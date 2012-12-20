@@ -8,14 +8,14 @@ package model;
  *
  */
 public abstract class Unit implements Soldier{
-	protected int hp; 	// Life points
-	protected int dmg;	// Damage
-	protected int hit;	// Probability of hitting (%)
-	protected int move; // Number of moves
-	protected int def;  // Damage reduction (%)
-	protected int crit; // Probability of critical attack (%)
-	protected Weapon wep; // Type of Weapon
-	protected String name; // Name
+	protected int hp;		// Life points
+	protected int dmg;		// Damage
+	protected int hit;		// Probability of hitting (%)
+	protected int move;		// Number of moves
+	protected int def; 		// Damage reduction (%)
+	protected int crit;		// Probability of critical attack (%)
+	protected Weapon wep; 	// Type of Weapon
+	protected String name; 	// Name
 	
 	public Unit(int hp, int dmg, int hit, int move, int def, int crit, Weapon wep, String name) {
 		this.hp = hp;
@@ -36,6 +36,5 @@ public abstract class Unit implements Soldier{
 	{
 		this.hp -= dmg;
 		if(this.hp <= 0 ) throw new DeadUnitException(this.name);
-		//return (this.hp < 0);
 	}
 }
