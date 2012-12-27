@@ -31,13 +31,14 @@ public class AttackCaC implements IAttack {
 			return  def.getName() + " a esquivé l'attaque !";
 		
 		System.out.println("dmg avant crit: " + dmg);
-		dmg += dmg * (crit / 100);
-		dmg -= dmg * (def.getDef() / 100);
+		dmg += dmg * ((double) crit / 100);
+		System.out.println("dmg après crit: " + dmg);
+		dmg -= dmg * ((double) def.getDef() / 100);
 		System.out.println("dmg après def: " + dmg);
 		
 		def.receiveDmg(dmg);
 		
-		return "L'attaque de " + att.getName() + " a infligé " + dmg + " à " + def.getName();
+		return "L'attaque de votre " + att.getName() + " a infligé " + dmg + " à " + def.getName();
 	}
 	
 	@Override
