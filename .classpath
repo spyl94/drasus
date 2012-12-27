@@ -2,5 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/Aurel/Dropbox/Drasus/lib/slick.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Aurel/Dropbox/Drasus/lib/lwjgl-2.8.5/jar/jinput.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Aurel/Dropbox/Drasus/lib/lwjgl-2.8.5/jar/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/Aurel/Dropbox/Drasus/lib/lwjgl-2.8.5/native/windows"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Aurel/Dropbox/Drasus/lib/lwjgl-2.8.5/jar/lwjgl_util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

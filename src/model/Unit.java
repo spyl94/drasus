@@ -37,13 +37,8 @@ public abstract class Unit {
 		this.attack = a;
 	}
 	
-	public String attack(Unit u) {
-		try {
+	public String attack(Unit u) throws DeadUnitException {
 			return this.attack.attack(this, u);
-		} catch (DeadUnitException e) {
-			
-			return e.getName() + " est mort !";
-		}
 	}
 	
 	public boolean canAttackFromRange(int i) {

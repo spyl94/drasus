@@ -4,7 +4,7 @@ public class AttackCaC implements IAttack {
 	
 	protected boolean canHit(int i)
 	{
-		return (int)(Math.random() * (101)) > i;
+		return (int)(Math.random() * (101)) < i;
 	}
 	
 	protected boolean trinityAdvantage(Weapon a, Weapon b)
@@ -21,6 +21,7 @@ public class AttackCaC implements IAttack {
 		int dmg = att.getDmg();
 		int crit = att.getCrit();
 		
+		
 		if(trinityAdvantage(def.getWep(),att.getWep()))
 			hit = hit * 1/3;
 		if(trinityAdvantage(att.getWep(),def.getWep()))
@@ -29,8 +30,10 @@ public class AttackCaC implements IAttack {
 		if(!canHit(hit))
 			return  def.getName() + " a esquivé l'attaque !";
 		
+		System.out.println("dmg avant crit: " + dmg);
 		dmg += dmg * (crit / 100);
 		dmg -= dmg * (def.getDef() / 100);
+		System.out.println("dmg après def: " + dmg);
 		
 		def.receiveDmg(dmg);
 		
