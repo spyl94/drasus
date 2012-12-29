@@ -18,14 +18,25 @@ public class MainController {
 	public void init() {
 
 		this.a.addUnit("Eclaireur");
+		this.a.addUnit("Fantassin");
+		this.a.addUnit("Rodeur");
+		
 
 		// b est géré par le réseau on ne le créé jamais il est récupéré !
 		this.b.addUnit("Eclaireur");
+		this.b.addUnit("Tank");
+		this.b.addUnit("Bretteur");
+		
+		
+		//Pour changer la porté d'un rodeur à 5: exemple de pouvoir
+		a.getUnit("Rodeur").setIAttack(new AttackDistance(5));
+		//Pour donner 15% de double attack
+		a.getUnit("Fantassin").setIAttack(new AttackCaCBerserker());
 
 		System.out.println(attack("Eclaireur", "Eclaireur"));
-		System.out.println(attack("Eclaireur", "Eclaireur"));
-		System.out.println(attack("Eclaireur", "Eclaireur"));
-		System.out.println(attack("Eclaireur", "Eclaireur"));
+		System.out.println(attack("Fantassin", "Tank"));
+		System.out.println(attack("Fantassin", "Tank"));
+		System.out.println(attack("Fantassin", "Tank"));
 
 	}
 
