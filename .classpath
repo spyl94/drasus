@@ -11,5 +11,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Aurel/Dropbox/Drasus/lib/lwjgl-2.8.5/jar/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Aurel/Dropbox/Drasus/lib/kryonet-2.20/jars/debug/onejar/kryonet-debug-2.18-all.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

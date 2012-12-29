@@ -1,5 +1,5 @@
 package model;
 
 public enum Weapon {
-	SWORD,LANCE,AXE
+	SWORD,LANCE,AXE,BOW
 }
