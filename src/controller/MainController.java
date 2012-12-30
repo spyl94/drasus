@@ -1,6 +1,11 @@
 package controller;
 
 import model.*;
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 public class MainController {
 
@@ -16,6 +21,21 @@ public class MainController {
 	}
 
 	public void init() {
+		
+		/*
+		try
+		{
+			AppGameContainer app = new AppGameContainer(new ViewController());
+			//app.setShowFPS(false);
+			app.setDisplayMode(500, 400, false);
+			app.start();
+		}
+		catch (SlickException e)
+		{
+			e.printStackTrace();
+		}
+		*/
+		
 
 		this.a.addUnit("Eclaireur");
 		this.a.addUnit("Fantassin");
@@ -32,6 +52,9 @@ public class MainController {
 		a.getUnit("Rodeur").setIAttack(new AttackDistance(5));
 		//Pour donner 15% de double attack
 		a.getUnit("Fantassin").setIAttack(new AttackCaCBerserker());
+		
+		if (a.getUnit("Rodeur").canAttackFromRange(3))
+			System.out.println(attack("Rodeur","Tank"));
 
 		System.out.println(attack("Eclaireur", "Eclaireur"));
 		System.out.println(attack("Fantassin", "Tank"));

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="63" height="64" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="grasstile" tilewidth="32" tileheight="32">
+  <image source="tileset/grasstile.bmp" trans="ff00ff" width="256" height="192"/>
+ </tileset>
+ <layer name="Calque de Tile 1" width="63" height="64">
+  <data encoding="base64" compression="zlib">
+   eJzt0jEOACAIBEH9/6eNnY1Sy80kNHQbGAMgzyymo6qza3t1667dW0LjS3J/+t/f9gntafe+Se0+JbcDAAAAAAAAAAAAAAB/W/pMAD0=
+  </data>
+ </layer>
+</map>
