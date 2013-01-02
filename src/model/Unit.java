@@ -18,6 +18,21 @@ public abstract class Unit {
 	protected int mat; // Number of moves after attack
 	protected Weapon wep; // Type of Weapon
 	protected String name; // Name
+	
+	protected int x;
+	protected int y;
+	
+	public int getX(){
+		return x;
+	}
+	public int getY(){
+		return y;
+	}
+	
+	public void setXY(int x, int y){
+		this.x=x;
+		this.y=y;
+	}
 
 	public Unit(IAttack attack, int hp, int dmg, int hit, int move, int def,
 			int crit, int mat, Weapon wep, String name) {
