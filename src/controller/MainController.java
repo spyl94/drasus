@@ -40,11 +40,11 @@ public class MainController {
 		return b;
 	}
 
-	public boolean isFreeTileset(int x, int y) {
+	public boolean isFreeTileset(Tile tile) {
 		Hashtable<String, Unit> units = a.getUnits();
 		Iterator<Unit> it = units.values().iterator();
 		while (it.hasNext()) {
-			if (it.next().getX() == x && it.next().getY() == y)
+			if (it.next().getTile().x == tile.x && it.next().getTile().y == tile.y)
 				return false;
 		}
 		if (b != null) {
@@ -52,7 +52,7 @@ public class MainController {
 			if(units != null) {
 				it = units.values().iterator();
 				while (it.hasNext()) {
-					if (it.next().getX() == x && it.next().getY() == y)
+					if (it.next().getTile().x == tile.x && it.next().getTile().y == tile.y)
 						return false;
 				}
 			}
@@ -60,32 +60,32 @@ public class MainController {
 		return true;
 	}
 	
-	public boolean isPlayerAUnit(int x, int y)
+	public boolean isPlayerAUnit(Tile tile)
 	{
 		Hashtable<String, Unit> units = a.getUnits();
 		Iterator<Unit> it = units.values().iterator();
 		while (it.hasNext()) {
-			if (it.next().getX() == x && it.next().getY() == y)
+			if (it.next().getTile().x == tile.x && it.next().getTile().y == tile.y)
 				return true;
 		}
 		return false;
 	}
 	
-	public boolean isPlayerBUnit(int x, int y)
+	public boolean isPlayerBUnit(Tile tile)
 	{
 		Hashtable<String, Unit> units = b.getUnits();
 		Iterator<Unit> it = units.values().iterator();
 		while (it.hasNext()) {
-			if (it.next().getX() == x && it.next().getY() == y)
+			if (it.next().getTile().x == tile.x && it.next().getTile().y == tile.y)
 				return true;
 		}
 		return false;
 	}
 
-	public void addUnit(String name, int x, int y) {
+	public void addUnit(String name, Tile tile) {
 		a.addUnit(name);
 		if (a.getUnit(name) != null)
-			a.getUnit(name).setXY(x, y);
+			a.getUnit(name).setTile(tile);
 	}
 
 	public void init() {
@@ -98,9 +98,11 @@ public class MainController {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+		
+		/*
 
 		this.a.addUnit("Eclaireur");
-		this.a.getUnit("Eclaireur").setXY(2, 2);
+		this.a.getUnit("Eclaireur");
 		this.a.addUnit("Fantassin");
 		this.a.addUnit("Rodeur");
 
@@ -121,6 +123,8 @@ public class MainController {
 		System.out.println(attack("Fantassin", "Tank"));
 		System.out.println(attack("Fantassin", "Tank"));
 		System.out.println(attack("Fantassin", "Tank"));
+		
+		*/
 
 	}
 

@@ -3,6 +3,7 @@
  */
 package model;
 
+import view.Tile;
 /**
  * @author Aurel
  * 
@@ -19,20 +20,14 @@ public abstract class Unit {
 	protected Weapon wep; // Type of Weapon
 	protected String name; // Name
 	
-	protected int x;
-	protected int y;
-	
-	public int getX(){
-		return x;
+	protected Tile tile;
+	public Tile getTile() {
+		return tile;
 	}
-	public int getY(){
-		return y;
+	public void setTile(Tile tile){
+		this.tile = tile;
 	}
 	
-	public void setXY(int x, int y){
-		this.x=x;
-		this.y=y;
-	}
 
 	public Unit(IAttack attack, int hp, int dmg, int hit, int move, int def,
 			int crit, int mat, Weapon wep, String name) {

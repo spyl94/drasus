@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Vector;
+
 import controller.*;
 import model.*;
 
@@ -33,6 +35,7 @@ public class GamePlayState extends BasicGameState {
 	private STATES currentState = null;
 	private MainController main;
 	private Tile currentSelected = null;
+	private Vector<Tile> tiles;
 	Image Archer = null;
 	Image ArcherMonte = null;
 	Image Berserker = null;
@@ -48,6 +51,7 @@ public class GamePlayState extends BasicGameState {
 	public GamePlayState(int stateID) {
 		this.stateID = stateID;
 		currentState = STATES.START_GAME;
+		tiles = new Vector<Tile>();
 		main = MainController.getInstance();
 	}
 
@@ -72,18 +76,30 @@ public class GamePlayState extends BasicGameState {
 		Tank = new Image("res/sprites/Tank.png");
 
 		grassMap = new TiledMap("res/drasus.tmx");
-		blocked = new boolean[grassMap.getWidth()][grassMap.getHeight()];
+
+		/* Init Vector tiles */
+
 		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
 				int tileID = grassMap.getTileId(xAxis, yAxis, 0);
+				System.out.println(tileID);
+				boolean block = false;
 				String value = grassMap.getTileProperty(tileID, "blocked",
 						"false");
 				if ("true".equals(value)) {
-					blocked[xAxis][yAxis] = true;
+					block = true;
+				}
+				value = grassMap.getTileProperty(tileID, "field", "default");
+				switch (value) {
+				case "default":
+					tiles.addElement(new Tile(xAxis, yAxis, block));
+					break;
+
+				default:
+					break;
 				}
 			}
 		}
-
 	}
 
 	@Override
@@ -122,9 +138,8 @@ public class GamePlayState extends BasicGameState {
 	private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 		Tile tile = getTileClicked(gc);
 		if (tile != null) // si clic
-			if (blocked[tile.x][tile.y] == false
-					&& main.isFreeTileset(tile.x, tile.y))
-				main.addUnit("Eclaireur", tile.x, tile.y);
+			if (tile.isBlocked() == false && main.isFreeTileset(tile))
+				main.addUnit("Eclaireur", tile);
 			else
 				System.out.println("Impossible de placer une unité ici");
 
@@ -138,7 +153,7 @@ public class GamePlayState extends BasicGameState {
 	private void playTurn(GameContainer gc, StateBasedGame sbg, int delta) {
 		Tile tile = getTileClicked(gc);
 		if (tile != null) {
-			if (main.isPlayerAUnit(tile.x, tile.y)) {
+			if (main.isPlayerAUnit(tile)) {
 				currentState = STATES.SELECTING_UNIT;
 				currentSelected = tile;
 			}
@@ -151,15 +166,14 @@ public class GamePlayState extends BasicGameState {
 		Tile tile = getTileClicked(gc);
 		if (tile != null) {
 			// on clique sur une unité de B
-			if (main.isPlayerBUnit(tile.x, tile.y)) {
+			if (main.isPlayerBUnit(tile)) {
 				System.out.println(main.attack(currentSelected, tile));
 				// Si tout c'est bien passé on réinitialise l'état
 				currentState = STATES.PLAY_TURN;
 
 			}
 			// si on clic que une case vide déplacement
-			if (main.isFreeTileset(tile.x, tile.y)
-					&& blocked[tile.x][tile.y] == false) {
+			if (main.isFreeTileset(tile) && tile.isBlocked() == false) {
 				// move
 			}
 		}
@@ -168,15 +182,21 @@ public class GamePlayState extends BasicGameState {
 	private Tile getTileClicked(GameContainer gc) {
 		Input input = gc.getInput();
 		if (input.isMousePressed(0)) {
+			
 			int mouseX = input.getMouseX();
 			int mouseY = input.getMouseY();
 			int x = 0;
 			int y = 0;
+			
 			x = mouseX / grassMap.getTileWidth();
 			y = mouseY / grassMap.getTileHeight();
 			System.out.println(mouseX + " x : " + x);
 			System.out.println(mouseY + " y : " + y);
-			return new Tile(x, y);
+
+			for (Tile t : tiles) {
+				if (t.x == x && t.y == y)
+					return t;
+			}
 		}
 		return null;
 	}

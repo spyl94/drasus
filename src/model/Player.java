@@ -39,7 +39,7 @@ public class Player {
 	{
 		Iterator<Unit> it = units.values().iterator();
 		while (it.hasNext()) {
-			if (it.next().getX() == x && it.next().getY() == y)
+			if (it.next().getTile().x == x && it.next().getTile().y == y)
 				return it.next();
 		}
 		return null;
