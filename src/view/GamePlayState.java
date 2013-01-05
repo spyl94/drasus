@@ -169,8 +169,48 @@ public class GamePlayState extends BasicGameState {
 		tabb = main.bToTab();
 		for (int i = 0; i < tabb.length; i++) {
 			switch (tabb[i][0]) {
+			case "Archer":
+				Archer.draw(Integer.parseInt(tabb[i][1]) * 32,
+						Integer.parseInt(tabb[i][2]) * 32);
+				break;	
+			case "ArcherMonte":
+				ArcherMonte.draw(Integer.parseInt(tabb[i][1]) * 32,
+						Integer.parseInt(tabb[i][2]) * 32);
+				break;
+			case "Berserker":
+				Berserker.draw(Integer.parseInt(tabb[i][1]) * 32,
+						Integer.parseInt(tabb[i][2]) * 32);
+				break;
+			case "Bretteur":
+				Bretteur.draw(Integer.parseInt(tabb[i][1]) * 32,
+						Integer.parseInt(tabb[i][2]) * 32);
+				break;
+			case "Cavalier":
+				Cavalier.draw(Integer.parseInt(tabb[i][1]) * 32,
+						Integer.parseInt(tabb[i][2]) * 32);
+				break;
+			case "Chevalier":
+				Chevalier.draw(Integer.parseInt(tabb[i][1]) * 32,
+						Integer.parseInt(tabb[i][2]) * 32);
+				break;
 			case "Eclaireur":
 				Eclaireur.draw(Integer.parseInt(tabb[i][1]) * 32,
+						Integer.parseInt(tabb[i][2]) * 32);
+				break;
+			case "Fantassin":
+				Fantassin.draw(Integer.parseInt(tabb[i][1]) * 32,
+						Integer.parseInt(tabb[i][2]) * 32);
+				break;
+			case "Lancier":
+				Lancier.draw(Integer.parseInt(tabb[i][1]) * 32,
+						Integer.parseInt(tabb[i][2]) * 32);
+				break;
+			case "Rodeur":
+				Rodeur.draw(Integer.parseInt(tabb[i][1]) * 32,
+						Integer.parseInt(tabb[i][2]) * 32);
+				break;
+			case "Tank":
+				Tank.draw(Integer.parseInt(tabb[i][1]) * 32,
 						Integer.parseInt(tabb[i][2]) * 32);
 				break;
 			}
