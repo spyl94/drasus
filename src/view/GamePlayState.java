@@ -294,7 +294,11 @@ public class GamePlayState extends BasicGameState {
 			}
 			// si on clic que une case vide déplacement
 			if (main.isFreeTileset(tile) && tile.isBlocked() == false) {
-				// move
+				System.out.println(currentSelected.x);
+				System.out.println(currentSelected.y);
+				System.out.println(main.getPlayerA().getUnit(currentSelected.x, currentSelected.y).getName());
+				main.getPlayerA().getUnit(currentSelected.x, currentSelected.y).setTile(tile);
+				currentState = STATES.PLAY_TURN;
 			}
 		}
 	}
