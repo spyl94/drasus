@@ -1,4 +1,5 @@
 package controller;
+
 import view.*;
 
 import java.util.Hashtable;
@@ -43,40 +44,47 @@ public class MainController {
 	public boolean isFreeTileset(Tile tile) {
 		Hashtable<String, Unit> units = a.getUnits();
 		Iterator<Unit> it = units.values().iterator();
+		Unit temp;
 		while (it.hasNext()) {
-			if (it.next().getTile().x == tile.x && it.next().getTile().y == tile.y)
+			temp = it.next();
+			if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
 				return false;
+
 		}
 		if (b != null) {
 			units = b.getUnits();
-			if(units != null) {
+			if (units != null) {
 				it = units.values().iterator();
 				while (it.hasNext()) {
-					if (it.next().getTile().x == tile.x && it.next().getTile().y == tile.y)
+					temp = it.next();
+					if (temp.getTile().x == tile.x
+							&& temp.getTile().y == tile.y)
 						return false;
 				}
 			}
 		}
 		return true;
 	}
-	
-	public boolean isPlayerAUnit(Tile tile)
-	{
+
+	public boolean isPlayerAUnit(Tile tile) {
 		Hashtable<String, Unit> units = a.getUnits();
 		Iterator<Unit> it = units.values().iterator();
+		Unit temp;
 		while (it.hasNext()) {
-			if (it.next().getTile().x == tile.x && it.next().getTile().y == tile.y)
+			temp = it.next();
+			if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
 				return true;
 		}
 		return false;
 	}
-	
-	public boolean isPlayerBUnit(Tile tile)
-	{
+
+	public boolean isPlayerBUnit(Tile tile) {
 		Hashtable<String, Unit> units = b.getUnits();
 		Iterator<Unit> it = units.values().iterator();
+		Unit temp;
 		while (it.hasNext()) {
-			if (it.next().getTile().x == tile.x && it.next().getTile().y == tile.y)
+			temp = it.next();
+			if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
 				return true;
 		}
 		return false;
@@ -92,38 +100,52 @@ public class MainController {
 		String[][] tab;
 		int i = 0;
 		Hashtable<String, Unit> units = a.getUnits();
-		Iterator<Unit> it0 = units.values().iterator();
-		Iterator<Unit> it1 = units.values().iterator();
+		Iterator<Unit> it = units.values().iterator();
 		Iterator<String> itKey = units.keySet().iterator();
 		tab = new String[units.size()][3];
-		while (it0.hasNext()) {
+		Unit temp;
+		while (it.hasNext()) {
+			temp = it.next();
 			tab[i][0] = itKey.next();
-			tab[i][1] = String.valueOf(it0.next().getTile().x);
-			tab[i][2] = String.valueOf(it1.next().getTile().y);
+			tab[i][1] = String.valueOf(temp.getTile().x);
+			tab[i][2] = String.valueOf(temp.getTile().y);
 			i++;
 		}
 
 		return tab;
 	}
-	
+
 	public String[][] bToTab() {
 		String[][] tab;
 		int i = 0;
 		Hashtable<String, Unit> units = b.getUnits();
-		Iterator<Unit> it0 = units.values().iterator();
-		Iterator<Unit> it1 = units.values().iterator();
+		Iterator<Unit> it = units.values().iterator();
 		Iterator<String> itKey = units.keySet().iterator();
 		tab = new String[units.size()][3];
-		while (it0.hasNext()) {
+		Unit temp;
+		while (it.hasNext()) {
+			temp = it.next();
 			tab[i][0] = itKey.next();
-			tab[i][1] = String.valueOf(it0.next().getTile().x);
-			tab[i][2] = String.valueOf(it1.next().getTile().y);
+			tab[i][1] = String.valueOf(temp.getTile().x);
+			tab[i][2] = String.valueOf(temp.getTile().y);
 			i++;
 		}
 
 		return tab;
 	}
-	
+
+	public int distance(Tile tile1,Tile tile2){
+		int a = tile1.x - tile2.x;
+		if(a<0){
+			a = a * -1;
+		}
+		int b = tile1.y - tile2.y;
+		if(b<0){
+			b = b * -1;
+		}
+		return a + b;
+	}
+
 	public void init() {
 
 		try {
@@ -134,33 +156,29 @@ public class MainController {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		
+
 		/*
-
-		this.a.addUnit("Eclaireur");
-		this.a.getUnit("Eclaireur");
-		this.a.addUnit("Fantassin");
-		this.a.addUnit("Rodeur");
-
-		// b est géré par le réseau on ne le créé jamais il est récupéré !
-		this.b.addUnit("Eclaireur");
-		this.b.addUnit("Tank");
-		this.b.addUnit("Bretteur");
-
-		// Pour changer la porté d'un rodeur à 5: exemple de pouvoir
-		a.getUnit("Rodeur").setIAttack(new AttackDistance(5));
-		// Pour donner 15% de double attack
-		a.getUnit("Fantassin").setIAttack(new AttackCaCBerserker());
-
-		if (a.getUnit("Rodeur").canAttackFromRange(3))
-			System.out.println(attack("Rodeur", "Tank"));
-
-		System.out.println(attack("Eclaireur", "Eclaireur"));
-		System.out.println(attack("Fantassin", "Tank"));
-		System.out.println(attack("Fantassin", "Tank"));
-		System.out.println(attack("Fantassin", "Tank"));
-		
-		*/
+		 * 
+		 * this.a.addUnit("Eclaireur"); this.a.getUnit("Eclaireur");
+		 * this.a.addUnit("Fantassin"); this.a.addUnit("Rodeur");
+		 * 
+		 * // b est géré par le réseau on ne le créé jamais il est récupéré !
+		 * this.b.addUnit("Eclaireur"); this.b.addUnit("Tank");
+		 * this.b.addUnit("Bretteur");
+		 * 
+		 * // Pour changer la porté d'un rodeur à 5: exemple de pouvoir
+		 * a.getUnit("Rodeur").setIAttack(new AttackDistance(5)); // Pour donner
+		 * 15% de double attack a.getUnit("Fantassin").setIAttack(new
+		 * AttackCaCBerserker());
+		 * 
+		 * if (a.getUnit("Rodeur").canAttackFromRange(3))
+		 * System.out.println(attack("Rodeur", "Tank"));
+		 * 
+		 * System.out.println(attack("Eclaireur", "Eclaireur"));
+		 * System.out.println(attack("Fantassin", "Tank"));
+		 * System.out.println(attack("Fantassin", "Tank"));
+		 * System.out.println(attack("Fantassin", "Tank"));
+		 */
 
 	}
 
@@ -178,21 +196,17 @@ public class MainController {
 			return "L'unité " + def + " n'éxiste pas !";
 		}
 	}
-	
-	public String attack(Tile att, Tile def)
-	{
-		try
-		{
+
+	public String attack(Tile att, Tile def) {
+		try {
 			Unit at = a.getUnit(att.x, att.y);
 			Unit de = b.getUnit(def.x, def.y);
-			
-			//TODO: vérif coordonnées
-			//if(at.canAttackFromRange())
-			
+
+			// TODO: vérif coordonnées
+			// if(at.canAttackFromRange())
+
 			return attack(at.getName(), de.getName());
-		}
-		catch(NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			return "unité introuvable";
 		}
 	}

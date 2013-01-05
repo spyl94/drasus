@@ -39,9 +39,11 @@ public class Player {
 	public Unit getUnit(int x, int y)
 	{
 		Iterator<Unit> it = units.values().iterator();
+		Unit temp;
 		while (it.hasNext()) {
-			if (it.next().getTile().x == x && it.next().getTile().y == y)
-				return it.next();
+			temp = it.next();
+			if (temp.getTile().x == x && temp.getTile().y == y)
+				return temp;
 		}
 		return null;
 	}
