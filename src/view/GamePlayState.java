@@ -33,6 +33,17 @@ public class GamePlayState extends BasicGameState {
 	private STATES currentState = null;
 	private MainController main;
 	private Tile currentSelected = null;
+	Image Archer = null;
+	Image ArcherMonte = null;
+	Image Berserker = null;
+	Image Bretteur = null;
+	Image Cavalier = null;
+	Image Chevalier = null;
+	Image Eclaireur = null;
+	Image Fantassin = null;
+	Image Lancier = null;
+	Image Rodeur = null;
+	Image Tank = null;
 
 	public GamePlayState(int stateID) {
 		this.stateID = stateID;
@@ -48,6 +59,18 @@ public class GamePlayState extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
+		Archer = new Image("res/sprites/Archer.png");
+		ArcherMonte = new Image("res/sprites/Archermonte.png");
+		Berserker = new Image("res/sprites/Berserk.png");
+		Bretteur = new Image("res/sprites/Bretteur.png");
+		Cavalier = new Image("res/sprites/Cavalier.png");
+		Chevalier = new Image("res/sprites/Chevalier.png");
+		Eclaireur = new Image("res/sprites/Eclaireur.png");
+		Fantassin = new Image("res/sprites/Fantassin.png");
+		Lancier = new Image("res/sprites/Lancier.png");
+		Rodeur = new Image("res/sprites/Rodeur.png");
+		Tank = new Image("res/sprites/Tank.png");
+
 		grassMap = new TiledMap("res/drasus.tmx");
 		blocked = new boolean[grassMap.getWidth()][grassMap.getHeight()];
 		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
@@ -73,7 +96,6 @@ public class GamePlayState extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		
 		switch (currentState) {
 		case START_GAME:
 			currentState = STATES.NEW_UNIT;
@@ -105,46 +127,40 @@ public class GamePlayState extends BasicGameState {
 				main.addUnit("Eclaireur", tile.x, tile.y);
 			else
 				System.out.println("Impossible de placer une unité ici");
-		
-		//si il reste des unités à placer
+
+		// si il reste des unités à placer
 		currentState = STATES.NEW_UNIT;
-		//sinon
-		//currentState = STATES.START_TURN
-		
+		// sinon
+		// currentState = STATES.START_TURN
+
 	}
-	private  void playTurn(GameContainer gc, StateBasedGame sbg, int delta)
-	{
+
+	private void playTurn(GameContainer gc, StateBasedGame sbg, int delta) {
 		Tile tile = getTileClicked(gc);
-		if (tile != null)
-		{
-			if(main.isPlayerAUnit(tile.x, tile.y))
-			{
+		if (tile != null) {
+			if (main.isPlayerAUnit(tile.x, tile.y)) {
 				currentState = STATES.SELECTING_UNIT;
 				currentSelected = tile;
 			}
 		}
-			
 
-		//autres...
+		// autres...
 	}
-	
-	private void selectingUnit(GameContainer gc, StateBasedGame sbg, int delta)
-	{
+
+	private void selectingUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 		Tile tile = getTileClicked(gc);
-		if (tile != null)
-		{
-			//on clique sur une unité de B
-			if(main.isPlayerBUnit(tile.x, tile.y))
-			{
+		if (tile != null) {
+			// on clique sur une unité de B
+			if (main.isPlayerBUnit(tile.x, tile.y)) {
 				System.out.println(main.attack(currentSelected, tile));
 				// Si tout c'est bien passé on réinitialise l'état
 				currentState = STATES.PLAY_TURN;
-				
+
 			}
-			//si on clic que une case vide déplacement
-			if(main.isFreeTileset(tile.x, tile.y) && blocked[tile.x][tile.y] == false)
-			{
-				//move
+			// si on clic que une case vide déplacement
+			if (main.isFreeTileset(tile.x, tile.y)
+					&& blocked[tile.x][tile.y] == false) {
+				// move
 			}
 		}
 	}
