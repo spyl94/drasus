@@ -47,9 +47,11 @@ public class GamePlayState extends BasicGameState {
 	private Image Lancier = null;
 	private Image Rodeur = null;
 	private Image Tank = null;
+	private Image Target = null;
 	private int unitNb = 0;
 	private String[][] taba;
 	private String[][] tabb;
+	private Vector<Tile> highLight = new Vector<Tile>();
 
 	public GamePlayState(int stateID) {
 		this.stateID = stateID;
@@ -77,7 +79,7 @@ public class GamePlayState extends BasicGameState {
 		Lancier = new Image("res/sprites/Lancier.png");
 		Rodeur = new Image("res/sprites/Rodeur.png");
 		Tank = new Image("res/sprites/Tank.png");
-
+		Target = new Image("res/sprites/path.png");
 		grassMap = new TiledMap("res/drasus.tmx");
 
 		/* Init Vector tiles */
@@ -112,6 +114,12 @@ public class GamePlayState extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics arg2)
 			throws SlickException {
 		grassMap.render(0, 0);
+		
+		if (highLight.isEmpty() == false) {
+			for (Tile t : highLight) {
+				Target.draw(t.x * 32, t.y * 32);
+			}
+		}
 
 		taba = main.aToTab();
 		for (int i = 0; i < taba.length; i++) {
@@ -119,7 +127,7 @@ public class GamePlayState extends BasicGameState {
 			case "Archer":
 				Archer.draw(Integer.parseInt(taba[i][1]) * 32,
 						Integer.parseInt(taba[i][2]) * 32);
-				break;	
+				break;
 			case "ArcherMonte":
 				ArcherMonte.draw(Integer.parseInt(taba[i][1]) * 32,
 						Integer.parseInt(taba[i][2]) * 32);
@@ -161,9 +169,7 @@ public class GamePlayState extends BasicGameState {
 						Integer.parseInt(taba[i][2]) * 32);
 				break;
 			}
-			
-			
-			
+
 		}
 
 		tabb = main.bToTab();
@@ -172,7 +178,7 @@ public class GamePlayState extends BasicGameState {
 			case "Archer":
 				Archer.draw(Integer.parseInt(tabb[i][1]) * 32,
 						Integer.parseInt(tabb[i][2]) * 32);
-				break;	
+				break;
 			case "ArcherMonte":
 				ArcherMonte.draw(Integer.parseInt(tabb[i][1]) * 32,
 						Integer.parseInt(tabb[i][2]) * 32);
@@ -263,7 +269,7 @@ public class GamePlayState extends BasicGameState {
 		// si il reste des unités à placer
 		currentState = STATES.NEW_UNIT;
 		// sinon
-		if (unitNb == main.getPlayerA().getNom().length) 
+		if (unitNb == main.getPlayerA().getNom().length)
 			currentState = STATES.START_TURN;
 
 	}
@@ -274,6 +280,8 @@ public class GamePlayState extends BasicGameState {
 			if (main.isPlayerAUnit(tile)) {
 				currentState = STATES.SELECTING_UNIT;
 				currentSelected = tile;
+				highLight(main.getPlayerA().getUnit(currentSelected.x,
+						currentSelected.y));
 			}
 		} else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
 			currentState = STATES.END_TURN;
@@ -293,12 +301,30 @@ public class GamePlayState extends BasicGameState {
 
 			}
 			// si on clic que une case vide déplacement
-			if (main.isFreeTileset(tile) && tile.isBlocked() == false) {
-				System.out.println(currentSelected.x);
-				System.out.println(currentSelected.y);
-				System.out.println(main.getPlayerA().getUnit(currentSelected.x, currentSelected.y).getName());
-				main.getPlayerA().getUnit(currentSelected.x, currentSelected.y).setTile(tile);
-				currentState = STATES.PLAY_TURN;
+			if (main.distance(currentSelected, tile) <= main.getPlayerA()
+					.getUnit(currentSelected.x, currentSelected.y).getMove()) {
+				if (main.isFreeTileset(tile) && tile.isBlocked() == false) {
+
+					main.getPlayerA()
+							.getUnit(currentSelected.x, currentSelected.y)
+							.setTile(tile);
+				} else {
+					System.out.println("La case n'est pas libre");
+				}
+			} else {
+				System.out.println("C'est trop loin");
+			}
+			highLight.clear();
+			currentState = STATES.PLAY_TURN;
+
+		}
+	}
+
+	private void highLight(Unit u) {
+		for (Tile t : tiles) {
+			if (main.distance(t, currentSelected) <= u.getMove()) {
+				System.out.println("try");
+				highLight.add(t);
 			}
 		}
 	}

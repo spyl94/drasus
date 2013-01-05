@@ -47,7 +47,7 @@ public class MainController {
 		Unit temp;
 		while (it.hasNext()) {
 			temp = it.next();
-			if (temp.getTile().x == tile.x && temp.getTile().y == tile.y) 
+			if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
 				return false;
 
 		}
@@ -72,8 +72,7 @@ public class MainController {
 		Unit temp;
 		while (it.hasNext()) {
 			temp = it.next();
-			if (temp.getTile().x == tile.x
-					&& temp.getTile().y == tile.y)
+			if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
 				return true;
 		}
 		return false;
@@ -85,8 +84,7 @@ public class MainController {
 		Unit temp;
 		while (it.hasNext()) {
 			temp = it.next();
-			if (temp.getTile().x == tile.x
-					&& temp.getTile().y == tile.y)
+			if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
 				return true;
 		}
 		return false;
@@ -134,6 +132,18 @@ public class MainController {
 		}
 
 		return tab;
+	}
+
+	public int distance(Tile tile1,Tile tile2){
+		int a = tile1.x - tile2.x;
+		if(a<0){
+			a = a * -1;
+		}
+		int b = tile1.y - tile2.y;
+		if(b<0){
+			b = b * -1;
+		}
+		return a + b;
 	}
 
 	public void init() {
