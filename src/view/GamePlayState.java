@@ -21,16 +21,16 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.tiled.TileSet;
 import org.newdawn.slick.tiled.TiledMap;
-import org.newdawn.slick.geom.Vector2f;
+
+import view.Tile.FIELD;
 
 public class GamePlayState extends BasicGameState {
 
 	private enum STATES {
-		START_GAME, NEW_UNIT, START_TURN, PLAY_TURN, SELECTING_UNIT, PAUSE_GAME, GAME_OVER
+		START_GAME, NEW_UNIT, START_TURN, PLAY_TURN, END_TURN, SELECTING_UNIT, PAUSE_GAME, GAME_OVER
 	}
 
 	private TiledMap grassMap;
-	private boolean[][] blocked;
 	private int stateID = -1;
 	private STATES currentState = null;
 	private MainController main;
@@ -82,8 +82,8 @@ public class GamePlayState extends BasicGameState {
 		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
 				int tileID = grassMap.getTileId(xAxis, yAxis, 0);
-				System.out.println(tileID);
 				boolean block = false;
+				
 				String value = grassMap.getTileProperty(tileID, "blocked",
 						"false");
 				if ("true".equals(value)) {
@@ -92,9 +92,12 @@ public class GamePlayState extends BasicGameState {
 				value = grassMap.getTileProperty(tileID, "field", "default");
 				switch (value) {
 				case "default":
+					System.out.println("création d'un tile");
 					tiles.addElement(new Tile(xAxis, yAxis, block));
 					break;
-
+				case "grass":
+					tiles.addElement(new Tile(xAxis, yAxis, block, FIELD.GRASS));
+					break;
 				default:
 					break;
 				}
@@ -126,6 +129,11 @@ public class GamePlayState extends BasicGameState {
 		case SELECTING_UNIT:
 			selectingUnit(gc, sbg, delta);
 			break;
+		case END_TURN:
+			currentSelected = null;
+			System.out.println("fin du tour");
+			//currentState = STATES.PAUSE_GAME;
+			break;
 		case PAUSE_GAME:
 			break;
 		case GAME_OVER:
@@ -139,14 +147,17 @@ public class GamePlayState extends BasicGameState {
 		Tile tile = getTileClicked(gc);
 		if (tile != null) // si clic
 			if (tile.isBlocked() == false && main.isFreeTileset(tile))
+			{
 				main.addUnit("Eclaireur", tile);
+				System.out.println("Ajout Eclaireur");
+			}
 			else
 				System.out.println("Impossible de placer une unité ici");
-
+		//else System.out.println("null");
 		// si il reste des unités à placer
 		currentState = STATES.NEW_UNIT;
 		// sinon
-		// currentState = STATES.START_TURN
+		//currentState = STATES.START_TURN;
 
 	}
 
@@ -157,6 +168,9 @@ public class GamePlayState extends BasicGameState {
 				currentState = STATES.SELECTING_UNIT;
 				currentSelected = tile;
 			}
+		}
+		else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
+			currentState = STATES.END_TURN;
 		}
 
 		// autres...

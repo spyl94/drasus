@@ -22,6 +22,7 @@ public class Tile {
 	
 	public Tile(int x, int y, boolean block)
 	{
+		this(x,y);
 		this.blocked=block;
 		this.field = FIELD.DEFAULT;
 	}
