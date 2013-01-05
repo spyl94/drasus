@@ -23,6 +23,17 @@ public class MainMenuState extends BasicGameState {
 
 	private int stateID = -1;
 	Image background = null;
+	Image Archer = null;
+	Image ArcherMonte = null;
+	Image Berserker = null;
+	Image Bretteur = null;
+	Image Cavalier = null;
+	Image Chevalier = null;
+	Image Eclaireur = null;
+	Image Fantassin = null;
+	Image Lancier = null;
+	Image Rodeur = null;
+	Image Tank = null;
 
 	public MainMenuState(int stateID) {
 		this.stateID = stateID;
@@ -41,6 +52,18 @@ public class MainMenuState extends BasicGameState {
 			throws SlickException {
 
 		background = new Image("res/menu.jpg");
+		Archer = new Image("res/sprites/Archer.png");
+		ArcherMonte = new Image("res/sprites/Archermonte.png");
+		Berserker = new Image("res/sprites/Berserk.png");
+		Bretteur = new Image("res/sprites/Bretteur.png");
+		Cavalier = new Image("res/sprites/Cavalier.png");
+		Chevalier = new Image("res/sprites/Chevalier.png");
+		Eclaireur = new Image("res/sprites/Eclaireur.png");
+		Fantassin = new Image("res/sprites/Fantassin.png");
+		Lancier = new Image("res/sprites/Lancier.png");
+		Rodeur = new Image("res/sprites/Rodeur.png");
+		Tank = new Image("res/sprites/Tank.png");
+
 	}
 
 	@Override

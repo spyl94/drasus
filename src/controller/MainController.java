@@ -93,13 +93,14 @@ public class MainController {
 		try {
 			AppGameContainer app = new AppGameContainer(new ViewController());
 			// app.setShowFPS(false);
-			app.setDisplayMode(1000, 1000, false);
+			app.setDisplayMode(1280, 704, false);
 			app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 
 		this.a.addUnit("Eclaireur");
+		this.a.getUnit("Eclaireur").setXY(2, 2);
 		this.a.addUnit("Fantassin");
 		this.a.addUnit("Rodeur");
 

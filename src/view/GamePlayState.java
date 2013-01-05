@@ -48,7 +48,7 @@ public class GamePlayState extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		grassMap = new TiledMap("res/sans-titre.tmx");
+		grassMap = new TiledMap("res/drasus.tmx");
 		blocked = new boolean[grassMap.getWidth()][grassMap.getHeight()];
 		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
@@ -73,6 +73,7 @@ public class GamePlayState extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
+		
 		switch (currentState) {
 		case START_GAME:
 			currentState = STATES.NEW_UNIT;
