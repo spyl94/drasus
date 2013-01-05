@@ -14,7 +14,8 @@ public class Player {
 	UnitFactory factory;
 
 	private Hashtable<String, Unit> units;
-
+	private static String [] nomUnits = {"Tank","Fantassin","Chevalier","Berserker","Bretteur","Eclaireur",
+		"Lancier","Archer","Rodeur","ArcherMonte","Cavalier"};
 	/**
 	 * 
 	 */
@@ -45,6 +46,9 @@ public class Player {
 		return null;
 	}
 	
+	public String [] getNom(){
+		return nomUnits;
+	}
 	public Hashtable<String, Unit> getUnits() {
 		return units;
 	}

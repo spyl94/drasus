@@ -88,6 +88,42 @@ public class MainController {
 			a.getUnit(name).setTile(tile);
 	}
 
+	public String[][] aToTab() {
+		String[][] tab;
+		int i = 0;
+		Hashtable<String, Unit> units = a.getUnits();
+		Iterator<Unit> it0 = units.values().iterator();
+		Iterator<Unit> it1 = units.values().iterator();
+		Iterator<String> itKey = units.keySet().iterator();
+		tab = new String[units.size()][3];
+		while (it0.hasNext()) {
+			tab[i][0] = itKey.next();
+			tab[i][1] = String.valueOf(it0.next().getTile().x);
+			tab[i][2] = String.valueOf(it1.next().getTile().y);
+			i++;
+		}
+
+		return tab;
+	}
+	
+	public String[][] bToTab() {
+		String[][] tab;
+		int i = 0;
+		Hashtable<String, Unit> units = b.getUnits();
+		Iterator<Unit> it0 = units.values().iterator();
+		Iterator<Unit> it1 = units.values().iterator();
+		Iterator<String> itKey = units.keySet().iterator();
+		tab = new String[units.size()][3];
+		while (it0.hasNext()) {
+			tab[i][0] = itKey.next();
+			tab[i][1] = String.valueOf(it0.next().getTile().x);
+			tab[i][2] = String.valueOf(it1.next().getTile().y);
+			i++;
+		}
+
+		return tab;
+	}
+	
 	public void init() {
 
 		try {

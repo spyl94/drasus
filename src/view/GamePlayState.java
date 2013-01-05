@@ -36,17 +36,20 @@ public class GamePlayState extends BasicGameState {
 	private MainController main;
 	private Tile currentSelected = null;
 	private Vector<Tile> tiles;
-	Image Archer = null;
-	Image ArcherMonte = null;
-	Image Berserker = null;
-	Image Bretteur = null;
-	Image Cavalier = null;
-	Image Chevalier = null;
-	Image Eclaireur = null;
-	Image Fantassin = null;
-	Image Lancier = null;
-	Image Rodeur = null;
-	Image Tank = null;
+	private Image Archer = null;
+	private Image ArcherMonte = null;
+	private Image Berserker = null;
+	private Image Bretteur = null;
+	private Image Cavalier = null;
+	private Image Chevalier = null;
+	private Image Eclaireur = null;
+	private Image Fantassin = null;
+	private Image Lancier = null;
+	private Image Rodeur = null;
+	private Image Tank = null;
+	private int unitNb = 0;
+	private String[][] taba;
+	private String[][] tabb;
 
 	public GamePlayState(int stateID) {
 		this.stateID = stateID;
@@ -83,7 +86,7 @@ public class GamePlayState extends BasicGameState {
 			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
 				int tileID = grassMap.getTileId(xAxis, yAxis, 0);
 				boolean block = false;
-				
+
 				String value = grassMap.getTileProperty(tileID, "blocked",
 						"false");
 				if ("true".equals(value)) {
@@ -110,6 +113,68 @@ public class GamePlayState extends BasicGameState {
 			throws SlickException {
 		grassMap.render(0, 0);
 
+		taba = main.aToTab();
+		for (int i = 0; i < taba.length; i++) {
+			switch (taba[i][0]) {
+			case "Archer":
+				Archer.draw(Integer.parseInt(taba[i][1]) * 32,
+						Integer.parseInt(taba[i][2]) * 32);
+				break;	
+			case "ArcherMonte":
+				ArcherMonte.draw(Integer.parseInt(taba[i][1]) * 32,
+						Integer.parseInt(taba[i][2]) * 32);
+				break;
+			case "Berserker":
+				Berserker.draw(Integer.parseInt(taba[i][1]) * 32,
+						Integer.parseInt(taba[i][2]) * 32);
+				break;
+			case "Bretteur":
+				Bretteur.draw(Integer.parseInt(taba[i][1]) * 32,
+						Integer.parseInt(taba[i][2]) * 32);
+				break;
+			case "Cavalier":
+				Cavalier.draw(Integer.parseInt(taba[i][1]) * 32,
+						Integer.parseInt(taba[i][2]) * 32);
+				break;
+			case "Chevalier":
+				Chevalier.draw(Integer.parseInt(taba[i][1]) * 32,
+						Integer.parseInt(taba[i][2]) * 32);
+				break;
+			case "Eclaireur":
+				Eclaireur.draw(Integer.parseInt(taba[i][1]) * 32,
+						Integer.parseInt(taba[i][2]) * 32);
+				break;
+			case "Fantassin":
+				Fantassin.draw(Integer.parseInt(taba[i][1]) * 32,
+						Integer.parseInt(taba[i][2]) * 32);
+				break;
+			case "Lancier":
+				Lancier.draw(Integer.parseInt(taba[i][1]) * 32,
+						Integer.parseInt(taba[i][2]) * 32);
+				break;
+			case "Rodeur":
+				Rodeur.draw(Integer.parseInt(taba[i][1]) * 32,
+						Integer.parseInt(taba[i][2]) * 32);
+				break;
+			case "Tank":
+				Tank.draw(Integer.parseInt(taba[i][1]) * 32,
+						Integer.parseInt(taba[i][2]) * 32);
+				break;
+			}
+			
+			
+			
+		}
+
+		tabb = main.bToTab();
+		for (int i = 0; i < tabb.length; i++) {
+			switch (tabb[i][0]) {
+			case "Eclaireur":
+				Eclaireur.draw(Integer.parseInt(tabb[i][1]) * 32,
+						Integer.parseInt(tabb[i][2]) * 32);
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -132,7 +197,7 @@ public class GamePlayState extends BasicGameState {
 		case END_TURN:
 			currentSelected = null;
 			System.out.println("fin du tour");
-			//currentState = STATES.PAUSE_GAME;
+			// currentState = STATES.PAUSE_GAME;
 			break;
 		case PAUSE_GAME:
 			break;
@@ -146,18 +211,20 @@ public class GamePlayState extends BasicGameState {
 	private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 		Tile tile = getTileClicked(gc);
 		if (tile != null) // si clic
-			if (tile.isBlocked() == false && main.isFreeTileset(tile))
-			{
-				main.addUnit("Eclaireur", tile);
-				System.out.println("Ajout Eclaireur");
-			}
-			else
+			if (tile.isBlocked() == false && main.isFreeTileset(tile)) {
+				main.addUnit(main.getPlayerA().getNom()[unitNb], tile);
+				System.out.print("Ajout :");
+				System.out.println(main.getPlayerA().getNom()[unitNb]);
+				unitNb++;
+			} else
 				System.out.println("Impossible de placer une unité ici");
-		//else System.out.println("null");
+
+		// else System.out.println("null");
 		// si il reste des unités à placer
 		currentState = STATES.NEW_UNIT;
 		// sinon
-		//currentState = STATES.START_TURN;
+		if (unitNb == main.getPlayerA().getNom().length) 
+			currentState = STATES.START_TURN;
 
 	}
 
@@ -168,8 +235,7 @@ public class GamePlayState extends BasicGameState {
 				currentState = STATES.SELECTING_UNIT;
 				currentSelected = tile;
 			}
-		}
-		else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
+		} else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
 			currentState = STATES.END_TURN;
 		}
 
@@ -196,12 +262,12 @@ public class GamePlayState extends BasicGameState {
 	private Tile getTileClicked(GameContainer gc) {
 		Input input = gc.getInput();
 		if (input.isMousePressed(0)) {
-			
+
 			int mouseX = input.getMouseX();
 			int mouseY = input.getMouseY();
 			int x = 0;
 			int y = 0;
-			
+
 			x = mouseX / grassMap.getTileWidth();
 			y = mouseY / grassMap.getTileHeight();
 			System.out.println(mouseX + " x : " + x);
