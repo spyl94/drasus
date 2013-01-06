@@ -257,7 +257,7 @@ public class GamePlayState extends BasicGameState {
 		case END_TURN:
 			currentSelected = null;
 			System.out.println("fin du tour");
-			// currentState = STATES.PAUSE_GAME;
+			currentState = STATES.PLAY_TURN;
 			break;
 		case PAUSE_GAME:
 			break;
