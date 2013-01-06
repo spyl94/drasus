@@ -13,6 +13,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Vector;
 
 public class MainController {
 	private static MainController controller;
@@ -146,6 +147,97 @@ public class MainController {
 		return a + b;
 	}
 
+	public Vector<Tile> canCross(Vector<Tile> tiles,Tile base, int moveNb){
+		Tile[] finale = null;
+		Vector<Tile> tempo = new Vector<Tile>();
+		Vector<Tile> result = new Vector<Tile>();
+		boolean temp = false;
+		
+		for (Tile t : tiles) {
+			if(t.x == base.x+1 && t.y == base.y){
+				if(t.isBlocked() == false){
+					for(Tile p : result){
+						if(p == t){
+							temp = true;
+						}
+					}
+					if (temp == false){
+						result.add(t);
+					}
+					temp = false;
+				}
+			}
+			
+			if(t.x == base.x && t.y+1 == base.y){
+				if(t.isBlocked() == false){
+					for(Tile p : result){
+						if(p == t){
+							temp = true;
+						}
+					}
+					if (temp == false){
+						result.add(t);
+					}
+					temp = false;
+				}
+			}
+			
+			if(t.x == base.x-1 && t.y == base.y){
+				if(t.isBlocked() == false){
+					for(Tile p : result){
+						if(p == t){
+							temp = true;
+						}
+					}
+					if (temp == false){
+						result.add(t);
+					}
+					temp = false;
+				}
+			}
+			
+			if(t.x == base.x && t.y-1 == base.y){
+				if(t.isBlocked() == false){
+					for(Tile p : result){
+						if(p == t){
+							temp = true;
+						}
+					}
+					if (temp == false){
+						result.add(t);
+					}
+					temp = false;
+				}
+			}
+		}
+		finale = new Tile[result.size()];
+		int i = 0;
+		for(Tile test : result){
+			finale[i] = test;
+			i++;
+		}
+		moveNb--;
+		if (moveNb == 0 || result.isEmpty()){
+			return result;
+		}
+		//System.out.println(finale.size());
+		for(i = 0; i < finale.length; i++){
+			tempo = this.canCross(tiles, finale[i],moveNb);
+			for(Tile k : tempo){
+				for(Tile p : result){
+					if(k == p){
+						temp = true;
+					}
+				}
+				if(temp == false){
+					result.add(k);
+				}
+				temp = false;
+			}
+		}
+		return result; 
+	}
+	
 	public void init() {
 
 		try {
