@@ -7,9 +7,11 @@ import model.*;
 
 import org.newdawn.slick.GameContainer;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -52,7 +54,9 @@ public class GamePlayState extends BasicGameState {
 	private String[][] taba;
 	private String[][] tabb;
 	private Vector<Tile> highLight = new Vector<Tile>();
-
+	private SpriteSheet ArcherS;
+	private Animation ArcherA;
+	
 	public GamePlayState(int stateID) {
 		this.stateID = stateID;
 		currentState = STATES.START_GAME;
@@ -81,6 +85,8 @@ public class GamePlayState extends BasicGameState {
 		Tank = new Image("res/sprites/Tank.png");
 		Target = new Image("res/sprites/path.png");
 		grassMap = new TiledMap("res/drasus.tmx");
+		ArcherS = new SpriteSheet("res/sprites/ArcherS.png", 32,32);
+		ArcherA = new Animation(ArcherS, 0,0,1,0,false, 500, true);
 
 		/* Init Vector tiles */
 
@@ -132,12 +138,12 @@ public class GamePlayState extends BasicGameState {
 				Target.draw(t.x * 32, t.y * 32);
 			}
 		}
-
+		
 		taba = main.aToTab();
 		for (int i = 0; i < taba.length; i++) {
 			switch (taba[i][0]) {
 			case "Archer":
-				Archer.draw(Integer.parseInt(taba[i][1]) * 32,
+				ArcherA.draw(Integer.parseInt(taba[i][1]) * 32,
 						Integer.parseInt(taba[i][2]) * 32);
 				break;
 			case "ArcherMonte":
@@ -319,32 +325,10 @@ public class GamePlayState extends BasicGameState {
 				currentState = STATES.PLAY_TURN;
 
 			}
-			// si on clic que une case vide déplacement
-			if (main.distance(currentSelected, tile) <= main.getPlayerA()
-					.getUnit(currentSelected.x, currentSelected.y).getMove()) {
-				if (main.isFreeTileset(tile) && tile.isBlocked() == false) {
-
-					main.getPlayerA()
-							.getUnit(currentSelected.x, currentSelected.y)
-							.setTile(tile);
-				} else {
-					System.out.println("La case n'est pas libre");
-				}
-			} else {
-				System.out.println("C'est trop loin");
-			}
+			main.move(tile, currentSelected, highLight);
 			highLight.clear();
 			currentState = STATES.PLAY_TURN;
 
-		}
-	}
-
-	private void highLight(Unit u) {
-		for (Tile t : tiles) {
-			if (main.distance(t, currentSelected) <= u.getMove()) {
-				System.out.println("try");
-				highLight.add(t);
-			}
 		}
 	}
 
