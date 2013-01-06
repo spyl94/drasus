@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author Aurel
+ *
+ */
 public class AttackDistance implements IAttack {
 
     private int range;

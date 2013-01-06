@@ -317,6 +317,11 @@ public class MainController {
 			return "L'unité " + def + " n'éxiste pas !";
 		}
 	}
+	
+	public String [] getPlayerAUnitsNames()
+	{
+	    return a.getNamesOfUnits();
+	}
 
 	public String attack(Tile att, Tile def) {
 		try {

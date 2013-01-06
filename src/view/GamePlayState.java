@@ -282,18 +282,17 @@ public class GamePlayState extends BasicGameState {
 		Tile tile = getTileClicked(gc);
 		if (tile != null) // si clic
 			if (tile.isBlocked() == false && main.isFreeTileset(tile)) {
-				main.addUnit(main.getPlayerA().getNom()[unitNb], tile);
+				main.addUnit(main.getPlayerAUnitsNames()[unitNb], tile);
 				System.out.print("Ajout :");
-				System.out.println(main.getPlayerA().getNom()[unitNb]);
+				System.out.println(main.getPlayerAUnitsNames()[unitNb]);
 				unitNb++;
 			} else
 				System.out.println("Impossible de placer une unité ici");
 
-		// else System.out.println("null");
 		// si il reste des unités à placer
 		currentState = STATES.NEW_UNIT;
 		// sinon
-		if (unitNb == main.getPlayerA().getNom().length)
+		if (unitNb == main.getPlayerAUnitsNames().length)
 			currentState = STATES.START_TURN;
 
 	}

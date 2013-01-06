@@ -6,6 +6,14 @@ package model;
  */
 public class UnitFactoryPegasus extends UnitFactory {
 
+    private String [] names;
+    
+    public UnitFactoryPegasus() {
+	this.names = new String [] {"Tank", "Fantassin", "Chevalier",
+		    "Berserker", "Bretteur", "Eclaireur", "Lancier", "Archer",
+		    "Rodeur", "ArcherMonte", "Cavalier"};
+    }
+    
     @Override
     public Unit getUnit(String str) {
 
@@ -33,6 +41,11 @@ public class UnitFactoryPegasus extends UnitFactory {
 	    return new Chevalier();
 
 	return null;
+    }
+    
+    @Override
+    public String[] getNamesOfUnits() {
+	return this.names;
     }
 
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model;
 
 import java.util.Hashtable;
@@ -12,15 +9,12 @@ import java.util.Iterator;
  */
 public class Player {
     UnitFactory factory;
-
     private Hashtable<String, Unit> units;
-    private static String[] nomUnits = { "Tank", "Fantassin", "Chevalier",
-	    "Berserker", "Bretteur", "Eclaireur", "Lancier", "Archer",
-	    "Rodeur", "ArcherMonte", "Cavalier" };
 
     public Player() {
 	units = new Hashtable<String, Unit>();
 	factory = new UnitFactoryPegasus();
+	
     }
 
     public void addUnit(String name) {
@@ -46,8 +40,8 @@ public class Player {
 	return null;
     }
 
-    public String[] getNom() {
-	return nomUnits;
+    public String[] getNamesOfUnits() {
+	return factory.getNamesOfUnits();
     }
 
     public Hashtable<String, Unit> getUnits() {
