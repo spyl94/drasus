@@ -314,32 +314,10 @@ public class GamePlayState extends BasicGameState {
 				currentState = STATES.PLAY_TURN;
 
 			}
-			// si on clic que une case vide déplacement
-			if (main.distance(currentSelected, tile) <= main.getPlayerA()
-					.getUnit(currentSelected.x, currentSelected.y).getMove()) {
-				if (main.isFreeTileset(tile) && tile.isBlocked() == false) {
-
-					main.getPlayerA()
-							.getUnit(currentSelected.x, currentSelected.y)
-							.setTile(tile);
-				} else {
-					System.out.println("La case n'est pas libre");
-				}
-			} else {
-				System.out.println("C'est trop loin");
-			}
+			main.move(tile, currentSelected, highLight);
 			highLight.clear();
 			currentState = STATES.PLAY_TURN;
 
-		}
-	}
-
-	private void highLight(Unit u) {
-		for (Tile t : tiles) {
-			if (main.distance(t, currentSelected) <= u.getMove()) {
-				System.out.println("try");
-				highLight.add(t);
-			}
 		}
 	}
 
