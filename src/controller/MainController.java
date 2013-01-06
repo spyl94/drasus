@@ -152,12 +152,16 @@ public class MainController {
     }
 
     public void move(Tile tile, Tile currentSelected, Vector<Tile> highLight) {
-	if(!turn.hasMove(getUnit(currentSelected)))
+	Unit u = getUnit(currentSelected);
+	if(!turn.hasMove(u))
         	for (Tile t : highLight) {
         	    if (tile == t) {
         		if (isFreeTileset(tile) && tile.isBlocked() == false)
-        		    getUnit(currentSelected).setTile(tile);
-        		else
+        		{
+        		    u.setTile(tile);
+        		    turn.setHasMove(u);
+        		    
+        		} else
         		    System.out.println("La case n'est pas libre");
         	    } else {
         		System.out.println("C'est trop loin");
