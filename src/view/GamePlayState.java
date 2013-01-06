@@ -97,7 +97,6 @@ public class GamePlayState extends BasicGameState {
 				value = grassMap.getTileProperty(tileID, "field", "default");
 				switch (value) {
 				case "default":
-					System.out.println("création d'un tile");
 					tiles.addElement(new Tile(xAxis, yAxis, block));
 					break;
 				case "grass":
@@ -242,11 +241,13 @@ public class GamePlayState extends BasicGameState {
 		switch (currentState) {
 		case START_GAME:
 			currentState = STATES.NEW_UNIT;
+			autoGenerateBUnits();
 			break;
 		case NEW_UNIT:
 			newUnit(gc, sbg, delta);
 			break;
 		case START_TURN:
+			initTurn();
 			currentState = STATES.PLAY_TURN;
 		case PLAY_TURN:
 			playTurn(gc, sbg, delta);
@@ -267,6 +268,10 @@ public class GamePlayState extends BasicGameState {
 
 	}
 
+	private void initTurn()
+	{
+		// Ajout des pv aux unités sur les forts
+	}
 	private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 		Tile tile = getTileClicked(gc);
 		if (tile != null) // si clic
@@ -367,6 +372,14 @@ public class GamePlayState extends BasicGameState {
 			}
 		}
 		return null;
+	}
+	
+	private void autoGenerateBUnits()
+	{
+		main.addUnitToB("Eclaireur", tiles.get(800));
+		main.addUnitToB("Fantassin", tiles.get(801));
+		main.addUnitToB("Tank", tiles.get(802));
+		main.addUnitToB("Archer", tiles.get(803));
 	}
 
 }

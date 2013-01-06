@@ -17,6 +17,7 @@ import java.util.Vector;
 
 public class MainController {
 	private static MainController controller;
+	private AppGameContainer app;
 	private Player a;
 	private Player b;
 
@@ -96,6 +97,11 @@ public class MainController {
 		if (a.getUnit(name) != null)
 			a.getUnit(name).setTile(tile);
 	}
+	
+	public void addUnitToB(String name, Tile tile) {
+		b.addUnit(name);
+		b.getUnit(name).setTile(tile);
+	}
 
 	public String[][] aToTab() {
 		String[][] tab;
@@ -135,75 +141,75 @@ public class MainController {
 		return tab;
 	}
 
-	public int distance(Tile tile1,Tile tile2){
+	public int distance(Tile tile1, Tile tile2) {
 		int a = tile1.x - tile2.x;
-		if(a<0){
+		if (a < 0) {
 			a = a * -1;
 		}
 		int b = tile1.y - tile2.y;
-		if(b<0){
+		if (b < 0) {
 			b = b * -1;
 		}
 		return a + b;
 	}
 
-	public Vector<Tile> canCross(Vector<Tile> tiles,Tile base, int moveNb){
+	public Vector<Tile> canCross(Vector<Tile> tiles, Tile base, int moveNb) {
 		Tile[] finale = null;
 		Vector<Tile> tempo = new Vector<Tile>();
 		Vector<Tile> result = new Vector<Tile>();
 		boolean temp = false;
-		
+
 		for (Tile t : tiles) {
-			if(t.x == base.x+1 && t.y == base.y){
-				if(t.isBlocked() == false){
-					for(Tile p : result){
-						if(p == t){
+			if (t.x == base.x + 1 && t.y == base.y) {
+				if (t.isBlocked() == false) {
+					for (Tile p : result) {
+						if (p == t) {
 							temp = true;
 						}
 					}
-					if (temp == false){
+					if (temp == false) {
 						result.add(t);
 					}
 					temp = false;
 				}
 			}
-			
-			if(t.x == base.x && t.y+1 == base.y){
-				if(t.isBlocked() == false){
-					for(Tile p : result){
-						if(p == t){
+
+			if (t.x == base.x && t.y + 1 == base.y) {
+				if (t.isBlocked() == false) {
+					for (Tile p : result) {
+						if (p == t) {
 							temp = true;
 						}
 					}
-					if (temp == false){
+					if (temp == false) {
 						result.add(t);
 					}
 					temp = false;
 				}
 			}
-			
-			if(t.x == base.x-1 && t.y == base.y){
-				if(t.isBlocked() == false){
-					for(Tile p : result){
-						if(p == t){
+
+			if (t.x == base.x - 1 && t.y == base.y) {
+				if (t.isBlocked() == false) {
+					for (Tile p : result) {
+						if (p == t) {
 							temp = true;
 						}
 					}
-					if (temp == false){
+					if (temp == false) {
 						result.add(t);
 					}
 					temp = false;
 				}
 			}
-			
-			if(t.x == base.x && t.y-1 == base.y){
-				if(t.isBlocked() == false){
-					for(Tile p : result){
-						if(p == t){
+
+			if (t.x == base.x && t.y - 1 == base.y) {
+				if (t.isBlocked() == false) {
+					for (Tile p : result) {
+						if (p == t) {
 							temp = true;
 						}
 					}
-					if (temp == false){
+					if (temp == false) {
 						result.add(t);
 					}
 					temp = false;
@@ -212,36 +218,36 @@ public class MainController {
 		}
 		finale = new Tile[result.size()];
 		int i = 0;
-		for(Tile test : result){
+		for (Tile test : result) {
 			finale[i] = test;
 			i++;
 		}
 		moveNb--;
-		if (moveNb == 0 || result.isEmpty()){
+		if (moveNb == 0 || result.isEmpty()) {
 			return result;
 		}
-		//System.out.println(finale.size());
-		for(i = 0; i < finale.length; i++){
-			tempo = this.canCross(tiles, finale[i],moveNb);
-			for(Tile k : tempo){
-				for(Tile p : result){
-					if(k == p){
+		// System.out.println(finale.size());
+		for (i = 0; i < finale.length; i++) {
+			tempo = this.canCross(tiles, finale[i], moveNb);
+			for (Tile k : tempo) {
+				for (Tile p : result) {
+					if (k == p) {
 						temp = true;
 					}
 				}
-				if(temp == false){
+				if (temp == false) {
 					result.add(k);
 				}
 				temp = false;
 			}
 		}
-		return result; 
+		return result;
 	}
-	
+
 	public void init() {
 
 		try {
-			AppGameContainer app = new AppGameContainer(new ViewController());
+			app = new AppGameContainer(new ViewController());
 			// app.setShowFPS(false);
 			app.setDisplayMode(1280, 704, false);
 			app.start();
@@ -294,13 +300,17 @@ public class MainController {
 			Unit at = a.getUnit(att.x, att.y);
 			Unit de = b.getUnit(def.x, def.y);
 
-			// TODO: vérif coordonnées
-			// if(at.canAttackFromRange())
-
-			return attack(at.getName(), de.getName());
+			if ((att.x + 1 == def.x && att.y == def.y) // CaC
+					|| (att.x - 1 == def.x && att.y == def.y)
+					|| (att.y + 1 == def.y && att.x == def.x)
+					|| (att.y - 1 == def.y && att.x == def.x))
+				return attack(at.getName(), de.getName());
+			if (at.canAttackFromRange(distance(att,def))) // Distance
+				return attack(at.getName(), de.getName());
+			return "Impossible d'attaquer !";
+			
 		} catch (NullPointerException e) {
 			return "unité introuvable";
 		}
 	}
-
 }
