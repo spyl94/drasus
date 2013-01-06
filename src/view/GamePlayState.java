@@ -103,6 +103,19 @@ public class GamePlayState extends BasicGameState {
 				case "grass":
 					tiles.addElement(new Tile(xAxis, yAxis, block, FIELD.GRASS));
 					break;
+				case "forest":
+					tiles.addElement(new Tile(xAxis, yAxis, block, FIELD.FOREST));
+					break;
+				case "mountain":
+					tiles.addElement(new Tile(xAxis, yAxis, block,
+							FIELD.MOUNTAIN));
+					break;
+				case "fort":
+					tiles.addElement(new Tile(xAxis, yAxis, block, FIELD.FORT));
+					break;
+				case "bridge":
+					tiles.addElement(new Tile(xAxis, yAxis, block, FIELD.BRIDGE));
+					break;
 				default:
 					break;
 				}
@@ -114,7 +127,7 @@ public class GamePlayState extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics arg2)
 			throws SlickException {
 		grassMap.render(0, 0);
-		
+
 		if (highLight.isEmpty() == false) {
 			for (Tile t : highLight) {
 				Target.draw(t.x * 32, t.y * 32);
@@ -280,8 +293,9 @@ public class GamePlayState extends BasicGameState {
 			if (main.isPlayerAUnit(tile)) {
 				currentState = STATES.SELECTING_UNIT;
 				currentSelected = tile;
-				highLight(main.getPlayerA().getUnit(currentSelected.x,
-						currentSelected.y));
+				setHighLight(main.canCross(tiles, currentSelected, main.getPlayerA().getUnit(currentSelected.x,
+						currentSelected.y).getMove()));
+				//setHighLight(main.canCross(tiles, currentSelected, 6));
 			}
 		} else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
 			currentState = STATES.END_TURN;
@@ -327,6 +341,10 @@ public class GamePlayState extends BasicGameState {
 				highLight.add(t);
 			}
 		}
+	}
+
+	private void setHighLight(Vector<Tile> hl) {
+		highLight = hl;
 	}
 
 	private Tile getTileClicked(GameContainer gc) {

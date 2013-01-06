@@ -9,7 +9,7 @@ public class Tile {
 	private boolean blocked;
 	
 	public enum FIELD {
-		DEFAULT, GRASS, WATER
+		DEFAULT, GRASS, FOREST, MOUNTAIN, BRIDGE, FORT
 	}
 	
 	public Tile(int x, int y) {
