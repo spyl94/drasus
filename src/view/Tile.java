@@ -4,6 +4,13 @@ public class Tile {
 
 	public enum FIELD {
 		DEFAULT, GRASS, FOREST, MOUNTAIN, BRIDGE, FORT
+	}	
+	
+	public Tile(){
+		x = 0;
+		y = 0;
+		this.blocked = false;
+		this.field = FIELD.DEFAULT;
 	}
 
 	// let public for easier use

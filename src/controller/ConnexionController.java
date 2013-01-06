@@ -14,15 +14,17 @@ public class ConnexionController {
 	 */
 
 	private Client client;
-	private Player player = null;
 	private Msg msg = new Msg();
+	private Player[] envoi;
+	private Player[] recu ;
+	
 	public ConnexionController(String adr) {
 
 		client = new Client();
 
 		Kryo kryo = client.getKryo();
-		kryo.register(Player.class);
-		kryo.register(Msg.class);
+		kryo.register(model.Player.class);
+		kryo.register(model.Msg.class);
 		kryo.register(model.UnitFactoryPegasus.class);
 		kryo.register(java.util.Hashtable.class);
 		kryo.register(model.Archer.class);
@@ -43,14 +45,19 @@ public class ConnexionController {
 		kryo.register(model.Tank.class);
 		kryo.register(model.Unit.class);
 		kryo.register(model.UnitFactory.class);
+		kryo.register(model.UnitFactoryPegasus.class);
 		kryo.register(model.Weapon.class);
+		kryo.register(view.Tile.class);
+		kryo.register(model.Player[].class);
+		kryo.register(view.Tile.FIELD.class);
+		kryo.register(String[].class);
 		
 		client.start();
 
 		client.addListener(new Listener() {
 			public void received(Connection connection, Object object) {
-				if (object instanceof Player) {
-					player = (Player) object;
+				if (object instanceof Player[]) {
+					recu = (Player[]) object;
 				}
 				if (object instanceof Msg) {
 					msg = (Msg) object;
@@ -59,23 +66,39 @@ public class ConnexionController {
 		});
 		
 		try {
-			client.connect(5000, adr, 54555, 54777);
+			client.connect(5000, adr, 4662, 4672);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void SendPlayer(Player player) {
-		client.sendTCP(player);
-		System.out.println("Envoie du player en cours...");
+	public void sendPlayer(Player player) {
+		envoi = new Player[1];
+		envoi[0] = player;
+		client.sendTCP(envoi);
 	}
 
-	public void SendMsg(Msg msg) {
+	public void sendPlayers(Player a, Player b){
+		envoi = new Player[2];
+		envoi[0] = a;
+		envoi[1] = b;
+		client.sendTCP(envoi);
+	}
+	
+	public void sendMsg(Msg msg) {
 		client.sendTCP(msg);
 	}
 
-	public Player getPlayer() {
-		return player;
+	public Player[] getPlayer() {
+		return recu;
+	}
+	
+	public void setNull(){
+		recu = null;
+	}
+	
+	public void eraseMsg(){
+		msg = null;
 	}
 	
 	public Msg getMsg(){

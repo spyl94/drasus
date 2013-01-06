@@ -8,13 +8,21 @@ public class AttackDistance implements IAttack {
 
     private int range;
 
+
+	public AttackDistance() {
+		range = 0;
+	}
+	
+	public AttackDistance(int i) {
+		range = i;
+	}
+	
     /**
      * @param i
-     *            the range
+     *            
      */
-    public AttackDistance(int i) {
-	range = i;
-    }
+
+
 
     @Override
     public String attack(Unit att, Unit def) throws DeadUnitException {

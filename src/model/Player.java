@@ -9,17 +9,30 @@ import java.util.Iterator;
  */
 public class Player {
     UnitFactory factory;
-    private Hashtable<String, Unit> units;
-
-    public Player() {
-	units = new Hashtable<String, Unit>();
-	factory = new UnitFactoryPegasus();
+	private Hashtable<String, Unit> units;
+	private static String [] nomUnits = {"Tank","Fantassin","Chevalier","Berserker","Bretteur","Eclaireur",
+		"Lancier","Archer","Rodeur","ArcherMonte","Cavalier"};
+	private boolean isTurn = true;
 	
-    }
+	/**
+	 * 
+	 */
+	public Player() {
+		units = new Hashtable<String, Unit>();
+		factory = new UnitFactoryPegasus();
+	}
 
-    public void addUnit(String name) {
-	units.put(name, factory.getUnit(name));
-    }
+	public void addUnit(String name) {
+		units.put(name, factory.getUnit(name));
+	}
+	
+	public void setTurn(boolean b){
+		isTurn = b;
+	}
+
+	public boolean getTurn(){
+		return isTurn;
+	}
 
     public void delUnit(String name) {
 	units.remove(name);

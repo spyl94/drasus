@@ -247,7 +247,8 @@ public class GamePlayState extends BasicGameState {
 		switch (currentState) {
 		case START_GAME:
 			currentState = STATES.NEW_UNIT;
-			autoGenerateBUnits();
+			//autoGenerateBUnits();
+			main.connexion("88.180.34.112");
 			break;
 		case NEW_UNIT:
 			newUnit(gc, sbg, delta);
@@ -263,9 +264,16 @@ public class GamePlayState extends BasicGameState {
 		case END_TURN:
 			currentSelected = null;
 			System.out.println("fin du tour");
+			currentState = STATES.PAUSE_GAME;
+			main.sendEnd();
+			main.endTurn();
 			currentState = STATES.START_TURN;
 			break;
 		case PAUSE_GAME:
+			main.recPlayers();
+			if(main.isTurn()){
+				currentState = STATES.START_TURN;
+			}
 			break;
 		case GAME_OVER:
 			sbg.enterState(ViewController.MAINMENUSTATE);
@@ -292,8 +300,15 @@ public class GamePlayState extends BasicGameState {
 		// si il reste des unités à placer
 		currentState = STATES.NEW_UNIT;
 		// sinon
-		if (unitNb == main.getPlayerAUnitsNames().length)
-			currentState = STATES.START_TURN;
+
+		if (unitNb == main.getPlayerAUnitsNames().length){
+						currentState = STATES.START_TURN;
+			main.sendPlayer();
+			main.recPlayer();
+			if (main.getPlayerA().getTurn() == false){
+				currentState = STATES.PAUSE_GAME;
+			}
+		}
 
 	}
 
@@ -303,8 +318,10 @@ public class GamePlayState extends BasicGameState {
 			if (main.isPlayerAUnit(tile)) {
 				currentState = STATES.SELECTING_UNIT;
 				currentSelected = tile;
-				setHighLight(main.canCross(tiles, currentSelected, main.getPlayerA().getUnit(currentSelected.x,
-						currentSelected.y).getMove()));
+				if (!main.getTurn().hasMove(main.getPlayerA().getUnit(tile.x, tile.y))){
+					setHighLight(main.canCross(tiles, currentSelected, main.getPlayerA().getUnit(currentSelected.x,
+							currentSelected.y).getMove()));
+				}
 				//setHighLight(main.canCross(tiles, currentSelected, 6));
 			}
 		} else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
@@ -329,9 +346,11 @@ public class GamePlayState extends BasicGameState {
 				currentState = STATES.PLAY_TURN;
 
 			}
+			
 			else {
-			    main.move(tile, currentSelected, highLight);
+				main.move(tile, currentSelected, highLight);
 			    highLight.clear();
+			    main.sendBoth();
 			    currentState = STATES.PLAY_TURN;
 			}
 		}
