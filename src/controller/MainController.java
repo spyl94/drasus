@@ -18,6 +18,7 @@ import java.util.Vector;
 public class MainController {
 	private static MainController controller;
 	private AppGameContainer app;
+	private TurnController turn;
 	private Player a;
 	private Player b;
 
@@ -97,7 +98,7 @@ public class MainController {
 		if (a.getUnit(name) != null)
 			a.getUnit(name).setTile(tile);
 	}
-	
+
 	public void addUnitToB(String name, Tile tile) {
 		b.addUnit(name);
 		b.getUnit(name).setTile(tile);
@@ -284,6 +285,11 @@ public class MainController {
 		MainController.getInstance().init();
 	}
 
+	public void initNewTurn() {
+		turn = new TurnController(a.getUnits());
+		// TODO Ajout des pv aux unités sur les forts
+	}
+
 	private String attack(String att, String def) {
 		try {
 			return a.attackWith(a.getUnit(att), b.getUnit(def));
@@ -297,18 +303,32 @@ public class MainController {
 
 	public String attack(Tile att, Tile def) {
 		try {
+			
 			Unit at = a.getUnit(att.x, att.y);
 			Unit de = b.getUnit(def.x, def.y);
-
-			if ((att.x + 1 == def.x && att.y == def.y) // CaC
-					|| (att.x - 1 == def.x && att.y == def.y)
-					|| (att.y + 1 == def.y && att.x == def.x)
-					|| (att.y - 1 == def.y && att.x == def.x))
-				return attack(at.getName(), de.getName());
-			if (at.canAttackFromRange(distance(att,def))) // Distance
-				return attack(at.getName(), de.getName());
-			return "Impossible d'attaquer !";
 			
+			if (!turn.hasAttack(at)) { 
+				//si on a pas déjà attaqué à ce tour
+				
+				if ((att.x + 1 == def.x && att.y == def.y) // CaC
+						|| (att.x - 1 == def.x && att.y == def.y)
+						|| (att.y + 1 == def.y && att.x == def.x)
+						|| (att.y - 1 == def.y && att.x == def.x)) {
+					String str = attack(at.getName(), de.getName());
+					turn.setHasAttack(at);
+					return str;
+				}
+
+				if (at.canAttackFromRange(distance(att, def))) // Distance
+				{
+					String str = attack(at.getName(), de.getName());
+					turn.setHasAttack(at);
+					return str;
+				}
+				return "Impossible d'attaquer !";
+			}
+			return "Vous avez déjà attaqué avec cette unité !";
+
 		} catch (NullPointerException e) {
 			return "unité introuvable";
 		}

@@ -270,7 +270,7 @@ public class GamePlayState extends BasicGameState {
 
 	private void initTurn()
 	{
-		// Ajout des pv aux unités sur les forts
+		main.initNewTurn();
 	}
 	private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 		Tile tile = getTileClicked(gc);
