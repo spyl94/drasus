@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author Aurel
+ *
+ */
 public class ArcherMonte extends Unit {
 
 	public ArcherMonte() {

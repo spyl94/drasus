@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author Aurel
+ *
+ */
 public class Tank extends Unit {
 
 	public Tank() {

@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author Aurel
+ *
+ */
 public class AttackCaCBerserker extends AttackCaC {
 
 	@Override

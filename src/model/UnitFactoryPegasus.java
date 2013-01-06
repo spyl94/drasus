@@ -1,6 +1,11 @@
 package model;
 
+/**
+ * @author Aurel
+ *
+ */
 public class UnitFactoryPegasus extends UnitFactory {
+
 
 	@Override
 	public Unit getUnit(String str) {

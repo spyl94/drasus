@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author Aurel
+ *
+ */
 public class Rodeur extends Unit {
 
 	public Rodeur() {

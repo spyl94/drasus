@@ -4,18 +4,11 @@ public class AttackDistance implements IAttack {
 
 	private int range;
 
+	/**
+	 * @param i the range
+	 */
 	public AttackDistance(int i) {
 		range = i;
-	}
-
-	protected boolean canHit(int i) {
-		return (int) (Math.random() * (101)) < i;
-	}
-
-	protected boolean trinityAdvantage(Weapon a, Weapon b) {
-		return (a == Weapon.SWORD && b == Weapon.LANCE)
-				|| (a == Weapon.LANCE && b == Weapon.AXE)
-				|| (a == Weapon.AXE && b == Weapon.SWORD);
 	}
 
 	@Override
@@ -23,11 +16,6 @@ public class AttackDistance implements IAttack {
 		int hit = att.getHit();
 		int dmg = att.getDmg();
 		int crit = att.getCrit();
-
-		if (trinityAdvantage(def.getWep(), att.getWep()))
-			hit = hit * 1 / 3;
-		if (trinityAdvantage(att.getWep(), def.getWep()))
-			crit += 5;
 
 		if (!canHit(hit))
 			return def.getName() + " a esquivé l'attaque !";
@@ -48,4 +36,15 @@ public class AttackDistance implements IAttack {
 	public boolean canAttackFromRange(int i) {
 		return i <= range;
 	}
+	
+	/**
+	 * Determine randomly if the unit has touched the target.
+	 * 
+	 * @param i the probability of hit
+	 * @return true if the attack succeed or false otherwise
+	 */
+	protected boolean canHit(int i) {
+		return (int) (Math.random() * (101)) < i;
+	}
+
 }

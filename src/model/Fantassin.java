@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author Aurel
+ *
+ */
 public class Fantassin extends Unit {
 
 	public Fantassin() {
