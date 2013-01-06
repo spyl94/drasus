@@ -160,7 +160,6 @@ public class MainController {
         		{
         		    u.setTile(tile);
         		    turn.setHasMove(u);
-        		    
         		} else
         		    System.out.println("La case n'est pas libre");
         	    } else {
@@ -318,10 +317,13 @@ public class MainController {
 	// TODO Ajout des pv aux unités sur les forts
     }
 
-    private String attack(String att, String def) {
+    private String attack(String att, String def) throws VictoryException {
 	try {
 	    return a.attackWith(a.getUnit(att), b.getUnit(def));
-	} catch (DeadUnitException e) {
+	} catch (DeadBossException e) {
+	    throw new VictoryException(e);
+	}
+	catch (DeadUnitException e) {
 	    b.delUnit(e.getName());
 	    return e.getName() + " est mort !";
 	} catch (NullPointerException e) {
@@ -334,7 +336,7 @@ public class MainController {
     }
     
 
-    public String attack(Tile att, Tile def) {
+    public String attack(Tile att, Tile def) throws VictoryException {
 	try {
 
 	    Unit at = a.getUnit(att.x, att.y);

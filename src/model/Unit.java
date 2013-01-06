@@ -163,11 +163,18 @@ public abstract class Unit {
      *            the damages
      * @throws DeadUnitException
      *             if the unit is dead
+     * @throws DeadBossException
+     *             if the boss is dead
+     * 
      */
-    public void receiveDmg(int dmg) throws DeadUnitException {
+    public void receiveDmg(int dmg) throws DeadUnitException, DeadBossException {
 	this.hp -= dmg;
-	if (this.hp <= 0)
+	if (this.hp <= 0) {
+	    if (this.name == "Pegasus" || this.name == "Dragon")
+		throw new DeadBossException(this.name, dmg);
 	    throw new DeadUnitException(this.name, dmg);
+	}
+
     }
 
     /**

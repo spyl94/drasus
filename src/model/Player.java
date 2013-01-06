@@ -48,7 +48,7 @@ public class Player {
 	return units;
     }
 
-    public String attackWith(Unit att, Unit def) throws DeadUnitException {
+    public String attackWith(Unit att, Unit def) throws DeadUnitException, DeadBossException {
 	return att.attack(def);
     }
 

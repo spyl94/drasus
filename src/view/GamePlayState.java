@@ -263,7 +263,7 @@ public class GamePlayState extends BasicGameState {
 		case END_TURN:
 			currentSelected = null;
 			System.out.println("fin du tour");
-			currentState = STATES.PLAY_TURN;
+			currentState = STATES.START_TURN;
 			break;
 		case PAUSE_GAME:
 			break;
@@ -319,15 +319,21 @@ public class GamePlayState extends BasicGameState {
 		if (tile != null) {
 			// on clique sur une unité de B
 			if (main.isPlayerBUnit(tile)) {
-				System.out.println(main.attack(currentSelected, tile));
+				try {
+				    System.out.println(main.attack(currentSelected, tile));
+				} catch (VictoryException e) {
+				    //TODO: prévenir l'autre de sa défaite !
+				   sbg.enterState(ViewController.MAINMENUSTATE);
+				}
 				// Si tout c'est bien passé on réinitialise l'état
 				currentState = STATES.PLAY_TURN;
 
 			}
-			main.move(tile, currentSelected, highLight);
-			highLight.clear();
-			currentState = STATES.PLAY_TURN;
-
+			else {
+			    main.move(tile, currentSelected, highLight);
+			    highLight.clear();
+			    currentState = STATES.PLAY_TURN;
+			}
 		}
 	}
 
