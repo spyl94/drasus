@@ -141,6 +141,23 @@ public class MainController {
 
 		return tab;
 	}
+	
+	public void move(Tile tile, Tile currentSelected, Vector<Tile> highLight){
+		for(Tile t : highLight){
+			if (tile == t) {
+				if (isFreeTileset(tile) && tile.isBlocked() == false) {
+
+					getPlayerA()
+							.getUnit(currentSelected.x, currentSelected.y)
+							.setTile(tile);
+				} else {
+					System.out.println("La case n'est pas libre");
+				}
+			} else {
+				System.out.println("C'est trop loin");
+			}
+		}
+	}
 
 	public int distance(Tile tile1, Tile tile2) {
 		int a = tile1.x - tile2.x;
