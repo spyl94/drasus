@@ -22,9 +22,6 @@ public class MainController {
     private Player a;
     private Player b;
 
-    /**
-     * @param args
-     */
     private MainController() {
 	a = new Player();
 	b = new Player();
@@ -153,7 +150,7 @@ public class MainController {
 
     public void move(Tile tile, Tile currentSelected, Vector<Tile> highLight) {
 	Unit u = getUnit(currentSelected);
-	if(!turn.hasMove(u))
+	if(!turn.hasMove(u) && !turn.hasAttack(u))
         	for (Tile t : highLight) {
         	    if (tile == t) {
         		if (isFreeTileset(tile) && tile.isBlocked() == false)
@@ -166,6 +163,10 @@ public class MainController {
         		System.out.println("C'est trop loin");
         	    }
         	}
+	else if (turn.hasAttack(u) && !turn.hasMoveAfterAttack(u))
+	{
+	    //TODO: MaT
+	}
 	else System.out.println("Vous avez déjà déplacé cette unité !");
     }
 
