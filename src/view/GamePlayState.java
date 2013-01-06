@@ -7,9 +7,11 @@ import model.*;
 
 import org.newdawn.slick.GameContainer;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -52,7 +54,9 @@ public class GamePlayState extends BasicGameState {
 	private String[][] taba;
 	private String[][] tabb;
 	private Vector<Tile> highLight = new Vector<Tile>();
-
+	private SpriteSheet ArcherS;
+	private Animation ArcherA;
+	
 	public GamePlayState(int stateID) {
 		this.stateID = stateID;
 		currentState = STATES.START_GAME;
@@ -81,6 +85,8 @@ public class GamePlayState extends BasicGameState {
 		Tank = new Image("res/sprites/Tank.png");
 		Target = new Image("res/sprites/path.png");
 		grassMap = new TiledMap("res/drasus.tmx");
+		ArcherS = new SpriteSheet("res/sprites/ArcherS.png", 32,32);
+		ArcherA = new Animation(ArcherS, 0,0,1,0,false, 500, true);
 
 		/* Init Vector tiles */
 
@@ -97,7 +103,6 @@ public class GamePlayState extends BasicGameState {
 				value = grassMap.getTileProperty(tileID, "field", "default");
 				switch (value) {
 				case "default":
-					System.out.println("création d'un tile");
 					tiles.addElement(new Tile(xAxis, yAxis, block));
 					break;
 				case "grass":
@@ -133,12 +138,12 @@ public class GamePlayState extends BasicGameState {
 				Target.draw(t.x * 32, t.y * 32);
 			}
 		}
-
+		
 		taba = main.aToTab();
 		for (int i = 0; i < taba.length; i++) {
 			switch (taba[i][0]) {
 			case "Archer":
-				Archer.draw(Integer.parseInt(taba[i][1]) * 32,
+				ArcherA.draw(Integer.parseInt(taba[i][1]) * 32,
 						Integer.parseInt(taba[i][2]) * 32);
 				break;
 			case "ArcherMonte":
@@ -242,11 +247,13 @@ public class GamePlayState extends BasicGameState {
 		switch (currentState) {
 		case START_GAME:
 			currentState = STATES.NEW_UNIT;
+			autoGenerateBUnits();
 			break;
 		case NEW_UNIT:
 			newUnit(gc, sbg, delta);
 			break;
 		case START_TURN:
+			initTurn();
 			currentState = STATES.PLAY_TURN;
 		case PLAY_TURN:
 			playTurn(gc, sbg, delta);
@@ -267,6 +274,10 @@ public class GamePlayState extends BasicGameState {
 
 	}
 
+	private void initTurn()
+	{
+		main.initNewTurn();
+	}
 	private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 		Tile tile = getTileClicked(gc);
 		if (tile != null) // si clic
@@ -345,6 +356,14 @@ public class GamePlayState extends BasicGameState {
 			}
 		}
 		return null;
+	}
+	
+	private void autoGenerateBUnits()
+	{
+		main.addUnitToB("Eclaireur", tiles.get(800));
+		main.addUnitToB("Fantassin", tiles.get(801));
+		main.addUnitToB("Tank", tiles.get(802));
+		main.addUnitToB("Archer", tiles.get(803));
 	}
 
 }
