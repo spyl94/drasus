@@ -377,7 +377,7 @@ public class MainController {
     }
 
     public void move(Tile tile, Tile currentSelected, Vector<Tile> highLight) {
-	Unit u = a.getUnit(currentSelected.x, currentSelected.y);
+	Unit u = getUnit(currentSelected);
 	if (!turn.hasMove(u) && !turn.hasAttack(u))
 	    for (Tile t : highLight) {
 		if (tile == t) {
