@@ -21,59 +21,59 @@ import org.newdawn.slick.gui.MouseOverArea;
 
 public class MainMenuState extends BasicGameState {
 
-	private int stateID = -1;
-	Image background = null;
+    private int stateID = -1;
+    Image background = null;
 
-	public MainMenuState(int stateID) {
-		this.stateID = stateID;
-	}
+    public MainMenuState(int stateID) {
+	this.stateID = stateID;
+    }
 
-	@Override
-	public int getID() {
-		return stateID;
-	}
+    @Override
+    public int getID() {
+	return stateID;
+    }
 
-	float startGameScale = 1;
-	float exitScale = 1;
+    float startGameScale = 1;
+    float exitScale = 1;
 
-	@Override
-	public void init(GameContainer gc, StateBasedGame sbg)
-			throws SlickException {
+    @Override
+    public void init(GameContainer gc, StateBasedGame sbg)
+	    throws SlickException {
 
-		background = new Image("res/menu.jpg");
+	background = new Image("res/menu.jpg");
 
-	}
+    }
 
-	@Override
-	public void update(GameContainer gc, StateBasedGame sbg, int delta)
-			throws SlickException {
+    @Override
+    public void update(GameContainer gc, StateBasedGame sbg, int delta)
+	    throws SlickException {
 
-		Input input = gc.getInput();
+	Input input = gc.getInput();
 
-		int mouseX = input.getMouseX();
-		int mouseY = input.getMouseY();
+	int mouseX = input.getMouseX();
+	int mouseY = input.getMouseY();
 
-		boolean insideStartGame = false;
+	boolean insideStartGame = false;
 
-		if ((mouseX >= 0 && mouseX <= background.getWidth())
-				&& (mouseY >= 0 && mouseY <= background.getHeight()))
-			insideStartGame = true;
+	if ((mouseX >= 0 && mouseX <= background.getWidth())
+		&& (mouseY >= 0 && mouseY <= background.getHeight()))
+	    insideStartGame = true;
 
-		/*
-		 * }else if( ( mouseX >= menuX && mouseX <= menuX+
-		 * exitOption.getWidth()) && ( mouseY >= menuY+80 && mouseY <= menuY+80
-		 * + exitOption.getHeight()) ){ insideExit = true; }
-		 */
+	/*
+	 * }else if( ( mouseX >= menuX && mouseX <= menuX+
+	 * exitOption.getWidth()) && ( mouseY >= menuY+80 && mouseY <= menuY+80
+	 * + exitOption.getHeight()) ){ insideExit = true; }
+	 */
 
-		if (insideStartGame)
-			sbg.enterState(ViewController.GAMEPLAYSTATE);
+	if (insideStartGame)
+	    sbg.enterState(ViewController.GAMEPLAYSTATE);
 
-	}
+    }
 
-	@Override
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
-			throws SlickException {
-		background.draw(0, 0);
-	}
+    @Override
+    public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
+	    throws SlickException {
+	background.draw(0, 0);
+    }
 
 }

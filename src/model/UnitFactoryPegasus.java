@@ -6,14 +6,14 @@ package model;
  */
 public class UnitFactoryPegasus extends UnitFactory {
 
-    private String [] names;
-    
+    private String[] names;
+
     public UnitFactoryPegasus() {
-	this.names = new String [] {"Tank", "Fantassin", "Chevalier",
-		    "Berserker", "Bretteur", "Eclaireur", "Lancier", "Archer",
-		    "Rodeur", "ArcherMonte", "Cavalier"};
+	this.names = new String[] { "Tank", "Fantassin", "Chevalier",
+		"Berserker", "Bretteur", "Eclaireur", "Lancier", "Archer",
+		"Rodeur", "ArcherMonte", "Cavalier" };
     }
-    
+
     @Override
     public Unit getUnit(String str) {
 
@@ -42,7 +42,7 @@ public class UnitFactoryPegasus extends UnitFactory {
 
 	return null;
     }
-    
+
     @Override
     public String[] getNamesOfUnits() {
 	return this.names;

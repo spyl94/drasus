@@ -2,27 +2,24 @@ package model;
 
 /**
  * @author Aurel
- *
+ * 
  */
 public class AttackDistance implements IAttack {
 
     private int range;
 
+    public AttackDistance() {
+	range = 0;
+    }
 
-	public AttackDistance() {
-		range = 0;
-	}
-	
-	public AttackDistance(int i) {
-		range = i;
-	}
-	
+    public AttackDistance(int i) {
+	range = i;
+    }
+
     /**
      * @param i
-     *            
+     * 
      */
-
-
 
     @Override
     public String attack(Unit att, Unit def) throws DeadUnitException {
