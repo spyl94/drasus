@@ -1,5 +1,7 @@
 package view;
 
+import com.sun.org.apache.xpath.internal.operations.Equals;
+
 public class Tile {
 
     public enum FIELD {
@@ -36,6 +38,14 @@ public class Tile {
     public Tile(int x, int y, boolean block, FIELD field) {
 	this(x, y, block);
 	this.field = field;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+	 if ( this == o ) return true;
+	 if (!(o instanceof Tile) ) return false;
+	 Tile t = (Tile) o;
+	 return this.x == t.x && this.y == t.y;
     }
 
     public FIELD getField() {
