@@ -9,7 +9,8 @@ TODO LIST:
 -animation et couleur rouge
 -Adapter highlight au mat
 -modifier move
-
+-menu
+-connexion multi users
 -Améliorations et conditions des unités
 -JavaDoc
 -UnitTest
