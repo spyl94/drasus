@@ -4,7 +4,7 @@ package model;
  * @author Aurel
  * 
  */
-public class AttackDistance implements IAttack {
+public class AttackDistance extends Attack {
 
     private int range;
 
@@ -46,16 +46,10 @@ public class AttackDistance implements IAttack {
     public boolean canAttackFromRange(int i) {
 	return i <= range;
     }
-
-    /**
-     * Determine randomly if the unit has touched the target.
-     * 
-     * @param i
-     *            the probability of hit
-     * @return true if the attack succeed or false otherwise
-     */
-    protected boolean canHit(int i) {
-	return (int) (Math.random() * (101)) < i;
+    
+    @Override
+    public int getRange() {
+	return range;
     }
 
 }

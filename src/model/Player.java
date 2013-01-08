@@ -10,9 +10,6 @@ import java.util.Iterator;
 public class Player {
     UnitFactory factory;
     private Hashtable<String, Unit> units;
-    private static String[] nomUnits = { "Tank", "Fantassin", "Chevalier",
-	    "Berserker", "Bretteur", "Eclaireur", "Lancier", "Archer",
-	    "Rodeur", "ArcherMonte", "Cavalier" };
     private boolean isTurn = true;
 
     /**

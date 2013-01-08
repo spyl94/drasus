@@ -4,9 +4,9 @@ package model;
  * @author Aurel
  * 
  */
-public class Berserker extends Unit {
+public class BerserkerPegasus extends Unit {
 
-    public Berserker() {
+    public BerserkerPegasus() {
 	super(new AttackCaCBerserker(), 130, 45, 85, 5, 10, 15, 0, Weapon.AXE,
 		"Berserker");
 

@@ -4,11 +4,11 @@ package model;
  * @author Aurel
  * 
  */
-public class UnitFactoryPegasus extends UnitFactory {
+public class UnitFactoryDragon extends UnitFactory {
 
     private String[] names;
 
-    public UnitFactoryPegasus() {
+    public UnitFactoryDragon() {
 	this.names = new String[] { "Tank", "Fantassin", "Chevalier",
 		"Berserker", "Bretteur", "Eclaireur", "Lancier", "Archer",
 		"Rodeur", "ArcherMonte", "Cavalier" };
@@ -17,30 +17,30 @@ public class UnitFactoryPegasus extends UnitFactory {
     @Override
     public Unit getUnit(String str) {
 
-	if (str == "Pegasus")
-	    return new Pegasus();
+	if (str == "Dragon")
+	    return new Dragon();
 	if (str == "Eclaireur")
-	    return new EclaireurPegasus();
+	    return new EclaireurDragon();
 	if (str == "Berserker")
-	    return new BerserkerPegasus();
+	    return new BerserkerDragon();
 	if (str == "Fantassin")
-	    return new FantassinPegasus();
+	    return new FantassinDragon();
 	if (str == "Archer")
-	    return new ArcherPegasus();
+	    return new ArcherDragon();
 	if (str == "Lancier")
-	    return new LancierPegasus();
+	    return new LancierDragon();
 	if (str == "Rodeur")
-	    return new RodeurPegasus();
+	    return new RodeurDragon();
 	if (str == "Tank")
-	    return new TankPegasus();
+	    return new TankDragon();
 	if (str == "ArcherMonte")
-	    return new ArcherMontePegasus();
+	    return new ArcherMonteDragon();
 	if (str == "Bretteur")
-	    return new BretteurPegasus();
+	    return new BretteurDragon();
 	if (str == "Cavalier")
-	    return new CavalierPegasus();
+	    return new CavalierDragon();
 	if (str == "Chevalier")
-	    return new ChevalierPegasus();
+	    return new ChevalierDragon();
 
 	return null;
     }

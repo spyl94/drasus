@@ -155,6 +155,10 @@ public abstract class Unit {
     public Weapon getWep() {
 	return wep;
     }
+    
+    public int getRange() {
+	return attack.getRange();
+    }
 
     /**
      * Reduce the number of life points.
