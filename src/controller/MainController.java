@@ -5,6 +5,10 @@ import view.*;
 import java.util.Hashtable;
 
 import model.*;
+import model.exception.DeadBossException;
+import model.exception.DeadUnitException;
+import model.exception.VictoryException;
+import model.units.Unit;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;

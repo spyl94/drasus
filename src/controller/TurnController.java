@@ -1,6 +1,7 @@
 package controller;
 
-import model.Unit;
+import model.units.Unit;
+
 import java.util.Hashtable;
 
 public class TurnController {

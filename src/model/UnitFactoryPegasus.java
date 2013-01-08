@@ -1,5 +1,21 @@
 package model;
 
+import model.units.ArcherMontePegasus;
+import model.units.ArcherPegasus;
+import model.units.BerserkerPegasus;
+import model.units.BretteurPegasus;
+import model.units.CavalierPegasus;
+import model.units.ChevalierPegasus;
+import model.units.EclaireurPegasus;
+import model.units.FantassinPegasus;
+import model.units.LancierPegasus;
+import model.units.Pegasus;
+import model.units.RodeurPegasus;
+import model.units.TankPegasus;
+import model.units.Unit;
+
+
+
 /**
  * @author Aurel
  * 

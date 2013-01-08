@@ -1,5 +1,7 @@
 package model;
 
+import model.units.Unit;
+
 /**
  * @author Aurel
  * 

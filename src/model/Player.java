@@ -3,6 +3,10 @@ package model;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+import model.exception.DeadBossException;
+import model.exception.DeadUnitException;
+import model.units.Unit;
+
 /**
  * @author Aurel
  * 

@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import controller.*;
 import model.*;
+import model.exception.VictoryException;
 
 import org.newdawn.slick.GameContainer;
 
