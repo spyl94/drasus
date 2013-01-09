@@ -382,39 +382,6 @@ public class MainController {
 		return true;
 	}
 
-	public boolean isPlayerAUnit(Tile tile) {
-		Hashtable<String, Unit> units = a.getUnits();
-		Iterator<Unit> it = units.values().iterator();
-		Unit temp;
-		while (it.hasNext()) {
-			temp = it.next();
-			if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
-				return true;
-		}
-		return false;
-	}
-
-	public boolean isPlayerBUnit(Tile tile) {
-		Hashtable<String, Unit> units = b.getUnits();
-		Iterator<Unit> it = units.values().iterator();
-		Unit temp;
-		while (it.hasNext()) {
-			temp = it.next();
-			if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
-				return true;
-		}
-		return false;
-	}
-
-	public boolean isTurn() {
-		if (client.getMsg() != null) {
-			boolean temp = client.getMsg().getFirstCo();
-			client.eraseMsg();
-			return temp;
-		} else {
-			return false;
-		}
-	}
 
 	public void move(Tile tile, Tile currentSelected, Vector<Tile> highLight) {
 		Unit u = getUnit(currentSelected);
@@ -442,10 +409,57 @@ public class MainController {
 					System.out.println("C'est trop loin");
 				}
 			}
-		} else {
-			System.out.println("Vous avez déjà déplacé cette unité !");
 		}
 	}
+
+    public boolean isPlayerAUnit(Tile tile) {
+	Hashtable<String, Unit> units = a.getUnits();
+	Iterator<Unit> it = units.values().iterator();
+	Unit temp;
+	while (it.hasNext()) {
+	    temp = it.next();
+	    if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
+		return true;
+	}
+	return false;
+    }
+
+    public boolean isPlayerBUnit(Tile tile) {
+	Hashtable<String, Unit> units = b.getUnits();
+	Iterator<Unit> it = units.values().iterator();
+	Unit temp;
+	while (it.hasNext()) {
+	    temp = it.next();
+	    if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
+		return true;
+	}
+	return false;
+    }
+
+    public boolean isTurn() {
+	if (client.getMsg() != null) {
+	    boolean temp = client.getMsg().getFirstCo();
+	    client.eraseMsg();
+	    return temp;
+	} else {
+	    return false;
+	}
+    }
+    
+    public boolean isTankInRange(Unit u) {
+	int range = 2;
+	if(isPlayerAUnit(u.getTile())) {
+	    Unit tank = a.getUnit("Tank");
+	    if(tank == null) return false;
+	    return distance(tank.getTile(), u.getTile()) <= range ;
+	}
+	else {
+	    Unit tank = b.getUnit("Tank");
+	    if(tank == null) return false;
+	    return distance(tank.getTile(), u.getTile()) <= range ;
+	}
+    }
+
 
 	public void recPlayer() {
 		while (client.getPlayer() == null) {
