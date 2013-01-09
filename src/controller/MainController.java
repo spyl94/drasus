@@ -392,6 +392,20 @@ public class MainController {
 	    return false;
 	}
     }
+    
+    public boolean isTankInRange(Unit u) {
+	int range = 2;
+	if(isPlayerAUnit(u.getTile())) {
+	    Unit tank = a.getUnit("Tank");
+	    if(tank == null) return false;
+	    return distance(tank.getTile(), u.getTile()) <= range ;
+	}
+	else {
+	    Unit tank = b.getUnit("Tank");
+	    if(tank == null) return false;
+	    return distance(tank.getTile(), u.getTile()) <= range ;
+	}
+    }
 
     public void move(Tile tile, Tile currentSelected, Vector<Tile> highLight) {
 	Unit u = getUnit(currentSelected);

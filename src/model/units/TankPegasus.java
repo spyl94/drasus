@@ -2,8 +2,6 @@ package model.units;
 
 import model.attack.AttackCaC;
 
-
-
 /**
  * @author Aurel
  * 
