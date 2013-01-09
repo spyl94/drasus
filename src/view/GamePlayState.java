@@ -378,8 +378,8 @@ public class GamePlayState extends BasicGameState {
 
 	    x = mouseX / grassMap.getTileWidth();
 	    y = mouseY / grassMap.getTileHeight();
-	    System.out.println(mouseX + " x : " + x);
-	    System.out.println(mouseY + " y : " + y);
+	    //System.out.println(mouseX + " x : " + x);
+	    //System.out.println(mouseY + " y : " + y);
 
 	    for (Tile t : tiles) {
 		if (t.x == x && t.y == y)

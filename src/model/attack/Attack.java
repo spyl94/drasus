@@ -12,6 +12,16 @@ public abstract class Attack implements IAttack {
     public abstract String attack(Unit att, Unit deff) throws DeadUnitException;
     public abstract boolean canAttackFromRange(int i);
     
+    @Override
+    public int getRange() {
+	return 0;
+    }
+    
+    protected boolean checkTankInRange(Unit deff)
+    {
+	if(deff.getName() == "Tank") return false;
+	return true;
+    }
     /**
      * Determine randomly if the unit has touched the target.
      * 
@@ -37,8 +47,5 @@ public abstract class Attack implements IAttack {
 		|| (a == Unit.Weapon.LANCE && b == Unit.Weapon.AXE)
 		|| (a == Unit.Weapon.AXE && b == Unit.Weapon.SWORD);
     }
-    
-    public int getRange() {
-	return 0;
-    }
+   
 }

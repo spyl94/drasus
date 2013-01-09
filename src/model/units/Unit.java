@@ -17,6 +17,7 @@ public abstract class Unit {
 
     protected IAttack attack;
     protected int hp;
+    protected int maxHp;
     protected int dmg;
     protected int hit;
     protected int move;
@@ -26,6 +27,7 @@ public abstract class Unit {
     protected Weapon wep;
     protected String name;
     protected Tile tile;
+    protected boolean pow;
 
     /**
      * @param attack
@@ -53,6 +55,7 @@ public abstract class Unit {
 	    int crit, int mat, Weapon wep, String name) {
 	this.attack = attack;
 	this.hp = hp;
+	this.maxHp = hp;
 	this.dmg = dmg;
 	this.hit = hit;
 	this.move = move;
@@ -185,7 +188,12 @@ public abstract class Unit {
 		throw new DeadBossException(this.name, dmg);
 	    throw new DeadUnitException(this.name, dmg);
 	}
-
+    }
+    
+    public void addRegenerationFort() {
+	this.hp += 5;
+	if (this.hp > this.maxHp)
+	    this.hp = this.maxHp;
     }
 
     /**

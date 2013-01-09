@@ -16,12 +16,21 @@ public class Player {
     private Hashtable<String, Unit> units;
     private boolean isTurn = true;
 
-    /**
-	 * 
-	 */
     public Player() {
 	units = new Hashtable<String, Unit>();
 	factory = new UnitFactoryPegasus();
+    }
+    
+    public Player(String boss) {
+	units = new Hashtable<String, Unit>();
+	
+	if (boss == "Dragon") {
+	    factory = new UnitFactoryDragon();
+	}
+	else {
+	    factory = new UnitFactoryPegasus();
+	}
+	
     }
 
     public void addUnit(String name) {

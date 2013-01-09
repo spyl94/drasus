@@ -22,10 +22,12 @@ import org.newdawn.slick.gui.MouseOverArea;
 public class MainMenuState extends BasicGameState {
 
     private int stateID = -1;
+    private MainController main;
     Image background = null;
 
     public MainMenuState(int stateID) {
 	this.stateID = stateID;
+	main = MainController.getInstance();
     }
 
     @Override
@@ -57,7 +59,11 @@ public class MainMenuState extends BasicGameState {
 
 	if ((mouseX >= 0 && mouseX <= background.getWidth())
 		&& (mouseY >= 0 && mouseY <= background.getHeight()))
+	{
 	    insideStartGame = true;
+	    main.setPlayerA("Pegasus");
+	}
+	    
 
 	/*
 	 * }else if( ( mouseX >= menuX && mouseX <= menuX+

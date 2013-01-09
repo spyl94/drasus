@@ -1,6 +1,7 @@
 package controller;
 
 import view.*;
+import view.Tile.FIELD;
 
 import java.util.Hashtable;
 
@@ -41,8 +42,15 @@ public class MainController {
     private boolean auto;
 
     private MainController() {
-	a = new Player();
+	a = null;
 	b = new Player();
+    }
+    
+    public void setPlayerA(String boss) {
+	if (a == null )
+	    a = new Player(boss);
+	else
+	    System.out.println("A existe déjà ! ");
     }
 
     public void addUnit(String name, Tile tile) {
@@ -317,6 +325,11 @@ public class MainController {
 
     public void initNewTurn() {
 	turn = new TurnController(a.getUnits());
+	for (Unit u : a.getUnits().values())
+	{
+	    if(u.getTile().getField() == FIELD.FORT)
+		u.addRegenerationFort();
+	}
 	// TODO Ajout des pv aux unités sur les forts
     }
 
