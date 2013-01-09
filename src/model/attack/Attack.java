@@ -14,7 +14,7 @@ public abstract class Attack implements IAttack {
     
     @Override
     public int getRange() {
-	return 0;
+	return 1;
     }
     
     protected boolean checkTankInRange(Unit deff)

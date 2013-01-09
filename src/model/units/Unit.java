@@ -134,6 +134,15 @@ public abstract class Unit {
     public int getHp() {
 	return hp;
     }
+    
+    /**
+     * Returns the number of movements after attack.
+     * 
+     * @return the number of movements after attack
+     */
+    public int getMat(){
+    	return mat;
+    }
 
     /**
      * Returns the number of movements.
