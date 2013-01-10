@@ -379,6 +379,7 @@ public class GamePlayState extends BasicGameState {
     private void startGame() {
 	if(main.playLeft())
 	    main.addUnit(main.getPlayerA().getBoss(), getTile(4, 3));
+	else main.addUnit(main.getPlayerA().getBoss(), getTile(25, 25));
     }
 
     private void initTurn() {

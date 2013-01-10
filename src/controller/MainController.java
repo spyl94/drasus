@@ -446,7 +446,6 @@ public class MainController {
 
     public Vector<Tile> isCrippled (Vector<Tile> tiles){
 	Vector<Tile> result = new Vector<Tile>();
-	//TODO
 	for(Tile t : tiles){
 	    if(getUnit(t) != null && getUnit(t).getTurnsCripple() > 0)
 		if(turn.isCrippled(getUnit(t)))
@@ -458,7 +457,6 @@ public class MainController {
     
     public Vector<Tile> isPoisoned (Vector<Tile> tiles){
 	Vector<Tile> result = new Vector<Tile>();
-	//TODO
 	for(Tile t : tiles){
 	    if(getUnit(t) != null)
 		if(turn.isPoisoned(getUnit(t)))
