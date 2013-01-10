@@ -423,19 +423,27 @@ public class MainController {
 
     public Vector<Tile> isCrippled (Vector<Tile> tiles){
 	Vector<Tile> result = new Vector<Tile>();
+	//TODO
+	//Probleme avec getUnit
+	/*
 	for(Tile t : tiles){
-	    if(getTurn().isCrippled(getUnit(t)))
+	    if(turn.isCrippled(getUnit(t)))
 		result.add(t);
 	}
+	*/
 	return result;
     }
     
     public Vector<Tile> isPoisoned (Vector<Tile> tiles){
 	Vector<Tile> result = new Vector<Tile>();
+	//TODO
+	//Probleme avec getUnit
+	/*
 	for(Tile t : tiles){
-	    if(getTurn().isPoisoned(getUnit(t)))
+	    if(turn.isPoisoned(getUnit(t)))
 		result.add(t);
 	}
+	*/
 	return result;
     }
     

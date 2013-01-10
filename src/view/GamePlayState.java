@@ -50,50 +50,50 @@ public class GamePlayState extends BasicGameState {
     private Vector<Tile> atkHighLight = new Vector<Tile>();
     private Vector<Tile> poisoned = new Vector<Tile>();
     private Vector<Tile> crippled = new Vector<Tile>();
-    private SpriteSheet ArcherS;
-    private Animation ArcherA;
-    private SpriteSheet ArcherR;
-    private Animation ArcherAR;
-    private SpriteSheet ArcherMonteS;
-    private Animation ArcherMonteA;
-    private SpriteSheet ArcherMonteR;
-    private Animation ArcherMonteAR;
-    private SpriteSheet BerserkerS;
-    private Animation BerserkerA;
-    private SpriteSheet BerserkerR;
-    private Animation BerserkerAR;
-    private SpriteSheet BretteurS;
-    private Animation BretteurA;
-    private SpriteSheet BretteurR;
-    private Animation BretteurAR;
-    private SpriteSheet CavalierS;
-    private Animation CavalierA;
-    private SpriteSheet CavalierR;
-    private Animation CavalierAR;
-    private SpriteSheet ChevalierS;
-    private Animation ChevalierA;
-    private SpriteSheet ChevalierR;
-    private Animation ChevalierAR;
-    private SpriteSheet EclaireurS;
-    private Animation EclaireurA;
-    private SpriteSheet EclaireurR;
-    private Animation EclaireurAR;
-    private SpriteSheet FantassinS;
-    private Animation FantassinA;
-    private SpriteSheet FantassinR;
-    private Animation FantassinAR;
-    private SpriteSheet LancierS;
-    private Animation LancierA;
-    private SpriteSheet LancierR;
-    private Animation LancierAR;
-    private SpriteSheet RodeurS;
-    private Animation RodeurA;
-    private SpriteSheet RodeurR;
-    private Animation RodeurAR;
-    private SpriteSheet TankS;
-    private Animation TankA;
-    private SpriteSheet TankR;
-    private Animation TankAR;
+    private SpriteSheet archerS;
+    private Animation archerA;
+    private SpriteSheet archerR;
+    private Animation archerAR;
+    private SpriteSheet archerMonteS;
+    private Animation archerMonteA;
+    private SpriteSheet archerMonteR;
+    private Animation archerMonteAR;
+    private SpriteSheet berserkerS;
+    private Animation berserkerA;
+    private SpriteSheet berserkerR;
+    private Animation berserkerAR;
+    private SpriteSheet bretteurS;
+    private Animation bretteurA;
+    private SpriteSheet bretteurR;
+    private Animation bretteurAR;
+    private SpriteSheet cavalierS;
+    private Animation cavalierA;
+    private SpriteSheet cavalierR;
+    private Animation cavalierAR;
+    private SpriteSheet chevalierS;
+    private Animation chevalierA;
+    private SpriteSheet chevalierR;
+    private Animation chevalierAR;
+    private SpriteSheet eclaireurS;
+    private Animation eclaireurA;
+    private SpriteSheet eclaireurR;
+    private Animation eclaireurAR;
+    private SpriteSheet fantassinS;
+    private Animation fantassinA;
+    private SpriteSheet fantassinR;
+    private Animation fantassinAR;
+    private SpriteSheet lancierS;
+    private Animation lancierA;
+    private SpriteSheet lancierR;
+    private Animation lancierAR;
+    private SpriteSheet rodeurS;
+    private Animation rodeurA;
+    private SpriteSheet rodeurR;
+    private Animation rodeurAR;
+    private SpriteSheet tankS;
+    private Animation tankA;
+    private SpriteSheet tankR;
+    private Animation tankAR;
 
     public GamePlayState(int stateID) {
 	this.stateID = stateID;
@@ -115,51 +115,51 @@ public class GamePlayState extends BasicGameState {
 	AtkTarget = new Image("res/sprites/atk.png");
 	poison = new Image("res/sprites/poison.png");
 	cripple = new Image("res/sprites/cripple.png");
-	ArcherS = new SpriteSheet("res/sprites/ArcherS.png", 32, 32);
-	ArcherA = new Animation(ArcherS, 0, 0, 1, 0, false, 500, true);
-	ArcherR = new SpriteSheet("res/sprites/ArcherR.png", 32, 32);
-	ArcherAR = new Animation(ArcherR, 0, 0, 1, 0, false, 500, true);
-	ArcherMonteS = new SpriteSheet("res/sprites/ArchermonteS.png", 32, 32);
-	ArcherMonteA = new Animation(ArcherMonteS, 0, 0, 1, 0, false, 500, true);
-	ArcherMonteR = new SpriteSheet("res/sprites/ArchermonteR.png", 32, 32);
-	ArcherMonteAR = new Animation(ArcherMonteR, 0, 0, 1, 0, false, 500,
+	archerS = new SpriteSheet("res/sprites/ArcherS.png", 32, 32);
+	archerA = new Animation(archerS, 0, 0, 1, 0, false, 500, true);
+	archerR = new SpriteSheet("res/sprites/ArcherR.png", 32, 32);
+	archerAR = new Animation(archerR, 0, 0, 1, 0, false, 500, true);
+	archerMonteS = new SpriteSheet("res/sprites/ArchermonteS.png", 32, 32);
+	archerMonteA = new Animation(archerMonteS, 0, 0, 1, 0, false, 500, true);
+	archerMonteR = new SpriteSheet("res/sprites/ArchermonteR.png", 32, 32);
+	archerMonteAR = new Animation(archerMonteR, 0, 0, 1, 0, false, 500,
 		true);
-	BerserkerS = new SpriteSheet("res/sprites/BerserkS.png", 32, 32);
-	BerserkerA = new Animation(BerserkerS, 0, 0, 1, 0, false, 500, true);
-	BerserkerR = new SpriteSheet("res/sprites/BerserkR.png", 32, 32);
-	BerserkerAR = new Animation(BerserkerR, 0, 0, 1, 0, false, 500, true);
-	BretteurS = new SpriteSheet("res/sprites/BretteurS.png", 32, 32);
-	BretteurA = new Animation(BretteurS, 0, 0, 1, 0, false, 500, true);
-	BretteurR = new SpriteSheet("res/sprites/BretteurR.png", 32, 32);
-	BretteurAR = new Animation(BretteurR, 0, 0, 1, 0, false, 500, true);
-	CavalierS = new SpriteSheet("res/sprites/CavalierS.png", 32, 32);
-	CavalierA = new Animation(CavalierS, 0, 0, 1, 0, false, 500, true);
-	CavalierR = new SpriteSheet("res/sprites/CavalierR.png", 32, 32);
-	CavalierAR = new Animation(CavalierR, 0, 0, 1, 0, false, 500, true);
-	ChevalierS = new SpriteSheet("res/sprites/ChevalierS.png", 32, 32);
-	ChevalierA = new Animation(ChevalierS, 0, 0, 1, 0, false, 500, true);
-	ChevalierR = new SpriteSheet("res/sprites/ChevalierR.png", 32, 32);
-	ChevalierAR = new Animation(ChevalierR, 0, 0, 1, 0, false, 500, true);
-	EclaireurS = new SpriteSheet("res/sprites/EclaireurS.png", 32, 32);
-	EclaireurA = new Animation(EclaireurS, 0, 0, 1, 0, false, 500, true);
-	EclaireurR = new SpriteSheet("res/sprites/EclaireurR.png", 32, 32);
-	EclaireurAR = new Animation(EclaireurR, 0, 0, 1, 0, false, 500, true);
-	FantassinS = new SpriteSheet("res/sprites/FantassinS.png", 32, 32);
-	FantassinA = new Animation(FantassinS, 0, 0, 1, 0, false, 500, true);
-	FantassinR = new SpriteSheet("res/sprites/FantassinR.png", 32, 32);
-	FantassinAR = new Animation(FantassinR, 0, 0, 1, 0, false, 500, true);
-	LancierS = new SpriteSheet("res/sprites/LancierS.png", 32, 32);
-	LancierA = new Animation(LancierS, 0, 0, 1, 0, false, 500, true);
-	LancierR = new SpriteSheet("res/sprites/LancierR.png", 32, 32);
-	LancierAR = new Animation(LancierR, 0, 0, 1, 0, false, 500, true);
-	RodeurS = new SpriteSheet("res/sprites/RodeurS.png", 32, 32);
-	RodeurA = new Animation(RodeurS, 0, 0, 1, 0, false, 500, true);
-	RodeurR = new SpriteSheet("res/sprites/RodeurR.png", 32, 32);
-	RodeurAR = new Animation(RodeurR, 0, 0, 1, 0, false, 500, true);
-	TankS = new SpriteSheet("res/sprites/TankS.png", 32, 32);
-	TankA = new Animation(TankS, 0, 0, 1, 0, false, 500, true);
-	TankR = new SpriteSheet("res/sprites/TankR.png", 32, 32);
-	TankAR = new Animation(TankR, 0, 0, 1, 0, false, 500, true);
+	berserkerS = new SpriteSheet("res/sprites/BerserkS.png", 32, 32);
+	berserkerA = new Animation(berserkerS, 0, 0, 1, 0, false, 500, true);
+	berserkerR = new SpriteSheet("res/sprites/BerserkR.png", 32, 32);
+	berserkerAR = new Animation(berserkerR, 0, 0, 1, 0, false, 500, true);
+	bretteurS = new SpriteSheet("res/sprites/BretteurS.png", 32, 32);
+	bretteurA = new Animation(bretteurS, 0, 0, 1, 0, false, 500, true);
+	bretteurR = new SpriteSheet("res/sprites/BretteurR.png", 32, 32);
+	bretteurAR = new Animation(bretteurR, 0, 0, 1, 0, false, 500, true);
+	cavalierS = new SpriteSheet("res/sprites/CavalierS.png", 32, 32);
+	cavalierA = new Animation(cavalierS, 0, 0, 1, 0, false, 500, true);
+	cavalierR = new SpriteSheet("res/sprites/CavalierR.png", 32, 32);
+	cavalierAR = new Animation(cavalierR, 0, 0, 1, 0, false, 500, true);
+	chevalierS = new SpriteSheet("res/sprites/ChevalierS.png", 32, 32);
+	chevalierA = new Animation(chevalierS, 0, 0, 1, 0, false, 500, true);
+	chevalierR = new SpriteSheet("res/sprites/ChevalierR.png", 32, 32);
+	chevalierAR = new Animation(chevalierR, 0, 0, 1, 0, false, 500, true);
+	eclaireurS = new SpriteSheet("res/sprites/EclaireurS.png", 32, 32);
+	eclaireurA = new Animation(eclaireurS, 0, 0, 1, 0, false, 500, true);
+	eclaireurR = new SpriteSheet("res/sprites/EclaireurR.png", 32, 32);
+	eclaireurAR = new Animation(eclaireurR, 0, 0, 1, 0, false, 500, true);
+	fantassinS = new SpriteSheet("res/sprites/FantassinS.png", 32, 32);
+	fantassinA = new Animation(fantassinS, 0, 0, 1, 0, false, 500, true);
+	fantassinR = new SpriteSheet("res/sprites/FantassinR.png", 32, 32);
+	fantassinAR = new Animation(fantassinR, 0, 0, 1, 0, false, 500, true);
+	lancierS = new SpriteSheet("res/sprites/LancierS.png", 32, 32);
+	lancierA = new Animation(lancierS, 0, 0, 1, 0, false, 500, true);
+	lancierR = new SpriteSheet("res/sprites/LancierR.png", 32, 32);
+	lancierAR = new Animation(lancierR, 0, 0, 1, 0, false, 500, true);
+	rodeurS = new SpriteSheet("res/sprites/RodeurS.png", 32, 32);
+	rodeurA = new Animation(rodeurS, 0, 0, 1, 0, false, 500, true);
+	rodeurR = new SpriteSheet("res/sprites/RodeurR.png", 32, 32);
+	rodeurAR = new Animation(rodeurR, 0, 0, 1, 0, false, 500, true);
+	tankS = new SpriteSheet("res/sprites/TankS.png", 32, 32);
+	tankA = new Animation(tankS, 0, 0, 1, 0, false, 500, true);
+	tankR = new SpriteSheet("res/sprites/TankR.png", 32, 32);
+	tankAR = new Animation(tankR, 0, 0, 1, 0, false, 500, true);
 
 	/* Init Vector tiles */
 
@@ -222,47 +222,47 @@ public class GamePlayState extends BasicGameState {
 	for (int i = 0; i < taba.length; i++) {
 	    switch (taba[i][0]) {
 	    case "Archer":
-		ArcherA.draw(Integer.parseInt(taba[i][1]) * 32,
+		archerA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    case "ArcherMonte":
-		ArcherMonteA.draw(Integer.parseInt(taba[i][1]) * 32,
+		archerMonteA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    case "Berserker":
-		BerserkerA.draw(Integer.parseInt(taba[i][1]) * 32,
+		berserkerA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    case "Bretteur":
-		BretteurA.draw(Integer.parseInt(taba[i][1]) * 32,
+		bretteurA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    case "Cavalier":
-		CavalierA.draw(Integer.parseInt(taba[i][1]) * 32,
+		cavalierA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    case "Chevalier":
-		ChevalierA.draw(Integer.parseInt(taba[i][1]) * 32,
+		chevalierA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    case "Eclaireur":
-		EclaireurA.draw(Integer.parseInt(taba[i][1]) * 32,
+		eclaireurA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    case "Fantassin":
-		FantassinA.draw(Integer.parseInt(taba[i][1]) * 32,
+		fantassinA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    case "Lancier":
-		LancierA.draw(Integer.parseInt(taba[i][1]) * 32,
+		lancierA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    case "Rodeur":
-		RodeurA.draw(Integer.parseInt(taba[i][1]) * 32,
+		rodeurA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    case "Tank":
-		TankA.draw(Integer.parseInt(taba[i][1]) * 32,
+		tankA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    }
@@ -273,47 +273,47 @@ public class GamePlayState extends BasicGameState {
 	for (int i = 0; i < tabb.length; i++) {
 	    switch (tabb[i][0]) {
 	    case "Archer":
-		ArcherAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+		archerAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "ArcherMonte":
-		ArcherMonteAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+		archerMonteAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Berserker":
-		BerserkerAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+		berserkerAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Bretteur":
-		BretteurAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+		bretteurAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Cavalier":
-		CavalierAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+		cavalierAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Chevalier":
-		ChevalierAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+		chevalierAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Eclaireur":
-		EclaireurAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+		eclaireurAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Fantassin":
-		FantassinAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+		fantassinAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Lancier":
-		LancierAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+		lancierAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Rodeur":
-		RodeurAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+		rodeurAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Tank":
-		TankAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+		tankAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    }
