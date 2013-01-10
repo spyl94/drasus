@@ -1,6 +1,5 @@
 package model.units;
 
-import model.attack.AttackCaCIgnoreArmor;
 import model.attack.AttackDistance;
 import model.attack.AttackDistanceDoubledInForest;
 

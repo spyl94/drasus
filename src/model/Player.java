@@ -35,30 +35,68 @@ public class Player {
 	
     }
     
+    /**
+     * Returns the name of the boss.
+     * 
+     * @return the boss
+     */
     public String getBoss() {
 	return boss;
     }
 
+    /**
+     * Create a new unit.
+     * 
+     * @param name the name of the new unit
+     */
     public void addUnit(String name) {
 	units.put(name, factory.getUnit(name));
     }
-
+    
+    /**
+     * Set the turn of the player.
+     * 
+     * @param b the turn
+     */
     public void setTurn(boolean b) {
 	isTurn = b;
     }
 
+    /**
+     * Returns if it is the turn of the player to play.
+     * 
+     * @return true if the turn of player false otherwise
+     */
     public boolean getTurn() {
 	return isTurn;
     }
 
+    /**
+     * Deletes a unit according to the name.
+     * 
+     * @param name
+     */
     public void delUnit(String name) {
 	units.remove(name);
     }
 
+    /**
+     *  Returns a unit according to the name.
+     * 
+     * @param name
+     * @return the unit
+     */
     public Unit getUnit(String name) {
 	return units.get(name);
     }
 
+    /**
+     * Returns a unit according x and y axis.
+     * 
+     * @param x the x axis
+     * @param y the y axis
+     * @return the unit
+     */
     public Unit getUnit(int x, int y) {
 	Iterator<Unit> it = units.values().iterator();
 	Unit temp;
@@ -70,14 +108,33 @@ public class Player {
 	return null;
     }
 
+    /**
+     * Return the names of units that can be created.
+     * 
+     * @return the names
+     */
     public String[] getNamesOfUnits() {
 	return factory.getNamesOfUnits();
     }
 
+    /**
+     * Returns the units of a player.
+     * 
+     * @return the units
+     */
     public Hashtable<String, Unit> getUnits() {
 	return units;
     }
 
+    /**
+     * Attack between two units.
+     * 
+     * @param att the attacking unit
+     * @param def the defending unit
+     * @return the result of the fight
+     * @throws DeadUnitException if a unit is dead
+     * @throws DeadBossException if a boss is dead
+     */
     public String attackWith(Unit att, Unit def) throws DeadUnitException,
 	    DeadBossException {
 	return att.attack(def);

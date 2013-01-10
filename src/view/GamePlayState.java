@@ -390,9 +390,11 @@ public class GamePlayState extends BasicGameState {
 	    endTurn();
 	    break;
 	case PAUSE_GAME:
+	    if (!main.isAuto()){
 	    main.recPlayers();
 	    if (main.isTurn())
 		currentState = STATES.START_TURN;
+	    }
 	    break;
 	case GAME_OVER:
 	    sbg.enterState(ViewController.MAINMENUSTATE);
@@ -424,75 +426,134 @@ public class GamePlayState extends BasicGameState {
     }
 
     private void endTurn() {
-	 currentSelected = null;
-	    System.out.println("fin du tour");
-	    currentState = STATES.PAUSE_GAME;
+	currentSelected = null;
+	System.out.println("fin du tour");
+	currentState = STATES.PAUSE_GAME;
 	main.endNewTurn();
-	main.sendEnd();
-	main.endTurn();
-	    if(main.getPlayerA().getTurn()){
+
+	if(main.isAuto()) {
+	   sleep();
 	    currentState = STATES.START_TURN;
-	    }
+	} else {
+
+		main.sendEnd();
+		main.endTurn();
+		    if(main.getPlayerA().getTurn()){
+			    currentState = STATES.START_TURN;
+			    }
+		    }
     }
 
     private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
-	Tile tile = getTileClicked(gc);
-	if (tile != null) // si clic
-	    if (tile.isBlocked() == false
-		    && main.isFreeTileset(tile)
-		    && ((main.playLeft() && tile.x < grassMap.getWidth() / 2) || (main
-			    .playRight() && tile.x >= grassMap.getWidth() / 2))) {
-		main.addUnit(main.getPlayerAUnitsNames()[unitNb], tile);
-		System.out.print("Ajout :");
-		System.out.println(main.getPlayerAUnitsNames()[unitNb]);
-		unitNb++;
-	    } else
-		System.out.println("Impossible de placer une unité ici");
-
-	// si il reste des unités à placer
-	currentState = STATES.NEW_UNIT;
-	// sinon
-
-	if (unitNb == main.getPlayerAUnitsNames().length) {
+	if (main.isAuto()) {
+	    main.addUnit("Eclaireur", getTile(18, 3));
+	    main.addUnit("Fantassin", getTile(18, 15));
+	    main.addUnit("Chevalier", getTile(17, 15));
+	    main.addUnit("Archer", getTile(18, 7));
+	    main.addUnit("ArcherMonte", getTile(18, 17));
 	    currentState = STATES.START_TURN;
-	    main.sendPlayer();
-	    main.recPlayer();
-	    if (main.getPlayerA().getTurn() == false) {
-		currentState = STATES.PAUSE_GAME;
+
+	} else {
+	    Tile tile = getTileClicked(gc);
+	    if (tile != null) // si clic
+		if (tile.isBlocked() == false
+			&& main.isFreeTileset(tile)
+			&& ((main.playLeft() && tile.x < grassMap.getWidth() / 2) || (main
+				.playRight() && tile.x >= grassMap.getWidth() / 2))) {
+		    main.addUnit(main.getPlayerAUnitsNames()[unitNb], tile);
+		    System.out.print("Ajout :");
+		    System.out.println(main.getPlayerAUnitsNames()[unitNb]);
+		    unitNb++;
+		} else
+		    System.out.println("Impossible de placer une unité ici");
+
+	    // si il reste des unités à placer
+	    currentState = STATES.NEW_UNIT;
+
+	    // sinon
+	    if (unitNb == main.getPlayerAUnitsNames().length) {
+		currentState = STATES.START_TURN;
+		main.sendPlayer();
+		main.recPlayer();
+		if (main.getPlayerA().getTurn() == false) {
+		    currentState = STATES.PAUSE_GAME;
+		}
 	    }
 	}
-
     }
-
+    private void sleep() {
+	try {
+	    Thread.sleep(2000L);
+	} catch (InterruptedException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+    }
     private void playTurn(GameContainer gc, StateBasedGame sbg, int delta) {
-	Tile tile = getTileClicked(gc);
-	if (tile != null) {
-	    if (main.isPlayerAUnit(tile)) {
-		currentState = STATES.SELECTING_UNIT;
-		currentSelected = tile;
-		if ((!main.getTurn().hasMove(main.getUnit(tile)) && !main
-			.getTurn().hasAttack(main.getUnit(tile)))) {
-		    highLight = main.canMove(tiles, currentSelected);
+	if (main.isAuto()) {
+	    switch(TurnController.numberTurn) {
+	    case 1:
+		highLight = main.canMove(tiles, getTile(18, 17));
+		break;
+	    case 2:
+		main.move(getTile(21, 17), getTile(18, 17), highLight);
+		break;
+	    case 3:
+		highLight = main.canMove(tiles, getTile(18, 3));
+		break;
+	    case 4:
+		main.move(getTile(21, 3), getTile(18, 3), highLight);
+		break;
+	    case 5:
+		 try {
+		    main.attack(getTile(21, 17), getTile(24, 17));
+		} catch (VictoryException e) {
+		    e.printStackTrace();
 		}
-
-		else if ((main.getUnit(tile).hasMat()
-			&& main.getTurn().hasAttack(main.getUnit(tile)) && !main
-			.getTurn().hasMoveAfterAttack(main.getUnit(tile)))) {
-		    highLight = main.canMove(tiles, currentSelected);
+		break;
+	    case 6:
+		 try {
+		    main.attack(getTile(21, 17), getTile(24, 17));
+		} catch (VictoryException e) {
+		    e.printStackTrace();
 		}
-
-		else if (main.getTurn().hasMove(main.getUnit(tile))
-			&& !main.getTurn().hasAttack(main.getUnit(tile))) {
-		    atkHighLight = main.atkHighLight(tiles, currentSelected);
-		}
-		// setHighLight(main.canCross(tiles, currentSelected, 6));
+		break;
+	    default:
+		sleep();
+		sbg.enterState(ViewController.MAINMENUSTATE);
+		break;
 	    }
-	} else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
 	    currentState = STATES.END_TURN;
-	}
+	} else {
+	    Tile tile = getTileClicked(gc);
+	    if (tile != null) {
+		if (main.isPlayerAUnit(tile)) {
+		    currentState = STATES.SELECTING_UNIT;
+		    currentSelected = tile;
+		    if ((!main.getTurn().hasMove(main.getUnit(tile)) && !main
+			    .getTurn().hasAttack(main.getUnit(tile)))) {
+			highLight = main.canMove(tiles, currentSelected);
+		    }
 
-	// autres...
+		    else if ((main.getUnit(tile).hasMat()
+			    && main.getTurn().hasAttack(main.getUnit(tile)) && !main
+			    .getTurn().hasMoveAfterAttack(main.getUnit(tile)))) {
+			highLight = main.canMove(tiles, currentSelected);
+		    }
+
+		    else if (main.getTurn().hasMove(main.getUnit(tile))
+			    && !main.getTurn().hasAttack(main.getUnit(tile))) {
+			atkHighLight = main
+				.atkHighLight(tiles, currentSelected);
+		    }
+		    // setHighLight(main.canCross(tiles, currentSelected, 6));
+		}
+	    } else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
+		currentState = STATES.END_TURN;
+	    }
+	}
     }
+
 
     private void selectingUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 	Tile tile = getTileClicked(gc);
@@ -508,7 +569,6 @@ public class GamePlayState extends BasicGameState {
 		main.sendBoth();
 		// Si tout c'est bien passé on réinitialise l'état
 		currentState = STATES.PLAY_TURN;
-
 	    }
 
 	    else {
@@ -533,8 +593,6 @@ public class GamePlayState extends BasicGameState {
 
 	    x = mouseX / grassMap.getTileWidth();
 	    y = mouseY / grassMap.getTileHeight();
-	    // System.out.println(mouseX + " x : " + x);
-	    // System.out.println(mouseY + " y : " + y);
 
 	    for (Tile t : tiles) {
 		if (t.x == x && t.y == y)

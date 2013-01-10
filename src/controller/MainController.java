@@ -364,8 +364,11 @@ public class MainController {
 
 	for (String s : args) {
 	    System.out.println(s);
-	    if (s == "-auto")
+	    if (s.equals("-auto")) {
+		System.out.println("mode auto");
 		this.auto = true;
+	    }
+		
 	}
 
 	try {
