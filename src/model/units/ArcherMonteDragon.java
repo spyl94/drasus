@@ -11,7 +11,7 @@ public class ArcherMonteDragon extends Unit {
 
     public ArcherMonteDragon() {
 	super(new AttackDistancePoisoned(3), 70, 25, 75, 8, 10, 25, 2, Weapon.BOW,
-		"Archer");
+		"ArcherMonte");
 
     }
     

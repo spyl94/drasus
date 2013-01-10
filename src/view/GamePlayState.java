@@ -320,7 +320,7 @@ public class GamePlayState extends BasicGameState {
 	}
 
 	if (currentState != STATES.START_GAME
-		&& currentState != STATES.NEW_UNIT ) {
+		&& currentState != STATES.NEW_UNIT && currentState != STATES.START_TURN ) {
 	    poisoned = main.isPoisoned(tiles);
 		for (Tile t : poisoned) {
 		    poison.draw(t.x * 32, t.y * 32);
