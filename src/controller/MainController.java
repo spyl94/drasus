@@ -43,8 +43,8 @@ public class MainController {
     private boolean left;
 
     private MainController() {
-	this.auto = true;
-	this.left = true;
+	this.auto = false;
+	//this.left = true;
 	a = null;
 	b = new Player("Dragon");
     }
@@ -304,6 +304,7 @@ public class MainController {
 		e.printStackTrace();
 	    }
 	}
+	left = client.getMsg().getFirstCo();
 	a.setTurn(client.getMsg().getFirstCo());
 	client.eraseMsg();
 
@@ -463,9 +464,12 @@ public class MainController {
     public Vector<Tile> isPoisoned (Vector<Tile> tiles){
 	Vector<Tile> result = new Vector<Tile>();
 	for(Tile t : tiles){
-	    if(getUnit(t) != null)
+	    if(getUnit(t) != null && getUnit(t).getTurnsCripple() > 0){
+		System.out.println("before");
 		if(turn.isPoisoned(getUnit(t)))
 		    result.add(t);
+		System.out.println("after");
+	    }
 	}
 	return result;
     }

@@ -402,16 +402,18 @@ public class GamePlayState extends BasicGameState {
     }
 
     private void startGame() {
-	if (main.playLeft())
-	    main.addUnit(main.getPlayerA().getBoss(), getTile(3, 2));
-	else
-	    main.addUnit(main.getPlayerA().getBoss(), getTile(36, 18));
-
 	if (main.isAuto())
-	    autoGenerateBUnits();
-	// else
-	// main.connexion("88.180.34.112");
-    }
+	autoGenerateBUnits();
+	else
+	main.connexion("88.180.34.112");
+	
+	if (main.playLeft())
+	main.addUnit(main.getPlayerA().getBoss(), getTile(3, 2));
+	else
+	main.addUnit(main.getPlayerA().getBoss(), getTile(36, 18));
+
+	}
+
 
     private void initTurn() {
 	try {

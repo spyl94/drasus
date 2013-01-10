@@ -45,10 +45,38 @@ public class ConnexionController {
 	kryo.register(model.attack.AttackDistanceArcher.class);
 	kryo.register(model.attack.AttackDistanceDoubledAgainstCavalry.class);
 	kryo.register(model.attack.AttackDistanceDoubledInForest.class);
+	kryo.register(model.attack.AttackDistancePoisoned.class);
 	kryo.register(model.attack.AttackDistancePoisonedLonger.class);
 	kryo.register(model.exception.DeadBossException.class);
 	kryo.register(model.exception.DeadUnitException.class);
 	kryo.register(model.exception.VictoryException.class);
+	kryo.register(model.units.ArcherDragon.class);
+	kryo.register(model.units.ArcherMonteDragon.class);
+	kryo.register(model.units.ArcherMontePegasus.class);
+	kryo.register(model.units.ArcherPegasus.class);
+	kryo.register(model.units.BerserkerDragon.class);
+	kryo.register(model.units.BerserkerPegasus.class);
+	kryo.register(model.units.BretteurDragon.class);
+	kryo.register(model.units.BretteurPegasus.class);
+	kryo.register(model.units.CavalierDragon.class);
+	kryo.register(model.units.CavalierPegasus.class);
+	kryo.register(model.units.ChevalierDragon.class);
+	kryo.register(model.units.ChevalierPegasus.class);
+	kryo.register(model.units.Dragon.class);
+	kryo.register(model.units.EclaireurDragon.class);
+	kryo.register(model.units.EclaireurPegasus.class);
+	kryo.register(model.units.FantassinDragon.class);
+	kryo.register(model.units.FantassinPegasus.class);
+	kryo.register(model.units.LancierDragon.class);
+	kryo.register(model.units.LancierPegasus.class);
+	kryo.register(model.units.Pegasus.class);
+	kryo.register(model.units.RodeurDragon.class);
+	kryo.register(model.units.RodeurPegasus.class);
+	kryo.register(model.units.TankDragon.class);
+	kryo.register(model.units.TankPegasus.class);
+	kryo.register(model.units.Unit.class);
+	kryo.register(java.util.Hashtable.class);
+	kryo.register(model.units.Unit.Weapon.class);
 	
 	client.start();
 
