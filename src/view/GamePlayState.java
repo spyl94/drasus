@@ -94,7 +94,15 @@ public class GamePlayState extends BasicGameState {
     private Animation tankA;
     private SpriteSheet tankR;
     private Animation tankAR;
-
+    private SpriteSheet pegasusS;
+    private Animation pegasusA;
+    private SpriteSheet pegasusR;
+    private Animation pegasusAR;
+    private SpriteSheet dragonS;
+    private Animation dragonA;
+    private SpriteSheet dragonR;
+    private Animation dragonAR;
+    
     public GamePlayState(int stateID) {
 	this.stateID = stateID;
 	currentState = STATES.START_GAME;
@@ -160,7 +168,15 @@ public class GamePlayState extends BasicGameState {
 	tankA = new Animation(tankS, 0, 0, 1, 0, false, 500, true);
 	tankR = new SpriteSheet("res/sprites/TankR.png", 32, 32);
 	tankAR = new Animation(tankR, 0, 0, 1, 0, false, 500, true);
-
+	pegasusS = new SpriteSheet("res/sprites/PegasusS.png", 32, 32);
+	pegasusA = new Animation(pegasusS, 0, 0, 1, 0, false, 500, true);
+	pegasusR = new SpriteSheet("res/sprites/PegasusR.png", 32, 32);
+	pegasusAR = new Animation(pegasusR, 0, 0, 1, 0, false, 500, true);
+	dragonS = new SpriteSheet("res/sprites/DragonnierS.png", 32, 32);
+	dragonA = new Animation(dragonS, 0, 0, 1, 0, false, 500, true);
+	dragonR = new SpriteSheet("res/sprites/DragonnierR.png", 32, 32);
+	dragonAR = new Animation(dragonR, 0, 0, 1, 0, false, 500, true);
+	
 	/* Init Vector tiles */
 
 	for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
@@ -265,6 +281,14 @@ public class GamePlayState extends BasicGameState {
 		tankA.draw(Integer.parseInt(taba[i][1]) * 32,
 			Integer.parseInt(taba[i][2]) * 32);
 		break;
+	    case "Dragon":
+		dragonA.draw(Integer.parseInt(taba[i][1]) * 32,
+			Integer.parseInt(taba[i][2]) * 32);
+		break;
+	    case "Pegasus":
+		pegasusA.draw(Integer.parseInt(taba[i][1]) * 32,
+			Integer.parseInt(taba[i][2]) * 32);
+		break;
 	    }
 
 	}
@@ -315,6 +339,14 @@ public class GamePlayState extends BasicGameState {
 	    case "Tank":
 		tankAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
+		break;
+	    case "Dragon":
+		dragonAR.draw(Integer.parseInt(taba[i][1]) * 32,
+			Integer.parseInt(taba[i][2]) * 32);
+		break;
+	    case "Pegasus":
+		pegasusAR.draw(Integer.parseInt(taba[i][1]) * 32,
+			Integer.parseInt(taba[i][2]) * 32);
 		break;
 	    }
 	}
