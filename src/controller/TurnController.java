@@ -32,14 +32,20 @@ public class TurnController {
 	    if(i > 1) {
 		isCrippled.put(u, true);
 		u.setTurnsCripple(i - 1);
-	    } else
+	    } else {
 		isCrippled.put(u, false);
+		u.setTurnsCripple(0);
+	    }
+		
 	    i = u.getTurnsPoisoned();
 	    if (i > 1) {
 		isPoisoned.put(u, true);
 		u.setTurnsPoisoned(i - 1);
-	    } else
+	    } else {
 		isPoisoned.put(u,false);
+		u.setTurnsPoisoned(0);
+	    }
+		
 	}
     }
 
