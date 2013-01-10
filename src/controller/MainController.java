@@ -348,7 +348,10 @@ public class MainController {
 	}
 
 	public void initNewTurn() {
-		turn = new TurnController(a.getUnits());
+	    	if (TurnController.numberTurn == 0)
+	    	    turn = new TurnController(a.getUnits());
+	    	else
+	    	    turn = new TurnController(a.getUnits(), turn);
 		for (Unit u : a.getUnits().values()) {
 			if (u.getTile().getField() == FIELD.FORT)
 				u.addRegenerationFort();
