@@ -102,7 +102,7 @@ public class GamePlayState extends BasicGameState {
     private Animation dragonA;
     private SpriteSheet dragonR;
     private Animation dragonAR;
-    
+
     public GamePlayState(int stateID) {
 	this.stateID = stateID;
 	currentState = STATES.START_GAME;
@@ -176,7 +176,7 @@ public class GamePlayState extends BasicGameState {
 	dragonA = new Animation(dragonS, 0, 0, 1, 0, false, 500, true);
 	dragonR = new SpriteSheet("res/sprites/DragonnierR.png", 32, 32);
 	dragonAR = new Animation(dragonR, 0, 0, 1, 0, false, 500, true);
-	
+
 	/* Init Vector tiles */
 
 	for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
@@ -343,26 +343,27 @@ public class GamePlayState extends BasicGameState {
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Dragon":
-		dragonAR.draw(Integer.parseInt(taba[i][1]) * 32,
-			Integer.parseInt(taba[i][2]) * 32);
+		dragonAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Pegasus":
-		pegasusAR.draw(Integer.parseInt(taba[i][1]) * 32,
-			Integer.parseInt(taba[i][2]) * 32);
+		pegasusAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    }
 	}
 
 	if (currentState != STATES.START_GAME
-		&& currentState != STATES.NEW_UNIT && currentState != STATES.START_TURN ) {
+		&& currentState != STATES.NEW_UNIT
+		&& currentState != STATES.START_TURN) {
 	    poisoned = main.isPoisoned(tiles);
-		for (Tile t : poisoned) {
-		    poison.draw(t.x * 32, t.y * 32);
-		}
+	    for (Tile t : poisoned) {
+		poison.draw(t.x * 32, t.y * 32);
+	    }
 	    crippled = main.isCrippled(tiles);
-		for (Tile t : crippled) {
-		    cripple.draw(t.x * 32 + 20, t.y * 32 + 20);
-		}
+	    for (Tile t : crippled) {
+		cripple.draw(t.x * 32 + 20, t.y * 32 + 20);
+	    }
 	}
     }
 
@@ -371,10 +372,8 @@ public class GamePlayState extends BasicGameState {
 	    throws SlickException {
 	switch (currentState) {
 	case START_GAME:
-	    currentState = STATES.NEW_UNIT;
 	    startGame();
-	    autoGenerateBUnits();
-	    // main.connexion("88.180.34.112");
+	    currentState = STATES.NEW_UNIT;
 	    break;
 	case NEW_UNIT:
 	    newUnit(gc, sbg, delta);
@@ -388,21 +387,12 @@ public class GamePlayState extends BasicGameState {
 	    selectingUnit(gc, sbg, delta);
 	    break;
 	case END_TURN:
-	    currentSelected = null;
-	    System.out.println("fin du tour");
-	    currentState = STATES.PAUSE_GAME;
 	    endTurn();
-	    main.sendEnd();
-	    main.endTurn();
-	    if(main.getPlayerA().getTurn()){
-	    currentState = STATES.START_TURN;
-	    }
 	    break;
 	case PAUSE_GAME:
 	    main.recPlayers();
-	    if (main.isTurn()) {
+	    if (main.isTurn())
 		currentState = STATES.START_TURN;
-	    }
 	    break;
 	case GAME_OVER:
 	    sbg.enterState(ViewController.MAINMENUSTATE);
@@ -410,10 +400,17 @@ public class GamePlayState extends BasicGameState {
 	}
 
     }
-    
+
     private void startGame() {
-	if(main.playLeft())
-	    main.addUnit(main.getPlayerA().getBoss(), getTile(4, 3));
+	if (main.playLeft())
+	    main.addUnit(main.getPlayerA().getBoss(), getTile(3, 2));
+	else
+	    main.addUnit(main.getPlayerA().getBoss(), getTile(36, 18));
+
+	if (main.isAuto())
+	    autoGenerateBUnits();
+	// else
+	// main.connexion("88.180.34.112");
     }
 
     private void initTurn() {
@@ -423,17 +420,26 @@ public class GamePlayState extends BasicGameState {
 
 	}
     }
+
     private void endTurn() {
+	 currentSelected = null;
+	    System.out.println("fin du tour");
+	    currentState = STATES.PAUSE_GAME;
 	main.endNewTurn();
+	main.sendEnd();
+	main.endTurn();
+	    if(main.getPlayerA().getTurn()){
+	    currentState = STATES.START_TURN;
+	    }
     }
 
     private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 	Tile tile = getTileClicked(gc);
 	if (tile != null) // si clic
-	    if (tile.isBlocked() == false && main.isFreeTileset(tile) && 
-	    ((main.playLeft() && tile.x < grassMap.getWidth() / 2 )
-		    || (main.playRight() && tile.x >= grassMap.getWidth() / 2 )
-	    )) {
+	    if (tile.isBlocked() == false
+		    && main.isFreeTileset(tile)
+		    && ((main.playLeft() && tile.x < grassMap.getWidth() / 2) || (main
+			    .playRight() && tile.x >= grassMap.getWidth() / 2))) {
 		main.addUnit(main.getPlayerAUnitsNames()[unitNb], tile);
 		System.out.print("Ajout :");
 		System.out.println(main.getPlayerAUnitsNames()[unitNb]);
@@ -535,20 +541,22 @@ public class GamePlayState extends BasicGameState {
 	}
 	return null;
     }
-    
+
     private Tile getTile(int x, int y) {
 	for (Tile t : tiles) {
-		if (t.x == x && t.y == y)
-		    return t;
+	    if (t.x == x && t.y == y)
+		return t;
 	}
 	return null;
     }
 
     private void autoGenerateBUnits() {
-	main.addUnitToB("Eclaireur", tiles.get(800));
-	main.addUnitToB("Fantassin", tiles.get(801));
-	main.addUnitToB("Tank", tiles.get(802));
-	main.addUnitToB("Archer", tiles.get(803));
+	main.addUnitToB(main.getPlayerB().getBoss(), getTile(36, 18));
+	main.addUnitToB("Eclaireur", getTile(23, 15));
+	main.addUnitToB("Fantassin", getTile(23, 16));
+	main.addUnitToB("Archer", getTile(24, 17));
+	main.addUnitToB("ArcherMonte", getTile(22, 15));
+	main.addUnitToB("Cavalier", getTile(23, 18));
     }
 
 }
