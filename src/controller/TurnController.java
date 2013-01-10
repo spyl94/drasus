@@ -79,7 +79,12 @@ public class TurnController {
      * @return true if the unit is crippled false otherwise
      */
     public boolean isCrippled(Unit u) {
-	return isCrippled.get(u);
+	try {
+	    return isCrippled.get(u);
+	} catch (NullPointerException e) {
+	    return false;
+	}
+
     }
 
     /**
@@ -90,7 +95,11 @@ public class TurnController {
      * @return true if the unit is poisoned false otherwise
      */
     public boolean isPoisoned(Unit u) {
-	return isPoisoned.get(u);
+	try {
+	    return isPoisoned.get(u);
+	} catch (NullPointerException e) {
+	    return false;
+	}
     }
 
     /**

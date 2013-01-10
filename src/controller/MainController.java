@@ -452,9 +452,14 @@ public class MainController {
     public Vector<Tile> isCrippled (Vector<Tile> tiles){
 	Vector<Tile> result = new Vector<Tile>();
 	for(Tile t : tiles){
-	    if(getUnit(t) != null && getUnit(t).getTurnsCripple() > 0)
-		if(turn.isCrippled(getUnit(t)))
+	    if(getUnit(t) != null && getUnit(t).getTurnsCripple() > 0){
+		System.out.println("before");
+		if(turn.isCrippled(getUnit(t))){
+		    System.out.println(turn.isCrippled(getUnit(t)));
 		    result.add(t);
+		}
+		System.out.println("after");
+	    }
 	}
 
 	return result;
@@ -467,10 +472,12 @@ public class MainController {
     public Vector<Tile> isPoisoned (Vector<Tile> tiles){
 	Vector<Tile> result = new Vector<Tile>();
 	for(Tile t : tiles){
-	    if(getUnit(t) != null && getUnit(t).getTurnsCripple() > 0){
+	    if(getUnit(t) != null && getUnit(t).getTurnsPoisoned() > 0){
 		System.out.println("before");
-		if(turn.isPoisoned(getUnit(t)))
+		if(turn.isPoisoned(getUnit(t))){
+		    System.out.println(turn.isPoisoned(getUnit(t)));
 		    result.add(t);
+		}
 		System.out.println("after");
 	    }
 	}
