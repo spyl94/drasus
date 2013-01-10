@@ -321,8 +321,10 @@ public class GamePlayState extends BasicGameState {
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Eclaireur":
+		if(!main.isCamo()){
 		eclaireurAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
+		}
 		break;
 	    case "Fantassin":
 		fantassinAR.draw(Integer.parseInt(tabb[i][1]) * 32,

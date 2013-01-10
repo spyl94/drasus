@@ -456,6 +456,10 @@ public class MainController {
 	return result;
     }
     
+    public boolean isCamo(){
+	return b.getUnit("Eclaireur").getTile().getField() == FIELD.FOREST;
+    }
+    
     public Vector<Tile> isPoisoned (Vector<Tile> tiles){
 	Vector<Tile> result = new Vector<Tile>();
 	//TODO
