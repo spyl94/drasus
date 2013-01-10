@@ -10,9 +10,9 @@ import view.Tile;
  * 
  */
 public abstract class Unit {
-    
+
     public enum Weapon {
-	    SWORD, LANCE, AXE, BOW
+	SWORD, LANCE, AXE, BOW
     }
 
     protected IAttack attack;
@@ -31,16 +31,17 @@ public abstract class Unit {
     protected int turnsCripple;
     protected int turnsPoisoned;
     protected boolean attackedPrevious;
+
     public boolean hasAttackedPrevious() {
-        return attackedPrevious;
+	return attackedPrevious;
     }
 
     public void setAttackedPrevious(boolean attackedPrevious) {
-        this.attackedPrevious = attackedPrevious;
+	this.attackedPrevious = attackedPrevious;
     }
 
     protected boolean cavalry;
-    
+
     /**
      * @param attack
      *            behavior of attack
@@ -81,16 +82,15 @@ public abstract class Unit {
 	this.attackedPrevious = false;
 	this.cavalry = false;
     }
-    
+
     public abstract void activatePower();
-    
+
     public void addRegenerationFort() {
 	this.hp += 5;
 	if (this.hp > this.maxHp)
 	    this.hp = this.maxHp;
     }
-    
-    
+
     /**
      * Attack an other unit.
      * 
@@ -122,6 +122,15 @@ public abstract class Unit {
      */
     public int getCrit() {
 	return crit;
+    }
+
+    /**
+     * Returns the possibility of the unit to MaT.
+     * 
+     * @return the true if the unit can MaT.
+     */
+    public boolean hasMat() {
+	return mat > 0;
     }
 
     /**
@@ -165,8 +174,8 @@ public abstract class Unit {
      * 
      * @return the number of movements after attack
      */
-    public int getMat(){
-    	return mat;
+    public int getMat() {
+	return mat;
     }
 
     /**
@@ -196,11 +205,11 @@ public abstract class Unit {
     }
 
     public int getTurnsCripple() {
-        return turnsCripple;
+	return turnsCripple;
     }
-    
+
     public int getTurnsPoisoned() {
-        return turnsPoisoned;
+	return turnsPoisoned;
     }
 
     /**
@@ -239,15 +248,16 @@ public abstract class Unit {
 	    throw new DeadUnitException(this.name, dmg);
 	}
     }
-    
-    public void receivePoisonedDmg() throws DeadUnitException, DeadBossException {
+
+    public void receivePoisonedDmg() throws DeadUnitException,
+	    DeadBossException {
 	this.receiveDmg(5);
     }
 
     public void setCavalry() {
 	this.cavalry = true;
     }
-    
+
     /**
      * Set a new behavior of attack.
      * 
@@ -257,7 +267,7 @@ public abstract class Unit {
     public void setIAttack(IAttack a) {
 	this.attack = a;
     }
-    
+
     /**
      * Set a new Tile on which is the unit.
      * 
@@ -269,11 +279,11 @@ public abstract class Unit {
     }
 
     public void setTurnsCripple(int turnsCripple) {
-        this.turnsCripple = turnsCripple;
+	this.turnsCripple = turnsCripple;
     }
 
     public void setTurnsPoisoned(int turnsPoisoned) {
-        this.turnsPoisoned = turnsPoisoned;
+	this.turnsPoisoned = turnsPoisoned;
     }
 
 }

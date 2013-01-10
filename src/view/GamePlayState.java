@@ -417,7 +417,7 @@ public class GamePlayState extends BasicGameState {
 					    currentSelected.y).getMove()));
 		}
 		
-		else if((main.getTurn().hasAttack(
+		else if((main.getUnit(tile).hasMat() && main.getTurn().hasAttack(
 					main.getUnit(tile)) && !main.getTurn().hasMoveAfterAttack(main.getUnit(tile)))){
 		    setHighLight(main.canCross(
 				    tiles,
