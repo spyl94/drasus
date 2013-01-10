@@ -46,10 +46,20 @@ public class Tile {
 	 return this.x == t.x && this.y == t.y;
     }
 
+    /**
+     * Returns the field of the Tile.
+     * 
+     * @return the field.
+     */
     public FIELD getField() {
 	return field;
     }
 
+    /**
+     * Returns is the Tile is blocked or not.
+     * 
+     * @return true if blocked false otherwise
+     */
     public boolean isBlocked() {
 	return blocked;
     }
