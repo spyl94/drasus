@@ -90,6 +90,10 @@ public class MainController {
 	    throw new VictoryException(e);
 	} catch (DeadUnitException e) {
 	    b.delUnit(e.getName());
+	    if(! a.getUnit(att).isPowActivate()) {
+		a.getUnit(att).activatePower();
+		return e.getName() + " est mort ! Activation du pouvoir de " + att + " !";
+	    }
 	    return e.getName() + " est mort !";
 	} catch (NullPointerException e) {
 	    return "L'unité " + def + " n'éxiste pas !";
