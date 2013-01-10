@@ -40,11 +40,21 @@ public class MainController {
     private Player b;
     private ConnexionController client;
     private boolean auto;
+    private boolean left;
 
     private MainController() {
 	this.auto = false;
+	this.left = true;
 	a = null;
 	b = new Player();
+    }
+    
+    public boolean playLeft() {
+	return left;
+    }
+    
+    public boolean playRight() {
+	return !left;
     }
 
     public void setPlayerA(String boss) {

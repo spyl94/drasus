@@ -15,22 +15,28 @@ public class Player {
     UnitFactory factory;
     private Hashtable<String, Unit> units;
     private boolean isTurn = true;
+    private String boss;
 
     public Player() {
+	boss = "Pegasus";
 	units = new Hashtable<String, Unit>();
 	factory = new UnitFactoryPegasus();
     }
     
     public Player(String boss) {
 	units = new Hashtable<String, Unit>();
-	
-	if (boss == "Dragon") {
+	this.boss = boss;
+	if (this.boss == "Dragon") {
 	    factory = new UnitFactoryDragon();
 	}
 	else {
 	    factory = new UnitFactoryPegasus();
 	}
 	
+    }
+    
+    public String getBoss() {
+	return boss;
     }
 
     public void addUnit(String name) {

@@ -338,6 +338,7 @@ public class GamePlayState extends BasicGameState {
 	switch (currentState) {
 	case START_GAME:
 	    currentState = STATES.NEW_UNIT;
+	    startGame();
 	    autoGenerateBUnits();
 	    // main.connexion("88.180.34.112");
 	    break;
@@ -374,6 +375,11 @@ public class GamePlayState extends BasicGameState {
 	}
 
     }
+    
+    private void startGame() {
+	if(main.playLeft())
+	    main.addUnit(main.getPlayerA().getBoss(), getTile(4, 3));
+    }
 
     private void initTurn() {
 	try {
@@ -389,7 +395,10 @@ public class GamePlayState extends BasicGameState {
     private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 	Tile tile = getTileClicked(gc);
 	if (tile != null) // si clic
-	    if (tile.isBlocked() == false && main.isFreeTileset(tile)) {
+	    if (tile.isBlocked() == false && main.isFreeTileset(tile) && 
+	    ((main.playLeft() && tile.x < grassMap.getWidth() / 2 )
+		    || (main.playRight() && tile.x >= grassMap.getWidth() / 2 )
+	    )) {
 		main.addUnit(main.getPlayerAUnitsNames()[unitNb], tile);
 		System.out.print("Ajout :");
 		System.out.println(main.getPlayerAUnitsNames()[unitNb]);
@@ -487,6 +496,14 @@ public class GamePlayState extends BasicGameState {
 		if (t.x == x && t.y == y)
 		    return t;
 	    }
+	}
+	return null;
+    }
+    
+    private Tile getTile(int x, int y) {
+	for (Tile t : tiles) {
+		if (t.x == x && t.y == y)
+		    return t;
 	}
 	return null;
     }
