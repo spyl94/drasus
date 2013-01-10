@@ -127,7 +127,8 @@ public class GamePlayState extends BasicGameState {
 	ArcherMonteS = new SpriteSheet("res/sprites/ArchermonteS.png", 32, 32);
 	ArcherMonteA = new Animation(ArcherMonteS, 0, 0, 1, 0, false, 500, true);
 	ArcherMonteR = new SpriteSheet("res/sprites/ArchermonteR.png", 32, 32);
-	ArcherMonteAR = new Animation(ArcherMonteR, 0, 0, 1, 0, false, 500, true);
+	ArcherMonteAR = new Animation(ArcherMonteR, 0, 0, 1, 0, false, 500,
+		true);
 	BerserkerS = new SpriteSheet("res/sprites/BerserkS.png", 32, 32);
 	BerserkerA = new Animation(BerserkerS, 0, 0, 1, 0, false, 500, true);
 	BerserkerR = new SpriteSheet("res/sprites/BerserkR.png", 32, 32);
@@ -164,7 +165,7 @@ public class GamePlayState extends BasicGameState {
 	TankA = new Animation(TankS, 0, 0, 1, 0, false, 500, true);
 	TankR = new SpriteSheet("res/sprites/TankR.png", 32, 32);
 	TankAR = new Animation(TankR, 0, 0, 1, 0, false, 500, true);
-	
+
 	/* Init Vector tiles */
 
 	for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
@@ -221,7 +222,7 @@ public class GamePlayState extends BasicGameState {
 		AtkTarget.draw(t.x * 32, t.y * 32);
 	    }
 	}
-	
+
 	taba = main.aToTab();
 	for (int i = 0; i < taba.length; i++) {
 	    switch (taba[i][0]) {
@@ -370,7 +371,7 @@ public class GamePlayState extends BasicGameState {
 	try {
 	    main.initNewTurn();
 	} catch (VictoryException e) {
-	    
+
 	}
     }
 
@@ -406,31 +407,20 @@ public class GamePlayState extends BasicGameState {
 	    if (main.isPlayerAUnit(tile)) {
 		currentState = STATES.SELECTING_UNIT;
 		currentSelected = tile;
-		if ((!main.getTurn().hasMove(
-			main.getUnit(tile)) && !main.getTurn().hasAttack(
-					main.getUnit(tile)))) {
-		    setHighLight(main.canCross(
-			    tiles,
-			    currentSelected,
-			    main.getPlayerA()
-				    .getUnit(currentSelected.x,
-					    currentSelected.y).getMove()));
+		if ((!main.getTurn().hasMove(main.getUnit(tile)) && !main
+			.getTurn().hasAttack(main.getUnit(tile)))) {
+		    highLight = main.canMove(tiles, currentSelected);
 		}
-		
-		else if((main.getUnit(tile).hasMat() && main.getTurn().hasAttack(
-					main.getUnit(tile)) && !main.getTurn().hasMoveAfterAttack(main.getUnit(tile)))){
-		    setHighLight(main.canCross(
-				    tiles,
-				    currentSelected,
-				    main.getPlayerA()
-					    .getUnit(currentSelected.x,
-						    currentSelected.y).getMat()));
+
+		else if ((main.getUnit(tile).hasMat()
+			&& main.getTurn().hasAttack(main.getUnit(tile)) && !main
+			.getTurn().hasMoveAfterAttack(main.getUnit(tile)))) {
+		    highLight = main.canMove(tiles, currentSelected);
 		}
-		
-		else if(main.getTurn().hasMove(
-				main.getUnit(tile)) && !main.getTurn().hasAttack(
-					main.getUnit(tile))){
-			setAtkHighLight(main.atkHighLight(tiles, currentSelected));
+
+		else if (main.getTurn().hasMove(main.getUnit(tile))
+			&& !main.getTurn().hasAttack(main.getUnit(tile))) {
+		    atkHighLight = main.atkHighLight(tiles, currentSelected);
 		}
 		// setHighLight(main.canCross(tiles, currentSelected, 6));
 	    }
@@ -463,19 +453,11 @@ public class GamePlayState extends BasicGameState {
 		currentState = STATES.PLAY_TURN;
 	    }
 	    System.out.println(atkHighLight.size());
-		highLight.clear();
-		atkHighLight.clear();
+	    highLight.clear();
+	    atkHighLight.clear();
 	}
     }
 
-    private void setHighLight(Vector<Tile> hl) {
-	highLight = hl;
-    }
-
-    private void setAtkHighLight(Vector<Tile> hl) {
-	atkHighLight = hl;
-    }
-    
     private Tile getTileClicked(GameContainer gc) {
 	Input input = gc.getInput();
 	if (input.isMousePressed(0)) {
@@ -487,8 +469,8 @@ public class GamePlayState extends BasicGameState {
 
 	    x = mouseX / grassMap.getTileWidth();
 	    y = mouseY / grassMap.getTileHeight();
-	    //System.out.println(mouseX + " x : " + x);
-	    //System.out.println(mouseY + " y : " + y);
+	    // System.out.println(mouseX + " x : " + x);
+	    // System.out.println(mouseY + " y : " + y);
 
 	    for (Tile t : tiles) {
 		if (t.x == x && t.y == y)

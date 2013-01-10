@@ -90,9 +90,10 @@ public class MainController {
 	    throw new VictoryException(e);
 	} catch (DeadUnitException e) {
 	    b.delUnit(e.getName());
-	    if(! a.getUnit(att).isPowActivate()) {
+	    if (!a.getUnit(att).isPowActivate()) {
 		a.getUnit(att).activatePower();
-		return e.getName() + " est mort ! Activation du pouvoir de " + att + " !";
+		return e.getName() + " est mort ! Activation du pouvoir de "
+			+ att + " !";
 	    }
 	    return e.getName() + " est mort !";
 	} catch (NullPointerException e) {
@@ -151,7 +152,16 @@ public class MainController {
 	return tab;
     }
 
-    public Vector<Tile> canCross(Vector<Tile> tiles, Tile base, int moveNb) {
+    public Vector<Tile> canMove(Vector<Tile> tiles, Tile base) {
+	if (getUnit(base).hasMat() && getTurn().hasAttack(getUnit(base))
+		&& !getTurn().hasMoveAfterAttack(getUnit(base))) {
+	    return canCross(tiles, base, getUnit(base).getMat());
+	} else {
+	    return canCross(tiles, base, getUnit(base).getMove());
+	}
+    }
+
+    private Vector<Tile> canCross(Vector<Tile> tiles, Tile base, int moveNb) {
 	Tile[] finale = null;
 	Vector<Tile> tempo = new Vector<Tile>();
 	Vector<Tile> result = new Vector<Tile>();
@@ -368,14 +378,13 @@ public class MainController {
 	    }
 	}
 	// TODO Ajout des pv aux unités sur les forts
-	
+
 	// TODO pv rodeur foret
-	
+
 	// TODO fantassin regen
-	
+
 	// TODO eclaireur camouflage bois
-	
-	
+
 	return str;
     }
 
