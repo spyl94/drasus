@@ -1,6 +1,5 @@
 package model.attack;
 
-import controller.MainController;
 import model.exception.DeadUnitException;
 import model.units.Unit;
 
@@ -29,7 +28,7 @@ public class AttackDistancePoisonedLonger extends AttackDistance {
 	
 	def.receiveDmg(dmg);
 	def.setTurnsPoisoned(def.getTurnsPoisoned() + poison);
-	MainController.getInstance().setPoisoned(def);
+	//MainController.getInstance().setPoisoned(def);
 
 	return "L'attaque à distance de votre " + att.getName() + " a infligé "
 		+ dmg + " à " + def.getName() + "ainsi que le poison pendant " + poison + " tours.";

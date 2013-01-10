@@ -1,6 +1,5 @@
 package model.attack;
 
-import controller.MainController;
 import model.exception.DeadUnitException;
 import model.units.Unit;
 
@@ -21,7 +20,8 @@ public abstract class Attack implements IAttack {
     protected boolean checkTankInRange(Unit deff)
     {
 	if(deff.getName() == "Tank") return false;
-	return MainController.getInstance().isTankInRange(deff);
+	return true;
+	//return MainController.getInstance().isTankInRange(deff);
     }
     /**
      * Determine randomly if the unit has touched the target.
