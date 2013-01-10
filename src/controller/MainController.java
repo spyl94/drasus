@@ -43,10 +43,10 @@ public class MainController {
     private boolean left;
 
     private MainController() {
-	this.auto = false;
+	this.auto = true;
 	this.left = true;
 	a = null;
-	b = new Player();
+	b = new Player("Dragon");
     }
     
     public boolean playLeft() {
@@ -76,7 +76,8 @@ public class MainController {
 
     public void addUnitToB(String name, Tile tile) {
 	b.addUnit(name);
-	b.getUnit(name).setTile(tile);
+	if(b.getUnit(name) != null)
+	    b.getUnit(name).setTile(tile);
     }
 
     public String[][] aToTab() {
