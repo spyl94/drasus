@@ -56,6 +56,10 @@ public class MainController {
     public boolean playRight() {
 	return !left;
     }
+    
+    public boolean isAuto() {
+	return auto;
+    }
 
     public void setPlayerA(String boss) {
 	if (a == null)
@@ -345,6 +349,14 @@ public class MainController {
 		return u;
 	return null;
     }
+    
+    public void setPoisoned(Unit u) {
+	turn.setPoisoned(u);
+    }
+    
+    public void setCrippled(Unit u) {
+	turn.setCrippled(u);
+    }
 
     public void init(String[] args) {
 
@@ -374,7 +386,7 @@ public class MainController {
 
     public String initNewTurn() throws VictoryException {
 	String str = "";
-	turn = new TurnController(a.getUnits());
+	turn = new TurnController(a.getUnits(), b.getUnits());
 	for (Unit u : a.getUnits().values()) {
 	    try {
 		if (u.getTile().getField() == FIELD.FORT)
@@ -388,13 +400,14 @@ public class MainController {
 		str += e.getName() + " est mort !";
 	    }
 	}
-	// TODO Ajout des pv aux unités sur les forts
-
-	// TODO pv rodeur foret
-
-	// TODO fantassin regen
-
-	// TODO eclaireur camouflage bois
+	for (Unit u : a.getUnits().values()) {
+	    if (u.getTile().getField() == FIELD.FORT)
+		u.addRegenerationFort();
+	    if (u.getName()=="Rodeur" && u.getTile().getField() == FIELD.FOREST)
+		u.addRegenerationForest();
+	    if (u.getName()=="Fantassin")
+		u.addRegeneration();
+	}
 
 	return str;
     }
@@ -434,26 +447,23 @@ public class MainController {
     public Vector<Tile> isCrippled (Vector<Tile> tiles){
 	Vector<Tile> result = new Vector<Tile>();
 	//TODO
-	//Probleme avec getUnit
-	/*
 	for(Tile t : tiles){
-	    if(turn.isCrippled(getUnit(t)))
-		result.add(t);
+	    if(getUnit(t) != null && getUnit(t).getTurnsCripple() > 0)
+		if(turn.isCrippled(getUnit(t)))
+		    result.add(t);
 	}
-	*/
+
 	return result;
     }
     
     public Vector<Tile> isPoisoned (Vector<Tile> tiles){
 	Vector<Tile> result = new Vector<Tile>();
 	//TODO
-	//Probleme avec getUnit
-	/*
 	for(Tile t : tiles){
-	    if(turn.isPoisoned(getUnit(t)))
-		result.add(t);
+	    if(getUnit(t) != null)
+		if(turn.isPoisoned(getUnit(t)))
+		    result.add(t);
 	}
-	*/
 	return result;
     }
     

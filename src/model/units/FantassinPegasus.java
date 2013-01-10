@@ -18,5 +18,12 @@ public class FantassinPegasus extends Unit {
     public void activatePower() {
 	pow = true;
     }
+    
+    @Override
+    public void addRegeneration() {
+	this.hp += 10;
+	if (this.hp > this.maxHp)
+	    this.hp = this.maxHp;
+    }
 
 }

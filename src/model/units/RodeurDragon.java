@@ -22,5 +22,12 @@ public class RodeurDragon extends Unit {
 	setIAttack(new AttackDistanceDoubledInForest(3));
 	
     }
+    
+    @Override
+    public void addRegenerationForest() {
+	this.hp += 10;
+	if (this.hp > this.maxHp)
+	    this.hp = this.maxHp;
+    }
 
 }

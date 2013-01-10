@@ -90,6 +90,16 @@ public abstract class Unit {
 	if (this.hp > this.maxHp)
 	    this.hp = this.maxHp;
     }
+    
+    public void addRegenerationForest() {
+	System.out.println("Nothing to do.");
+	// let empty
+    }
+    
+    public void addRegeneration() {
+	System.out.println("Nothing to do.");
+	// let empty
+    }
 
     /**
      * Attack an other unit.
