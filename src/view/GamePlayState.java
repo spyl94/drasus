@@ -348,6 +348,7 @@ public class GamePlayState extends BasicGameState {
 	    currentSelected = null;
 	    System.out.println("fin du tour");
 	    currentState = STATES.PAUSE_GAME;
+	    endTurn();
 	    // main.sendEnd();
 	    // main.endTurn();
 	    // if(main.getPlayerA().getTurn())
@@ -372,6 +373,9 @@ public class GamePlayState extends BasicGameState {
 	} catch (VictoryException e) {
 	    
 	}
+    }
+    private void endTurn() {
+	main.endNewTurn();
     }
 
     private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {

@@ -1,6 +1,7 @@
 package model.units;
 
 import model.attack.AttackDistance;
+import model.attack.AttackDistanceArcher;
 
 /**
  * @author Aurel
@@ -16,7 +17,7 @@ public class ArcherDragon extends Unit {
     
     public void activatePower() {
 	pow = true;
-	//setIAttack(a)
+	setIAttack(new AttackDistanceArcher(3));
     }
 
 }

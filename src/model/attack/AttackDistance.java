@@ -24,10 +24,6 @@ public class AttackDistance extends Attack {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
-	
-	// crit 50%
-	if(att.isPowActivate())
-	    crit = 50;
 
 	if (!canHit(hit))
 	    return def.getName() + " a esquivé l'attaque !";

@@ -42,6 +42,7 @@ public class MainController {
     private boolean auto;
 
     private MainController() {
+	this.auto = false;
 	a = null;
 	b = new Player();
     }
@@ -377,6 +378,12 @@ public class MainController {
 	
 	
 	return str;
+    }
+    
+    public void endNewTurn() {
+	for (Unit u : a.getUnits().values()) {
+	    u.setAttackedPrevious(turn.hasAttack(u));
+	}
     }
 
     public boolean isFreeTileset(Tile tile) {
