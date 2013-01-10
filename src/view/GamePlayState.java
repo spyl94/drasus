@@ -39,17 +39,8 @@ public class GamePlayState extends BasicGameState {
     private MainController main;
     private Tile currentSelected = null;
     private Vector<Tile> tiles;
-    private Image Archer = null;
-    private Image ArcherMonte = null;
-    private Image Berserker = null;
-    private Image Bretteur = null;
-    private Image Cavalier = null;
-    private Image Chevalier = null;
-    private Image Eclaireur = null;
-    private Image Fantassin = null;
-    private Image Lancier = null;
-    private Image Rodeur = null;
-    private Image Tank = null;
+    private Image poison = null;
+    private Image cripple = null;
     private Image Target = null;
     private Image AtkTarget = null;
     private int unitNb = 0;
@@ -57,6 +48,8 @@ public class GamePlayState extends BasicGameState {
     private String[][] tabb;
     private Vector<Tile> highLight = new Vector<Tile>();
     private Vector<Tile> atkHighLight = new Vector<Tile>();
+    private Vector<Tile> poisoned = new Vector<Tile>();
+    private Vector<Tile> crippled = new Vector<Tile>();
     private SpriteSheet ArcherS;
     private Animation ArcherA;
     private SpriteSheet ArcherR;
@@ -120,6 +113,8 @@ public class GamePlayState extends BasicGameState {
 	Target = new Image("res/sprites/path.png");
 	grassMap = new TiledMap("res/drasus.tmx");
 	AtkTarget = new Image("res/sprites/atk.png");
+	poison = new Image("res/sprites/poison.png");
+	cripple = new Image("res/sprites/cripple.png");
 	ArcherS = new SpriteSheet("res/sprites/ArcherS.png", 32, 32);
 	ArcherA = new Animation(ArcherS, 0, 0, 1, 0, false, 500, true);
 	ArcherR = new SpriteSheet("res/sprites/ArcherR.png", 32, 32);
@@ -322,6 +317,18 @@ public class GamePlayState extends BasicGameState {
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    }
+	}
+
+	if (currentState != STATES.START_GAME
+		&& currentState != STATES.NEW_UNIT ) {
+	    poisoned = main.isPoisoned(tiles);
+		for (Tile t : poisoned) {
+		    poison.draw(t.x * 32, t.y * 32);
+		}
+	    crippled = main.isCrippled(tiles);
+		for (Tile t : crippled) {
+		    cripple.draw(t.x * 32 + 20, t.y * 32 + 20);
+		}
 	}
     }
 
