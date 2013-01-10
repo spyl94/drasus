@@ -3,12 +3,8 @@ package model.attack;
 import model.exception.DeadUnitException;
 import model.units.Unit;
 
-/**
- * @author Aurel
- * 
- */
-public class AttackCaC extends Attack {
-
+public class AttackCaCIgnoreArmor extends AttackCaC {
+   
     @Override
     public String attack(Unit att, Unit def) throws DeadUnitException {
 	int hit = att.getHit();
@@ -24,17 +20,11 @@ public class AttackCaC extends Attack {
 	    return def.getName() + " a esquivé l'attaque !";
 
 	dmg += dmg * ((double) crit / 100);
-	dmg -= dmg * ((double) def.getDef() / 100);
+	// Ignore Armor
 
 	def.receiveDmg(dmg);
 
 	return "L'attaque de votre " + att.getName() + " a infligé " + dmg
-		+ " à " + def.getName();
+		+ " à " + def.getName() + " en ignorant l'armure.";
     }
-
-    @Override
-    public boolean canAttackFromRange(int i) {
-	return false;
-    }
-
 }

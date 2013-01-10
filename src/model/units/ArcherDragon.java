@@ -13,5 +13,10 @@ public class ArcherDragon extends Unit {
 		"Archer");
 
     }
+    
+    public void activatePower() {
+	pow = true;
+	//setIAttack(a)
+    }
 
 }

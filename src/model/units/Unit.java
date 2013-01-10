@@ -28,7 +28,19 @@ public abstract class Unit {
     protected String name;
     protected Tile tile;
     protected boolean pow;
+    protected int turnsCripple;
+    protected int turnsPoisoned;
+    protected boolean attackedPrevious;
+    public boolean hasAttackedPrevious() {
+        return attackedPrevious;
+    }
 
+    public void setAttackedPrevious(boolean attackedPrevious) {
+        this.attackedPrevious = attackedPrevious;
+    }
+
+    protected boolean cavalry;
+    
     /**
      * @param attack
      *            behavior of attack
@@ -64,8 +76,21 @@ public abstract class Unit {
 	this.mat = mat;
 	this.wep = wep;
 	this.name = name;
+	this.turnsCripple = 0;
+	this.turnsPoisoned = 0;
+	this.attackedPrevious = false;
+	this.cavalry = false;
     }
-
+    
+    public abstract void activatePower();
+    
+    public void addRegenerationFort() {
+	this.hp += 5;
+	if (this.hp > this.maxHp)
+	    this.hp = this.maxHp;
+    }
+    
+    
     /**
      * Attack an other unit.
      * 
@@ -134,7 +159,7 @@ public abstract class Unit {
     public int getHp() {
 	return hp;
     }
-    
+
     /**
      * Returns the number of movements after attack.
      * 
@@ -162,8 +187,20 @@ public abstract class Unit {
 	return name;
     }
 
+    public int getRange() {
+	return attack.getRange();
+    }
+
     public Tile getTile() {
 	return tile;
+    }
+
+    public int getTurnsCripple() {
+        return turnsCripple;
+    }
+    
+    public int getTurnsPoisoned() {
+        return turnsPoisoned;
     }
 
     /**
@@ -174,9 +211,13 @@ public abstract class Unit {
     public Weapon getWep() {
 	return wep;
     }
-    
-    public int getRange() {
-	return attack.getRange();
+
+    public boolean isCavalry() {
+	return cavalry;
+    }
+
+    public boolean isPowActivate() {
+	return pow;
     }
 
     /**
@@ -199,12 +240,14 @@ public abstract class Unit {
 	}
     }
     
-    public void addRegenerationFort() {
-	this.hp += 5;
-	if (this.hp > this.maxHp)
-	    this.hp = this.maxHp;
+    public void receivePoisonedDmg() throws DeadUnitException, DeadBossException {
+	this.receiveDmg(5);
     }
 
+    public void setCavalry() {
+	this.cavalry = true;
+    }
+    
     /**
      * Set a new behavior of attack.
      * 
@@ -214,7 +257,7 @@ public abstract class Unit {
     public void setIAttack(IAttack a) {
 	this.attack = a;
     }
-
+    
     /**
      * Set a new Tile on which is the unit.
      * 
@@ -223,6 +266,14 @@ public abstract class Unit {
      */
     public void setTile(Tile tile) {
 	this.tile = tile;
+    }
+
+    public void setTurnsCripple(int turnsCripple) {
+        this.turnsCripple = turnsCripple;
+    }
+
+    public void setTurnsPoisoned(int turnsPoisoned) {
+        this.turnsPoisoned = turnsPoisoned;
     }
 
 }

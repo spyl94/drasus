@@ -3,31 +3,21 @@ package model.attack;
 import model.exception.DeadUnitException;
 import model.units.Unit;
 
-/**
- * @author Aurel
- * 
- */
-public class AttackDistance extends Attack {
+public class AttackDistanceDoubledAgainstCavalry extends AttackDistance {
 
-    private int range;
-
-    public AttackDistance() {
-	range = 0;
+    public AttackDistanceDoubledAgainstCavalry() {
+   	super(0);
+      }
+    
+    public AttackDistanceDoubledAgainstCavalry(int i) {
+	super(i);
     }
-
-    public AttackDistance(int i) {
-	range = i;
-    }
-
+    
     @Override
     public String attack(Unit att, Unit def) throws DeadUnitException {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
-	
-	// crit 50%
-	if(att.isPowActivate())
-	    crit = 50;
 
 	if (!canHit(hit))
 	    return def.getName() + " a esquivé l'attaque !";
@@ -36,19 +26,14 @@ public class AttackDistance extends Attack {
 	dmg -= dmg * ((double) def.getDef() / 100);
 
 	def.receiveDmg(dmg);
+	
+	if(def.isCavalry()) {
+	    def.receiveDmg(dmg);
+	    return "La double attaque à distance de votre " + att.getName() + " a infligé "
+		+ dmg*2 + " à " + def.getName();
+	}
 
 	return "L'attaque à distance de votre " + att.getName() + " a infligé "
 		+ dmg + " à " + def.getName();
     }
-
-    @Override
-    public boolean canAttackFromRange(int i) {
-	return i <= range;
-    }
-    
-    @Override
-    public int getRange() {
-	return range;
-    }
-
 }

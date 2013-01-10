@@ -13,4 +13,10 @@ public class Pegasus extends Unit {
 
     }
 
+    @Override
+    public void activatePower() {
+	pow = true;
+	
+    }
+
 }

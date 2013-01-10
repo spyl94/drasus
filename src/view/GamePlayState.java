@@ -367,7 +367,11 @@ public class GamePlayState extends BasicGameState {
     }
 
     private void initTurn() {
-	main.initNewTurn();
+	try {
+	    main.initNewTurn();
+	} catch (VictoryException e) {
+	    
+	}
     }
 
     private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {

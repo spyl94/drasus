@@ -13,5 +13,9 @@ public class ArcherPegasus extends Unit {
 		"Archer");
 
     }
-
+    
+    public void activatePower() {
+	pow = true;
+	//setIAttack(a)
+    }
 }

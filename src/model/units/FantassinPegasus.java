@@ -14,4 +14,9 @@ public class FantassinPegasus extends Unit {
 
     }
 
+    @Override
+    public void activatePower() {
+	pow = true;
+    }
+
 }

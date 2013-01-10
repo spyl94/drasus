@@ -23,11 +23,8 @@ public class AttackCaCBerserker extends AttackCaC {
 	if (!canHit(hit))
 	    return def.getName() + " a esquivé l'attaque !";
 
-	System.out.println("dmg avant crit: " + dmg);
 	dmg += dmg * ((double) crit / 100);
-	System.out.println("dmg après crit: " + dmg);
 	dmg -= dmg * ((double) def.getDef() / 100);
-	System.out.println("dmg après def: " + dmg);
 
 	def.receiveDmg(dmg);
 	if (!((int) (Math.random() * (101)) < 15))

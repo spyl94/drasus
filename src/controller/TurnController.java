@@ -11,8 +11,8 @@ public class TurnController {
     private Hashtable<Unit, Boolean> hasAttack;
     private Hashtable<Unit, Boolean> hasMove;
     private Hashtable<Unit, Boolean> hasMoveAfterAttack;
-    private Hashtable<Unit, Integer> isCrippled;
-    private Hashtable<Unit, Integer> isPoisoned;
+    private Hashtable<Unit, Boolean> isCrippled;
+    private Hashtable<Unit, Boolean> isPoisoned;
 
     public TurnController(Hashtable<String, Unit> unitsA) {
 
@@ -21,58 +21,33 @@ public class TurnController {
 	hasAttack = new Hashtable<Unit, Boolean>();
 	hasMove = new Hashtable<Unit, Boolean>();
 	hasMoveAfterAttack = new Hashtable<Unit, Boolean>();
-	isCrippled = new Hashtable<Unit, Integer>();
-	isPoisoned = new Hashtable<Unit, Integer>();
+	isCrippled = new Hashtable<Unit, Boolean>();
+	isPoisoned = new Hashtable<Unit, Boolean>();
 
 	for (Unit u : unitsA.values()) {
 	    hasAttack.put(u, false);
 	    hasMove.put(u, false);
 	    hasMoveAfterAttack.put(u, false);
-	    isCrippled.put(u, 0);
-	    isPoisoned.put(u, 0);
+	    int i = u.getTurnsCripple();
+	    if(i > 1) {
+		isCrippled.put(u, true);
+		u.setTurnsCripple(i - 1);
+	    } else
+		isCrippled.put(u, false);
+	    i = u.getTurnsPoisoned();
+	    if (i > 1) {
+		isPoisoned.put(u, true);
+		u.setTurnsPoisoned(i - 1);
+	    } else
+		isPoisoned.put(u,false);
 	}
-    }
-
-    public TurnController(Hashtable<String, Unit> unitsA, TurnController t) {
-	this(unitsA);
-	for (Unit u : unitsA.values()) {
-	    Object o = getTurnsCrippled(u);
-	    int i = 0;
-	    if (o != null) {
-		i = (int) o;
-		if (i > 1)
-		    isCrippled.put(u, i - 1);
-	    }
-	    o = getTurnsPoisoned(u);
-	    if (o != null) {
-		i = (int) o;
-		if (i > 1)
-		    isPoisoned.put(u, i - 1);
-	    }
-	}
-    }
-
-    public void setIsCrippled(Unit u, int i) {
-	isCrippled.put(u, i);
-    }
-
-    public void setIsPoisoned(Unit u, int i) {
-	isPoisoned.put(u, i);
     }
 
     public boolean isCrippled(Unit u) {
-	return isCrippled.get(u) > 0;
-    }
-
-    public boolean isPoisoned(Unit u) {
-	return isPoisoned.get(u) > 0;
-    }
-
-    public int getTurnsCrippled(Unit u) {
 	return isCrippled.get(u);
     }
 
-    public int getTurnsPoisoned(Unit u) {
+    public boolean isPoisoned(Unit u) {
 	return isPoisoned.get(u);
     }
 

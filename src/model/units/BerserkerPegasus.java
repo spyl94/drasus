@@ -1,6 +1,7 @@
 package model.units;
 
 import model.attack.AttackCaCBerserker;
+import model.attack.AttackCaCBerserkerBoosted;
 
 /**
  * @author Aurel
@@ -13,5 +14,10 @@ public class BerserkerPegasus extends Unit {
 		"Berserker");
 
     }
+    
+    public void activatePower() {
+	pow = true;
+ 	setIAttack(new AttackCaCBerserkerBoosted());
+     }
 
 }

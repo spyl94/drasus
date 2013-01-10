@@ -7,7 +7,7 @@ import model.units.Unit;
  * @author Aurel
  * 
  */
-public class AttackCaC extends Attack {
+public class AttackCaCBerserkerBoosted extends AttackCaC {
 
     @Override
     public String attack(Unit att, Unit def) throws DeadUnitException {
@@ -27,14 +27,12 @@ public class AttackCaC extends Attack {
 	dmg -= dmg * ((double) def.getDef() / 100);
 
 	def.receiveDmg(dmg);
-
-	return "L'attaque de votre " + att.getName() + " a infligé " + dmg
-		+ " à " + def.getName();
-    }
-
-    @Override
-    public boolean canAttackFromRange(int i) {
-	return false;
+	if (!((int) (Math.random() * (101)) < 35))
+	    return "L'attaque de votre " + att.getName() + " a infligé " + dmg
+		    + " à " + def.getName();
+	def.receiveDmg(dmg);
+	return "La double attaque de votre " + att.getName() + " a infligé "
+		+ dmg * 2 + " à " + def.getName();
     }
 
 }

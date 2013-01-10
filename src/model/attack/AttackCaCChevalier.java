@@ -3,22 +3,23 @@ package model.attack;
 import model.exception.DeadUnitException;
 import model.units.Unit;
 
-/**
- * @author Aurel
- * 
- */
-public class AttackCaC extends Attack {
+public class AttackCaCChevalier extends AttackCaC {
 
+    @Override
+    protected boolean trinityAdvantage(Unit.Weapon a, Unit.Weapon b) {
+	return (int) (Math.random() * (2)) < 1;
+    }
+    
     @Override
     public String attack(Unit att, Unit def) throws DeadUnitException {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
 
+	// 1 chance sur 2 de la gagner
 	if (trinityAdvantage(def.getWep(), att.getWep()))
 	    hit = hit * 1 / 3;
-	if (trinityAdvantage(att.getWep(), def.getWep()))
-	    crit += 5;
+	// ne perd jamais la trinité
 
 	if (!canHit(hit))
 	    return def.getName() + " a esquivé l'attaque !";
@@ -31,10 +32,4 @@ public class AttackCaC extends Attack {
 	return "L'attaque de votre " + att.getName() + " a infligé " + dmg
 		+ " à " + def.getName();
     }
-
-    @Override
-    public boolean canAttackFromRange(int i) {
-	return false;
-    }
-
 }

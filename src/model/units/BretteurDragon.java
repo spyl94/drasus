@@ -1,6 +1,7 @@
 package model.units;
 
-import model.attack.AttackCaC;
+import model.attack.AttackCaCCripple;
+import model.attack.AttackCaCCrippleLonger;
 
 /**
  * @author Aurel
@@ -9,9 +10,14 @@ import model.attack.AttackCaC;
 public class BretteurDragon extends Unit {
 
     public BretteurDragon() {
-	super(new AttackCaC(), 80, 30, 95, 6, 10, 50, 0, Weapon.SWORD,
+	super(new AttackCaCCripple(), 80, 30, 95, 6, 10, 50, 0, Weapon.SWORD,
 		"Bretteur");
 
+    }
+    
+    public void activatePower() {
+	pow = true;
+	setIAttack(new AttackCaCCrippleLonger());
     }
 
 }
