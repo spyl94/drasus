@@ -18,6 +18,13 @@ public class AttackDistanceArcher extends AttackDistance {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
+	
+	// crit 50%
+	if(att.isPowActivate()) {
+	    crit = 50;
+	    System.out.println("critique pouvoir activé");
+	}
+	    
 
 	if (!canHit(hit))
 	    return def.getName() + " a esquivé l'attaque !";
