@@ -30,24 +30,24 @@ public class TurnController {
 	    hasMoveAfterAttack.put(u, false);
 	    int i = u.getTurnsCripple();
 	    if(i > 1) {
-		System.out.println(u.getName() + " reste " + i + "cripple.");
+		//System.out.println(u.getName() + " reste " + i + "cripple.");
 		isCrippled.put(u, true);
 		u.setTurnsCripple(i - 1);
 	    } else {
 		isCrippled.put(u, false);
 		u.setTurnsCripple(0);
-		System.out.println(u.getName() + " reste " + i + "cripple.");
+		//System.out.println(u.getName() + " reste " + i + "cripple.");
 	    }
 		
 	    i = u.getTurnsPoisoned();
 	    if (i > 1) {
-		System.out.println(u.getName() + " reste " + i + "poison.");
+		//System.out.println(u.getName() + " reste " + i + "poison.");
 		isPoisoned.put(u, true);
 		u.setTurnsPoisoned(i - 1);
 	    } else {
 		isPoisoned.put(u,false);
 		u.setTurnsPoisoned(0);
-		System.out.println(u.getName() + " reste " + i + "poison.");
+		//System.out.println(u.getName() + " reste " + i + "poison.");
 	    }
 		
 	}
@@ -61,11 +61,11 @@ public class TurnController {
 	    }
 	    i = u.getTurnsPoisoned();
 	    if (i >= 1) {
-		System.out.println(u.getName() + " reste " + i + "poison.");
+		//System.out.println(u.getName() + " reste " + i + "poison.");
 		isPoisoned.put(u, true);
 	    } else {
 		isPoisoned.put(u, false);
-		System.out.println(u.getName() + " reste " + i + "poison.");
+		//System.out.println(u.getName() + " reste " + i + "poison.");
 	    }
 	}
     }

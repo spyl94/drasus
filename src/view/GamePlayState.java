@@ -389,8 +389,8 @@ public class GamePlayState extends BasicGameState {
 	    currentState = STATES.START_TURN;
 	    break;
 	case PAUSE_GAME:
-	    main.recPlayers();
-	    if (main.isTurn())
+	    //main.recPlayers();
+	    //if (main.isTurn())
 		currentState = STATES.START_TURN;
 	    break;
 	case GAME_OVER:
@@ -425,10 +425,16 @@ public class GamePlayState extends BasicGameState {
 	System.out.println("fin du tour");
 	currentState = STATES.PAUSE_GAME;
 	main.endNewTurn();
+	if(main.isAuto()) {
+	   sleep();
+	    currentState = STATES.START_TURN;
+	} else {
 
-	// main.sendEnd();
-	// main.endTurn();
-	// if(main.getPlayerA().getTurn())
+		// main.sendEnd();
+		// main.endTurn();
+		// if(main.getPlayerA().getTurn())
+	}
+	
     }
 
     private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
@@ -467,10 +473,49 @@ public class GamePlayState extends BasicGameState {
 	    }
 	}
     }
-
+    private void sleep() {
+	try {
+	    Thread.sleep(2000L);
+	} catch (InterruptedException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+    }
     private void playTurn(GameContainer gc, StateBasedGame sbg, int delta) {
 	if (main.isAuto()) {
-
+	    switch(TurnController.numberTurn) {
+	    case 1:
+		highLight = main.canMove(tiles, getTile(18, 17));
+		break;
+	    case 2:
+		main.move(getTile(21, 17), getTile(18, 17), highLight);
+		break;
+	    case 3:
+		highLight = main.canMove(tiles, getTile(18, 3));
+		break;
+	    case 4:
+		main.move(getTile(21, 3), getTile(18, 3), highLight);
+		break;
+	    case 5:
+		 try {
+		    main.attack(getTile(21, 17), getTile(24, 17));
+		} catch (VictoryException e) {
+		    e.printStackTrace();
+		}
+		break;
+	    case 6:
+		 try {
+		    main.attack(getTile(21, 17), getTile(24, 17));
+		} catch (VictoryException e) {
+		    e.printStackTrace();
+		}
+		break;
+	    default:
+		sleep();
+		sbg.enterState(ViewController.MAINMENUSTATE);
+		break;
+	    }
+	    currentState = STATES.END_TURN;
 	} else {
 	    Tile tile = getTileClicked(gc);
 	    if (tile != null) {
@@ -501,6 +546,7 @@ public class GamePlayState extends BasicGameState {
 	}
     }
 
+
     private void selectingUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 	Tile tile = getTileClicked(gc);
 	if (tile != null) {
@@ -514,7 +560,6 @@ public class GamePlayState extends BasicGameState {
 		}
 		// Si tout c'est bien passé on réinitialise l'état
 		currentState = STATES.PLAY_TURN;
-
 	    }
 
 	    else {
