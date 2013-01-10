@@ -26,33 +26,30 @@ public class ConnexionController {
 	Kryo kryo = client.getKryo();
 	kryo.register(model.Player.class);
 	kryo.register(model.Msg.class);
-	kryo.register(model.UnitFactoryPegasus.class);
-	kryo.register(java.util.Hashtable.class);
-	kryo.register(model.units.ArcherPegasus.class);
-	kryo.register(model.units.ArcherMontePegasus.class);
-	kryo.register(model.attack.AttackCaC.class);
-	kryo.register(model.attack.AttackCaCBerserker.class);
-	kryo.register(model.attack.AttackDistance.class);
-	kryo.register(model.units.BerserkerPegasus.class);
-	kryo.register(model.units.BretteurPegasus.class);
-	kryo.register(model.units.CavalierPegasus.class);
-	kryo.register(model.units.ChevalierPegasus.class);
-	kryo.register(model.exception.DeadUnitException.class);
-	kryo.register(model.units.EclaireurPegasus.class);
-	kryo.register(model.units.FantassinPegasus.class);
-	kryo.register(model.attack.IAttack.class);
-	kryo.register(model.units.LancierPegasus.class);
-	kryo.register(model.units.RodeurPegasus.class);
-	kryo.register(model.units.TankPegasus.class);
-	kryo.register(model.units.Unit.class);
-	kryo.register(model.UnitFactory.class);
-	kryo.register(model.UnitFactoryPegasus.class);
-	kryo.register(model.units.Unit.Weapon.class);
 	kryo.register(view.Tile.class);
 	kryo.register(model.Player[].class);
 	kryo.register(view.Tile.FIELD.class);
 	kryo.register(String[].class);
-
+	kryo.register(model.UnitFactory.class);
+	kryo.register(model.UnitFactoryDragon.class);
+	kryo.register(model.UnitFactoryPegasus.class);
+	kryo.register(model.attack.Attack.class);
+	kryo.register(model.attack.AttackCaC.class);
+	kryo.register(model.attack.AttackCaCBerserker.class);
+	kryo.register(model.attack.AttackCaCBerserkerBoosted.class);
+	kryo.register(model.attack.AttackCaCChevalier.class);
+	kryo.register(model.attack.AttackCaCCripple.class);
+	kryo.register(model.attack.AttackCaCCrippleLonger.class);
+	kryo.register(model.attack.AttackCaCIgnoreArmor.class);
+	kryo.register(model.attack.AttackDistance.class);
+	kryo.register(model.attack.AttackDistanceArcher.class);
+	kryo.register(model.attack.AttackDistanceDoubledAgainstCavalry.class);
+	kryo.register(model.attack.AttackDistanceDoubledInForest.class);
+	kryo.register(model.attack.AttackDistancePoisonedLonger.class);
+	kryo.register(model.exception.DeadBossException.class);
+	kryo.register(model.exception.DeadUnitException.class);
+	kryo.register(model.exception.VictoryException.class);
+	
 	client.start();
 
 	client.addListener(new Listener() {

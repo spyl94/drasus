@@ -392,10 +392,11 @@ public class GamePlayState extends BasicGameState {
 	    System.out.println("fin du tour");
 	    currentState = STATES.PAUSE_GAME;
 	    endTurn();
-	    // main.sendEnd();
-	    // main.endTurn();
-	    // if(main.getPlayerA().getTurn())
+	    main.sendEnd();
+	    main.endTurn();
+	    if(main.getPlayerA().getTurn()){
 	    currentState = STATES.START_TURN;
+	    }
 	    break;
 	case PAUSE_GAME:
 	    main.recPlayers();
@@ -446,8 +447,8 @@ public class GamePlayState extends BasicGameState {
 
 	if (unitNb == main.getPlayerAUnitsNames().length) {
 	    currentState = STATES.START_TURN;
-	    // main.sendPlayer();
-	    // main.recPlayer();
+	    main.sendPlayer();
+	    main.recPlayer();
 	    if (main.getPlayerA().getTurn() == false) {
 		currentState = STATES.PAUSE_GAME;
 	    }
@@ -496,6 +497,7 @@ public class GamePlayState extends BasicGameState {
 		    // TODO: prévenir l'autre de sa défaite !
 		    sbg.enterState(ViewController.MAINMENUSTATE);
 		}
+		main.sendBoth();
 		// Si tout c'est bien passé on réinitialise l'état
 		currentState = STATES.PLAY_TURN;
 
@@ -503,7 +505,7 @@ public class GamePlayState extends BasicGameState {
 
 	    else {
 		main.move(tile, currentSelected, highLight);
-		// main.sendBoth();
+		main.sendBoth();
 		currentState = STATES.PLAY_TURN;
 	    }
 	    System.out.println(atkHighLight.size());
