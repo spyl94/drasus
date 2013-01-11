@@ -23,6 +23,7 @@ import java.util.Vector;
 public class MainController {
 
     private static MainController controller;
+    public static String [] BOSS = {"Pegasus", "Dragon"} ;
 
     public static MainController getInstance() {
 	if (controller == null)
@@ -43,7 +44,7 @@ public class MainController {
     private boolean left;
 
     private MainController() {
-	this.auto = true;
+	this.auto = false;
 	// this.left = true;
 	a = null;
 	b = new Player("Dragon");
