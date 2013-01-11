@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.*;
 
+import model.Player;
 import model.UnitFactory;
 import model.UnitFactoryDragon;
 import model.UnitFactoryPegasus;
@@ -13,16 +14,21 @@ public class UnitTest {
     @Test
     public void testPowerActivate() {
 	UnitFactory u;
+	Player p = new Player();
 	u = new UnitFactoryPegasus();
 	for (String str : u.getNamesOfUnits()) {
-	    u.getUnit(str).activatePower();
-	    assertTrue(u.getUnit(str).isPowActivate());
+	    p.addUnit(str);
+	    assertFalse(p.getUnit(str).isPowActivate());
+	    p.getUnit(str).activatePower();
+	    assertTrue(p.getUnit(str).isPowActivate());
 	}
-	    
+	p = new Player("Dragon"); 
 	u = new UnitFactoryDragon();
 	for (String str : u.getNamesOfUnits()) {
-	    u.getUnit(str).activatePower();
-	    assertTrue(u.getUnit(str).isPowActivate());
+	    p.addUnit(str);
+	    assertFalse(p.getUnit(str).isPowActivate());
+	    p.getUnit(str).activatePower();
+	    assertTrue(p.getUnit(str).isPowActivate());
 	}
     }
 
