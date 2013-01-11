@@ -14,8 +14,7 @@ public class TurnController {
     private Hashtable<Unit, Boolean> isCrippled;
     private Hashtable<Unit, Boolean> isPoisoned;
 
-    public TurnController(Hashtable<String, Unit> unitsA,
-	    Hashtable<String, Unit> unitsB) {
+    public TurnController(Hashtable<String, Unit> unitsA) {
 
 	numberTurn++;
 
@@ -31,42 +30,20 @@ public class TurnController {
 	    hasMoveAfterAttack.put(u, false);
 	    int i = u.getTurnsCripple();
 	    if (i > 1) {
-		// System.out.println(u.getName() + " reste " + i + "cripple.");
 		isCrippled.put(u, true);
 		u.setTurnsCripple(i - 1);
 	    } else {
 		isCrippled.put(u, false);
 		u.setTurnsCripple(0);
-		// System.out.println(u.getName() + " reste " + i + "cripple.");
 	    }
 
 	    i = u.getTurnsPoisoned();
 	    if (i > 1) {
-		// System.out.println(u.getName() + " reste " + i + "poison.");
 		isPoisoned.put(u, true);
 		u.setTurnsPoisoned(i - 1);
 	    } else {
 		isPoisoned.put(u, false);
 		u.setTurnsPoisoned(0);
-		// System.out.println(u.getName() + " reste " + i + "poison.");
-	    }
-
-	}
-
-	for (Unit u : unitsB.values()) {
-	    int i = u.getTurnsCripple();
-	    if (i >= 1) {
-		isCrippled.put(u, true);
-	    } else {
-		isCrippled.put(u, false);
-	    }
-	    i = u.getTurnsPoisoned();
-	    if (i >= 1) {
-		// System.out.println(u.getName() + " reste " + i + "poison.");
-		isPoisoned.put(u, true);
-	    } else {
-		isPoisoned.put(u, false);
-		// System.out.println(u.getName() + " reste " + i + "poison.");
 	    }
 	}
     }
@@ -82,6 +59,7 @@ public class TurnController {
 	try {
 	    return isCrippled.get(u);
 	} catch (NullPointerException e) {
+	    System.out.println("Erreur isCrippled");
 	    return false;
 	}
 
@@ -98,28 +76,9 @@ public class TurnController {
 	try {
 	    return isPoisoned.get(u);
 	} catch (NullPointerException e) {
+	    System.out.println("Erreur isPoisoned");
 	    return false;
 	}
-    }
-
-    /**
-     * Set the unit poisoned.
-     * 
-     * @param u
-     *            the unit
-     */
-    public void setPoisoned(Unit u) {
-	isPoisoned.put(u, true);
-    }
-
-    /**
-     * Set the unit crippled.
-     * 
-     * @param u
-     *            the unit
-     */
-    public void setCrippled(Unit u) {
-	isCrippled.put(u, true);
     }
 
     /**

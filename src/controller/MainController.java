@@ -43,20 +43,20 @@ public class MainController {
     private boolean left;
 
     private MainController() {
-	this.auto = false;
-	//this.left = true;
+	this.auto = true;
+	// this.left = true;
 	a = null;
 	b = new Player("Dragon");
     }
-    
+
     public boolean playLeft() {
 	return left;
     }
-    
+
     public boolean playRight() {
 	return !left;
     }
-    
+
     public boolean isAuto() {
 	return auto;
     }
@@ -76,7 +76,7 @@ public class MainController {
 
     public void addUnitToB(String name, Tile tile) {
 	b.addUnit(name);
-	if(b.getUnit(name) != null)
+	if (b.getUnit(name) != null)
 	    b.getUnit(name).setTile(tile);
     }
 
@@ -351,14 +351,6 @@ public class MainController {
 		return u;
 	return null;
     }
-    
-    public void setPoisoned(Unit u) {
-	turn.setPoisoned(u);
-    }
-    
-    public void setCrippled(Unit u) {
-	turn.setCrippled(u);
-    }
 
     public void init(String[] args) {
 
@@ -367,8 +359,15 @@ public class MainController {
 	    if (s.equals("-auto")) {
 		System.out.println("mode auto");
 		this.auto = true;
+	    } else if (s.contains("-ip=")) {
+		s = s.replace("-ip=", "");
+		ConnexionController.IP = s;
+	    } else if (s.contains("-port=")) {
+		s = s.replace("-port=", "");
+		ConnexionController.PORT = s;
 	    }
-		
+
+
 	}
 
 	try {
@@ -391,7 +390,7 @@ public class MainController {
 
     public String initNewTurn() throws VictoryException {
 	String str = "";
-	turn = new TurnController(a.getUnits(), b.getUnits());
+	turn = new TurnController(a.getUnits());
 	for (Unit u : a.getUnits().values()) {
 	    try {
 		if (u.getTile().getField() == FIELD.FORT)
@@ -408,15 +407,16 @@ public class MainController {
 	for (Unit u : a.getUnits().values()) {
 	    if (u.getTile().getField() == FIELD.FORT)
 		u.addRegenerationFort();
-	    if (u.getName()=="Rodeur" && u.getTile().getField() == FIELD.FOREST)
+	    if (u.getName() == "Rodeur"
+		    && u.getTile().getField() == FIELD.FOREST)
 		u.addRegenerationForest();
-	    if (u.getName()=="Fantassin")
+	    if (u.getName() == "Fantassin")
 		u.addRegeneration();
 	}
 
 	return str;
     }
-    
+
     public void endNewTurn() {
 	for (Unit u : a.getUnits().values()) {
 	    u.setAttackedPrevious(turn.hasAttack(u));
@@ -449,41 +449,45 @@ public class MainController {
 	return true;
     }
 
-    public Vector<Tile> isCrippled (Vector<Tile> tiles){
+    /**
+     * Returns crippled units on the map.
+     * 
+     * @param tiles
+     *            the map
+     * @return tiles with units crippled.
+     */
+    public Vector<Tile> isCrippled(Vector<Tile> tiles) {
 	Vector<Tile> result = new Vector<Tile>();
-	for(Tile t : tiles){
-	    if(getUnit(t) != null && getUnit(t).getTurnsCripple() > 0){
-		System.out.println("before");
-		if(turn.isCrippled(getUnit(t))){
-		    System.out.println(turn.isCrippled(getUnit(t)));
-		    result.add(t);
-		}
-		System.out.println("after");
+	for (Tile t : tiles) {
+	    if (getUnit(t) != null && getUnit(t).getTurnsCripple() > 0) {
+		result.add(t);
 	    }
 	}
 
 	return result;
     }
-    
-    public boolean isCamo(){
+
+    public boolean isCamo() {
 	return b.getUnit("Eclaireur").getTile().getField() == FIELD.FOREST;
     }
-    
-    public Vector<Tile> isPoisoned (Vector<Tile> tiles){
+
+    /**
+     * Returns poisoned units on the map.
+     * 
+     * @param tiles
+     *            the map
+     * @return tiles with units poisoned.
+     */
+    public Vector<Tile> isPoisoned(Vector<Tile> tiles) {
 	Vector<Tile> result = new Vector<Tile>();
-	for(Tile t : tiles){
-	    if(getUnit(t) != null && getUnit(t).getTurnsPoisoned() > 0){
-		System.out.println("before");
-		if(turn.isPoisoned(getUnit(t))){
-		    System.out.println(turn.isPoisoned(getUnit(t)));
-		    result.add(t);
-		}
-		System.out.println("after");
+	for (Tile t : tiles) {
+	    if (getUnit(t) != null && getUnit(t).getTurnsPoisoned() > 0) {
+		result.add(t);
 	    }
 	}
 	return result;
     }
-    
+
     public void move(Tile tile, Tile currentSelected, Vector<Tile> highLight) {
 	Unit u = getUnit(currentSelected);
 	if ((!turn.hasMove(u) && !turn.hasAttack(u)))

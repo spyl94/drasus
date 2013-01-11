@@ -10,10 +10,8 @@ import controller.ConnexionController;
 
 public class ConnexionController {
 
-    /**
-     * @param args
-     */
-
+    public static String IP;
+    public static String PORT;
     private Client client;
     private Msg msg = new Msg();
     private Player[] envoi;
