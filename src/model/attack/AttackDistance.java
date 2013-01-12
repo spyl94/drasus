@@ -33,7 +33,7 @@ public class AttackDistance extends Attack {
 
 	def.receiveDmg(dmg);
 
-	return "L'attaque à distance de votre " + att.getName() + " a infligé "
+	return "L'attaque à distance de " + att.getName() + " a infligé "
 		+ dmg + " à " + def.getName();
     }
 

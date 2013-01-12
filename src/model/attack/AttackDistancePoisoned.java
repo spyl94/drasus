@@ -30,8 +30,8 @@ public class AttackDistancePoisoned extends AttackDistance {
 	def.setTurnsPoisoned(def.getTurnsPoisoned() + poison);
 	//MainController.getInstance().setPoisoned(def);
 
-	return "L'attaque à distance de votre " + att.getName() + " a infligé "
-		+ dmg + " à " + def.getName() + "ainsi que le poison pendant " + poison + " tours.";
+	return "L'attaque à distance de l'" + att.getName() + " a infligé "
+		+ dmg + " à " + def.getName() + " ainsi que le poison pendant " + poison + " tours.";
     }
 
 }

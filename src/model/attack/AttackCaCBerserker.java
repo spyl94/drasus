@@ -28,10 +28,10 @@ public class AttackCaCBerserker extends AttackCaC {
 
 	def.receiveDmg(dmg);
 	if (!((int) (Math.random() * (101)) < 15))
-	    return "L'attaque de votre " + att.getName() + " a infligé " + dmg
+	    return "L'attaque du  " + att.getName() + " a infligé " + dmg
 		    + " à " + def.getName();
 	def.receiveDmg(dmg);
-	return "La double attaque de votre " + att.getName() + " a infligé "
+	return "La double attaque du " + att.getName() + " a infligé "
 		+ dmg * 2 + " à " + def.getName();
     }
 

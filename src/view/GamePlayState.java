@@ -107,8 +107,14 @@ public class GamePlayState extends BasicGameState {
     private Animation dragonAR;
     private int popupX = -1;
     private int popupY = -1;
-    private Image popup;
+    private Image popupGold;
+    private Image popupSilver;
+    private Image calque;
     private Tile unitOnIt;
+    private Font awtFont;
+    private TrueTypeFont font;
+    private Font traFont;
+    private TrueTypeFont message;
 
     public GamePlayState(int stateID) {
 	this.stateID = stateID;
@@ -130,7 +136,9 @@ public class GamePlayState extends BasicGameState {
 	AtkTarget = new Image("res/sprites/atk.png");
 	poison = new Image("res/sprites/poison.png");
 	cripple = new Image("res/sprites/cripple.png");
-	popup = new Image("res/sprites/popup.png");
+	popupGold = new Image("res/sprites/popupGold.png");
+	popupSilver = new Image("res/sprites/popupSilver.png");
+	calque = new Image("res/sprites/calqueblanc.png");
 	archerS = new SpriteSheet("res/sprites/ArcherS.png", 32, 32);
 	archerA = new Animation(archerS, 0, 0, 1, 0, false, 500, true);
 	archerR = new SpriteSheet("res/sprites/ArcherR.png", 32, 32);
@@ -184,7 +192,10 @@ public class GamePlayState extends BasicGameState {
 	dragonA = new Animation(dragonS, 0, 0, 1, 0, false, 500, true);
 	dragonR = new SpriteSheet("res/sprites/DragonnierR.png", 32, 32);
 	dragonAR = new Animation(dragonR, 0, 0, 1, 0, false, 500, true);
-
+	awtFont = new Font("Times New Roman", Font.BOLD, 24);
+	font = new TrueTypeFont(awtFont, false);
+	traFont = new Font("Times New Roman", Font.PLAIN, 24);
+	message = new TrueTypeFont(awtFont, false);
 	/* Init Vector tiles */
 
 	for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
@@ -229,7 +240,7 @@ public class GamePlayState extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics arg2)
 	    throws SlickException {
 	grassMap.render(0, 0);
-
+	calque.draw(32, 673);
 	if (highLight.isEmpty() == false) {
 	    for (Tile t : highLight) {
 		Target.draw(t.x * 32, t.y * 32);
@@ -362,24 +373,45 @@ public class GamePlayState extends BasicGameState {
 	}
 
 	if (popupX > -1 && popupY > -1) {
-	    popup.draw(popupX, popupY);
-	    Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
-	    TrueTypeFont font = new TrueTypeFont(awtFont, false);
-	    if (main.getUnit(unitOnIt).getHp() > 99) {
-		font.drawString(popupX + 19, popupY + 7,
-			String.valueOf(main.getUnit(unitOnIt).getHp()),
-			Color.black);
-	    } else if (main.getUnit(unitOnIt).getHp() > 9) {
-		font.drawString(popupX + 25, popupY + 7,
-			String.valueOf(main.getUnit(unitOnIt).getHp()),
-			Color.black);
-	    } else {
-		font.drawString(popupX + 31, popupY + 7,
-			String.valueOf(main.getUnit(unitOnIt).getHp()),
-			Color.black);
+	    if (main.getUnit(unitOnIt) != null) {
+		if (main.getUnit(unitOnIt).isPowActivate()) {
+		    popupGold.draw(popupX, popupY);
+		    if (main.getUnit(unitOnIt).getHp() > 99) {
+			font.drawString(popupX + 19, popupY + 7,
+				String.valueOf(main.getUnit(unitOnIt).getHp()),
+				Color.black);
+		    } else if (main.getUnit(unitOnIt).getHp() > 9) {
+			font.drawString(popupX + 25, popupY + 7,
+				String.valueOf(main.getUnit(unitOnIt).getHp()),
+				Color.black);
+		    } else {
+			font.drawString(popupX + 31, popupY + 7,
+				String.valueOf(main.getUnit(unitOnIt).getHp()),
+				Color.black);
+		    }
+		} else {
+		    popupSilver.draw(popupX, popupY);
+		    if (main.getUnit(unitOnIt).getHp() > 99) {
+			font.drawString(popupX + 19, popupY + 7,
+				String.valueOf(main.getUnit(unitOnIt).getHp()),
+				Color.black);
+		    } else if (main.getUnit(unitOnIt).getHp() > 9) {
+			font.drawString(popupX + 25, popupY + 7,
+				String.valueOf(main.getUnit(unitOnIt).getHp()),
+				Color.black);
+		    } else {
+			font.drawString(popupX + 31, popupY + 7,
+				String.valueOf(main.getUnit(unitOnIt).getHp()),
+				Color.black);
+		    }
+		}
 	    }
 	}
-
+	
+	if (main.getLastMessage() != null) {
+	    message.drawString(35, 675, main.getLastMessage(), Color.black);
+	}
+	
 	if (currentState != STATES.START_GAME
 		&& currentState != STATES.NEW_UNIT
 		&& currentState != STATES.START_TURN) {
@@ -417,6 +449,7 @@ public class GamePlayState extends BasicGameState {
 	    endTurn();
 	    break;
 	case PAUSE_GAME:
+	    main.recMsg();
 	    getTileMouseOn(gc);
 	    if (!main.isAuto()) {
 		main.recPlayers();
@@ -454,7 +487,6 @@ public class GamePlayState extends BasicGameState {
 
     private void endTurn() {
 	currentSelected = null;
-	System.out.println("fin du tour");
 	currentState = STATES.PAUSE_GAME;
 	main.endNewTurn();
 
@@ -592,7 +624,8 @@ public class GamePlayState extends BasicGameState {
 	    // on clique sur une unité de B
 	    if (main.isPlayerBUnit(tile)) {
 		try {
-		    System.out.println(main.attack(currentSelected, tile));
+		    main.setLastMessage(main.attack(currentSelected, tile));
+		    main.sendLastMessage();
 		} catch (VictoryException e) {
 		    // TODO: prévenir l'autre de sa défaite !
 		    sbg.enterState(ViewController.MAINMENUSTATE);

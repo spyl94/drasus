@@ -23,7 +23,7 @@ import java.util.Vector;
 public class MainController {
 
     private static MainController controller;
-    public static String [] BOSS = {"Pegasus", "Dragon"} ;
+    public static String[] BOSS = { "Pegasus", "Dragon" };
 
     public static MainController getInstance() {
 	if (controller == null)
@@ -42,6 +42,7 @@ public class MainController {
     private ConnexionController client;
     private boolean auto;
     private boolean left;
+    private String lastMessage;
 
     private MainController() {
 	this.auto = false;
@@ -368,7 +369,6 @@ public class MainController {
 		ConnexionController.PORT = s;
 	    }
 
-
 	}
 
 	try {
@@ -500,7 +500,7 @@ public class MainController {
 		    } else
 			System.out.println("La case n'est pas libre");
 		} else {
-		    System.out.println("C'est trop loin");
+		    // System.out.println("C'est trop loin");
 		}
 	    }
 	else if (turn.hasAttack(u) && !turn.hasMoveAfterAttack(u)) {
@@ -512,7 +512,7 @@ public class MainController {
 		    } else
 			System.out.println("La case n'est pas libre");
 		} else {
-		    System.out.println("C'est trop loin");
+		    // System.out.println("C'est trop loin");
 		}
 	    }
 	}
@@ -545,6 +545,7 @@ public class MainController {
     public boolean isTurn() {
 	if (client.getMsg() != null) {
 	    boolean temp = client.getMsg().getFirstCo();
+	    lastMessage = client.getMsg().getMsg();
 	    client.eraseMsg();
 	    return temp;
 	} else {
@@ -590,15 +591,39 @@ public class MainController {
 	}
     }
 
+    public void sendMsg(String message) {
+	Msg msg = new Msg(message, false, true);
+	client.sendMsg(msg);
+    }
+
+    public void sendLastMessage() {
+  	Msg msg = new Msg(lastMessage, false, true);
+  	client.sendMsg(msg);
+      }
+    
+    public void recMsg() {
+	if (client.getMsg() != null) {
+	    lastMessage = client.getMsg().getMsg();
+	}
+    }
+
+    public String getLastMessage() {
+	return lastMessage;
+    }
+
     public void sendBoth() {
 	client.sendPlayers(a, b);
     }
 
     public void sendEnd() {
-	Msg msg = new Msg("", true, true);
+	Msg msg = new Msg("C'est à vous de jouer.", true, true);
 	client.sendMsg(msg);
     }
 
+    public void setLastMessage(String text){
+	lastMessage = text;
+    }
+    
     public void sendPlayer() {
 	client.sendPlayer(a);
     }

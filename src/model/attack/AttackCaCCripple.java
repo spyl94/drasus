@@ -27,7 +27,7 @@ public class AttackCaCCripple extends AttackCaC {
 	def.setTurnsCripple(def.getTurnsCripple() + cripple);
 	//MainController.getInstance().setCrippled(def);
 
-	return "L'attaque de votre " + att.getName() + " a infligé " + dmg
+	return "L'attaque du " + att.getName() + " a infligé " + dmg
 		+ " à " + def.getName() + " ainsi que l'infirmité pendant " + cripple + " tours.";
     }
 

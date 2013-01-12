@@ -24,7 +24,7 @@ public class AttackCaCIgnoreArmor extends AttackCaC {
 
 	def.receiveDmg(dmg);
 
-	return "L'attaque de votre " + att.getName() + " a infligé " + dmg
+	return "L'attaque de l'" + att.getName() + " a infligé " + dmg
 		+ " à " + def.getName() + " en ignorant l'armure.";
     }
 }

@@ -110,6 +110,7 @@ public class ConnexionController {
     }
 
     public void sendMsg(Msg msg) {
+	System.out.println(msg.getMsg());
 	client.sendTCP(msg);
     }
 

@@ -30,11 +30,11 @@ public class AttackDistanceDoubledInForest extends AttackDistance {
 	
 	if(att.getTile().getField() == FIELD.FOREST) {
 	    def.receiveDmg(dmg);
-	    return "La double attaque à distance de votre " + att.getName() + " a infligé "
+	    return "La double attaque à distance du " + att.getName() + " a infligé "
 		+ dmg*2 + " à " + def.getName();
 	}
 
-	return "L'attaque à distance de votre " + att.getName() + " a infligé "
+	return "L'attaque à distance du " + att.getName() + " a infligé "
 		+ dmg + " à " + def.getName();
     }
 }

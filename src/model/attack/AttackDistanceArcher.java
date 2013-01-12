@@ -34,7 +34,7 @@ public class AttackDistanceArcher extends AttackDistance {
 
 	def.receiveDmg(dmg);
 
-	return "L'attaque à distance de votre " + att.getName() + " a infligé "
+	return "L'attaque à distance de l'" + att.getName() + " a infligé "
 		+ dmg + " à " + def.getName();
     }
 

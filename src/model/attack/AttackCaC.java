@@ -28,7 +28,7 @@ public class AttackCaC extends Attack {
 
 	def.receiveDmg(dmg);
 
-	return "L'attaque de votre " + att.getName() + " a infligé " + dmg
+	return "L'attaque du  " + att.getName() + " a infligé " + dmg
 		+ " à " + def.getName();
     }
 
