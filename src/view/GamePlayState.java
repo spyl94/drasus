@@ -407,11 +407,11 @@ public class GamePlayState extends BasicGameState {
 		}
 	    }
 	}
-	
+
 	if (main.getLastMessage() != null) {
 	    message.drawString(35, 675, main.getLastMessage(), Color.black);
 	}
-	
+
 	if (currentState != STATES.START_GAME
 		&& currentState != STATES.NEW_UNIT
 		&& currentState != STATES.START_TURN) {
@@ -424,6 +424,7 @@ public class GamePlayState extends BasicGameState {
 		cripple.draw(t.x * 32 + 20, t.y * 32 + 20);
 	    }
 	}
+
     }
 
     @Override
@@ -518,8 +519,8 @@ public class GamePlayState extends BasicGameState {
 	    if (tile != null) // si clic
 		if (tile.isBlocked() == false
 			&& main.isFreeTileset(tile)
-			&& ((main.playLeft() && tile.x < grassMap.getWidth() / 2) || (main
-				.playRight() && tile.x >= grassMap.getWidth() / 2))) {
+			&& ((main.playLeft() && tile.x < grassMap.getWidth() / 2) || (!main
+				.playLeft() && tile.x >= grassMap.getWidth() / 2))) {
 		    main.addUnit(main.getPlayerAUnitsNames()[unitNb], tile);
 		    System.out.print("Ajout :");
 		    System.out.println(main.getPlayerAUnitsNames()[unitNb]);

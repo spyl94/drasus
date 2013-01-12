@@ -14,7 +14,7 @@ public class AttackDistanceArcher extends AttackDistance {
     }
     
     @Override
-    public String attack(Unit att, Unit def) throws DeadUnitException {
+    public String attack(Unit att, Unit def, boolean tank) throws DeadUnitException {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
@@ -31,6 +31,9 @@ public class AttackDistanceArcher extends AttackDistance {
 
 	dmg += dmg * ((double) crit / 100);
 	dmg -= dmg * ((double) def.getDef() / 100);
+	
+	if (tank)
+	    dmg = dmg - (dmg/5);
 
 	def.receiveDmg(dmg);
 

@@ -9,7 +9,7 @@ import model.units.Unit;
  */
 public abstract class Attack implements IAttack {
 
-    public abstract String attack(Unit att, Unit deff) throws DeadUnitException;
+    public abstract String attack(Unit att, Unit deff, boolean tank) throws DeadUnitException;
     public abstract boolean canAttackFromRange(int i);
     
     @Override
@@ -17,12 +17,6 @@ public abstract class Attack implements IAttack {
 	return 1;
     }
     
-    protected boolean checkTankInRange(Unit deff)
-    {
-	if(deff.getName() == "Tank") return false;
-	return true;
-	//return MainController.getInstance().isTankInRange(deff);
-    }
     /**
      * Determine randomly if the unit has touched the target.
      * 

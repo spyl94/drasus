@@ -14,6 +14,9 @@ public class TurnController {
     private Hashtable<Unit, Boolean> isCrippled;
     private Hashtable<Unit, Boolean> isPoisoned;
 
+    /**
+     * It should be called exactly once each turn.
+     */
     public TurnController(Hashtable<String, Unit> unitsA) {
 
 	numberTurn++;

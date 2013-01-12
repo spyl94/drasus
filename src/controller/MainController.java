@@ -20,14 +20,24 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
+/**
+ * @author Aurel
+ * @Singleton
+ * 
+ */
 public class MainController {
 
     private static MainController controller;
-    public static String[] BOSS = { "Pegasus", "Dragon" };
+    public static String[] BOSS = { "Pegasus", "Dragon" }; // available boss
 
+    /**
+     * Returns the MainController.
+     * 
+     * @return the instance of MainController
+     */
     public static MainController getInstance() {
 	if (controller == null)
-	    controller = new MainController();
+	    new MainController();
 	return controller;
     }
 
@@ -37,49 +47,80 @@ public class MainController {
 
     private AppGameContainer app;
     private TurnController turn;
-    private Player a;
-    private Player b;
+    private Player a; // local player
+    private Player b; // remote player
     private ConnexionController client;
     private boolean auto;
     private boolean left;
     private String lastMessage;
 
+    /**
+     * The only constructor, the private no-argument constructor, can only be
+     * called from this class within the getInstance method. It should be called
+     * exactly once, the first time getInstance is called.
+     */
     private MainController() {
+	if (controller == null)
+	    controller = this;
+	else
+	    throw new IllegalArgumentException(
+		    "Default constructor called more than once.");
 	this.auto = false;
 	// this.left = true;
-	a = null;
-	b = new Player("Dragon");
+	a = null;	// Instanciate by setPlayerA
+	b = new Player("Dragon"); // for local demo only
     }
 
-    public boolean playLeft() {
-	return left;
-    }
-
-    public boolean playRight() {
-	return !left;
-    }
-
-    public boolean isAuto() {
-	return auto;
-    }
-
-    public void setPlayerA(String boss) {
-	if (a == null)
-	    a = new Player(boss);
-	else
-	    System.out.println("A existe déjà ! ");
-    }
-
+    /**
+     * Add a unit to player A.
+     * 
+     * @param name
+     *            the name of unit
+     * @param tile
+     *            the tile
+     */
     public void addUnit(String name, Tile tile) {
 	a.addUnit(name);
 	if (a.getUnit(name) != null)
 	    a.getUnit(name).setTile(tile);
     }
 
+    /**
+     * Add a unit to player B. (for demo only)
+     * 
+     * @param name
+     *            the name of unit
+     * @param tile
+     *            the tile
+     */
     public void addUnitToB(String name, Tile tile) {
 	b.addUnit(name);
 	if (b.getUnit(name) != null)
 	    b.getUnit(name).setTile(tile);
+    }
+
+    public Vector<Tile> atkHighLight(Vector<Tile> tiles, Tile base) {
+	Vector<Tile> result = new Vector<Tile>();
+	boolean temp = false;
+	for (Tile t : tiles) {
+	    for (int i = 1; i <= getUnit(base).getRange(); i++) {
+		if (distance(t, base) <= getUnit(base).getRange()
+			&& distance(t, base) > 0) {
+		    if (t.isBlocked() == false) {
+			for (Tile p : result) {
+			    if (t == p) {
+				temp = true;
+			    }
+			}
+			if (temp == false) {
+			    result.add(t);
+			}
+			temp = false;
+		    }
+		}
+	    }
+	}
+	return result;
     }
 
     public String[][] aToTab() {
@@ -101,9 +142,20 @@ public class MainController {
 	return tab;
     }
 
+    /**
+     * Attack between two units.
+     * 
+     * @param att
+     *            the attacking unit
+     * @param def
+     *            the defending unit
+     * @return the result of the fight
+     * @throws VictoryException
+     *             if a boss is dead
+     */
     private String attack(String att, String def) throws VictoryException {
 	try {
-	    return a.attackWith(a.getUnit(att), b.getUnit(def));
+	    return a.attackWith(a.getUnit(att), b.getUnit(def), isTankInRange(b.getUnit(def)));
 	} catch (DeadBossException e) {
 	    throw new VictoryException(e);
 	} catch (DeadUnitException e) {
@@ -119,6 +171,17 @@ public class MainController {
 	}
     }
 
+    /**
+     * Check if possible and attack between two tiles.
+     * 
+     * @param att
+     *            the attacking tile
+     * @param def
+     *            the defending tile
+     * @return the result of the fight
+     * @throws VictoryException
+     *             if a boss if dead
+     */
     public String attack(Tile att, Tile def) throws VictoryException {
 	try {
 
@@ -168,15 +231,6 @@ public class MainController {
 	}
 
 	return tab;
-    }
-
-    public Vector<Tile> canMove(Vector<Tile> tiles, Tile base) {
-	if (getUnit(base).hasMat() && getTurn().hasAttack(getUnit(base))
-		&& !getTurn().hasMoveAfterAttack(getUnit(base))) {
-	    return canCross(tiles, base, getUnit(base).getMat());
-	} else {
-	    return canCross(tiles, base, getUnit(base).getMove());
-	}
     }
 
     private Vector<Tile> canCross(Vector<Tile> tiles, Tile base, int moveNb) {
@@ -270,28 +324,13 @@ public class MainController {
 	return result;
     }
 
-    public Vector<Tile> atkHighLight(Vector<Tile> tiles, Tile base) {
-	Vector<Tile> result = new Vector<Tile>();
-	boolean temp = false;
-	for (Tile t : tiles) {
-	    for (int i = 1; i <= getUnit(base).getRange(); i++) {
-		if (distance(t, base) <= getUnit(base).getRange()
-			&& distance(t, base) > 0) {
-		    if (t.isBlocked() == false) {
-			for (Tile p : result) {
-			    if (t == p) {
-				temp = true;
-			    }
-			}
-			if (temp == false) {
-			    result.add(t);
-			}
-			temp = false;
-		    }
-		}
-	    }
+    public Vector<Tile> canMove(Vector<Tile> tiles, Tile base) {
+	if (getUnit(base).hasMat() && getTurn().hasAttack(getUnit(base))
+		&& !getTurn().hasMoveAfterAttack(getUnit(base))) {
+	    return canCross(tiles, base, getUnit(base).getMat());
+	} else {
+	    return canCross(tiles, base, getUnit(base).getMove());
 	}
-	return result;
     }
 
     public void connexion(String adr) {
@@ -324,6 +363,15 @@ public class MainController {
 	return a + b;
     }
 
+    /**
+     * End a turn of the game.
+     */
+    public void endNewTurn() {
+	for (Unit u : a.getUnits().values()) {
+	    u.setAttackedPrevious(turn.hasAttack(u));
+	}
+    }
+
     public void endTurn() {
 	a.setTurn(false);
     }
@@ -332,6 +380,11 @@ public class MainController {
 	return a;
     }
 
+    /**
+     * Returns all available units of player A.
+     * 
+     * @return strings of names.
+     */
     public String[] getPlayerAUnitsNames() {
 	return a.getNamesOfUnits();
     }
@@ -354,6 +407,12 @@ public class MainController {
 	return null;
     }
 
+    /**
+     * Init the GameContainer, start the game.
+     * 
+     * @param args
+     *            the arguments
+     */
     public void init(String[] args) {
 
 	for (String s : args) {
@@ -379,16 +438,15 @@ public class MainController {
 	} catch (SlickException e) {
 	    e.printStackTrace();
 	}
-
-	/*
-	 * // Pour changer la porté d'un rodeur à 5: exemple de pouvoir
-	 * a.getUnit("Rodeur").setIAttack(new AttackDistance(5)); // Pour donner
-	 * 15% de double attack a.getUnit("Fantassin").setIAttack(new
-	 * AttackCaCBerserker());
-	 */
-
     }
 
+    /**
+     * Init a new turn of the game.
+     * 
+     * @return results
+     * @throws VictoryException
+     *             if a boss is dead
+     */
     public String initNewTurn() throws VictoryException {
 	String str = "";
 	turn = new TurnController(a.getUnits());
@@ -414,16 +472,47 @@ public class MainController {
 	    if (u.getName() == "Fantassin")
 		u.addRegeneration();
 	}
-
 	return str;
     }
 
-    public void endNewTurn() {
-	for (Unit u : a.getUnits().values()) {
-	    u.setAttackedPrevious(turn.hasAttack(u));
-	}
+    /**
+     * Returns if automatic game. (for demo only)
+     * 
+     * @return true if demo false otherwise
+     */
+    public boolean isAuto() {
+	return auto;
     }
 
+    public boolean isCamo() {
+	return b.getUnit("Eclaireur").getTile().getField() == FIELD.FOREST;
+    }
+
+    /**
+     * Returns crippled units on the map.
+     * 
+     * @param tiles
+     *            the map
+     * @return tiles with units crippled.
+     */
+    public Vector<Tile> isCrippled(Vector<Tile> tiles) {
+	Vector<Tile> result = new Vector<Tile>();
+	for (Tile t : tiles) {
+	    if (getUnit(t) != null && getUnit(t).getTurnsCripple() > 0) {
+		result.add(t);
+	    }
+	}
+
+	return result;
+    }
+
+    /**
+     * Returns is a Tile does'nt already have a unit.
+     * 
+     * @param tile
+     *            the tile
+     * @return true if free false otherwise
+     */
     public boolean isFreeTileset(Tile tile) {
 	Hashtable<String, Unit> units = a.getUnits();
 	Iterator<Unit> it = units.values().iterator();
@@ -451,25 +540,41 @@ public class MainController {
     }
 
     /**
-     * Returns crippled units on the map.
+     * Returns if a unit on a tile belongs to player A.
      * 
-     * @param tiles
-     *            the map
-     * @return tiles with units crippled.
+     * @param tile
+     *            the tile
+     * @return true if the unit belongs to A false otherwise
      */
-    public Vector<Tile> isCrippled(Vector<Tile> tiles) {
-	Vector<Tile> result = new Vector<Tile>();
-	for (Tile t : tiles) {
-	    if (getUnit(t) != null && getUnit(t).getTurnsCripple() > 0) {
-		result.add(t);
-	    }
+    public boolean isPlayerAUnit(Tile tile) {
+	Hashtable<String, Unit> units = a.getUnits();
+	Iterator<Unit> it = units.values().iterator();
+	Unit temp;
+	while (it.hasNext()) {
+	    temp = it.next();
+	    if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
+		return true;
 	}
-
-	return result;
+	return false;
     }
 
-    public boolean isCamo() {
-	return b.getUnit("Eclaireur").getTile().getField() == FIELD.FOREST;
+    /**
+     * Returns if a unit on a tile belongs to player B.
+     * 
+     * @param tile
+     *            the tile
+     * @return true if the unit belongs to B false otherwise
+     */
+    public boolean isPlayerBUnit(Tile tile) {
+	Hashtable<String, Unit> units = b.getUnits();
+	Iterator<Unit> it = units.values().iterator();
+	Unit temp;
+	while (it.hasNext()) {
+	    temp = it.next();
+	    if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
+		return true;
+	}
+	return false;
     }
 
     /**
@@ -487,6 +592,42 @@ public class MainController {
 	    }
 	}
 	return result;
+    }
+
+    /**
+     * Returns if the tank of the player is in range of the unit.
+     * 
+     * @param u
+     *            the unit
+     * @return true if the tank of the player is in range false otherwise
+     */
+    public boolean isTankInRange(Unit u) {
+	int range = 2;
+	if (isPlayerAUnit(u.getTile())) {
+	    Unit tank = a.getUnit("Tank");
+	    if (tank == null)
+		return false;
+	    if(tank.isPowActivate())
+		return distance(tank.getTile(), u.getTile()) <= range*2;
+	    return distance(tank.getTile(), u.getTile()) <= range;
+	} else {
+	    Unit tank = b.getUnit("Tank");
+	    if (tank == null)
+		return false;
+	    if(tank.isPowActivate())
+		return distance(tank.getTile(), u.getTile()) <= range*2;
+	    return distance(tank.getTile(), u.getTile()) <= range;
+	}
+    }
+
+    public boolean isTurn() {
+	if (client.getMsg() != null) {
+	    boolean temp = client.getMsg().getFirstCo();
+	    client.eraseMsg();
+	    return temp;
+	} else {
+	    return false;
+	}
     }
 
     public void move(Tile tile, Tile currentSelected, Vector<Tile> highLight) {
@@ -518,54 +659,13 @@ public class MainController {
 	}
     }
 
-    public boolean isPlayerAUnit(Tile tile) {
-	Hashtable<String, Unit> units = a.getUnits();
-	Iterator<Unit> it = units.values().iterator();
-	Unit temp;
-	while (it.hasNext()) {
-	    temp = it.next();
-	    if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
-		return true;
-	}
-	return false;
-    }
-
-    public boolean isPlayerBUnit(Tile tile) {
-	Hashtable<String, Unit> units = b.getUnits();
-	Iterator<Unit> it = units.values().iterator();
-	Unit temp;
-	while (it.hasNext()) {
-	    temp = it.next();
-	    if (temp.getTile().x == tile.x && temp.getTile().y == tile.y)
-		return true;
-	}
-	return false;
-    }
-
-    public boolean isTurn() {
-	if (client.getMsg() != null) {
-	    boolean temp = client.getMsg().getFirstCo();
-	    lastMessage = client.getMsg().getMsg();
-	    client.eraseMsg();
-	    return temp;
-	} else {
-	    return false;
-	}
-    }
-
-    public boolean isTankInRange(Unit u) {
-	int range = 2;
-	if (isPlayerAUnit(u.getTile())) {
-	    Unit tank = a.getUnit("Tank");
-	    if (tank == null)
-		return false;
-	    return distance(tank.getTile(), u.getTile()) <= range;
-	} else {
-	    Unit tank = b.getUnit("Tank");
-	    if (tank == null)
-		return false;
-	    return distance(tank.getTile(), u.getTile()) <= range;
-	}
+    /**
+     * Returns if the player side is left.
+     * 
+     * @return true if the player play left
+     */
+    public boolean playLeft() {
+	return left;
     }
 
     public void recPlayer() {
@@ -626,5 +726,18 @@ public class MainController {
     
     public void sendPlayer() {
 	client.sendPlayer(a);
+    }
+
+    /**
+     * Instantiates the player A according to the choice of boss.
+     * 
+     * @param boss
+     *            the boss
+     */
+    public void setPlayerA(String boss) {
+	if (a == null)
+	    a = new Player(boss);
+	else
+	    throw new IllegalArgumentException("Player A already exists");
     }
 }
