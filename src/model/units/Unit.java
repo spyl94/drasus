@@ -31,15 +31,6 @@ public abstract class Unit {
     protected int turnsCripple;
     protected int turnsPoisoned;
     protected boolean attackedPrevious;
-
-    public boolean hasAttackedPrevious() {
-	return attackedPrevious;
-    }
-
-    public void setAttackedPrevious(boolean attackedPrevious) {
-	this.attackedPrevious = attackedPrevious;
-    }
-
     protected boolean cavalry;
 
     /**
@@ -85,22 +76,34 @@ public abstract class Unit {
 
     public abstract void activatePower();
 
+    /**
+     * Heal a unit.
+     * 
+     */
+    public void addRegeneration() {
+	System.out.println("Nothing to do.");
+	// let empty
+    }
+
+    /**
+     * Heal a unit on a Forest.
+     * 
+     */
+    public void addRegenerationForest() {
+	System.out.println("Nothing to do.");
+	// let empty
+    }
+
+    /**
+     * Heal a unit on a Fort.
+     * 
+     */
     public void addRegenerationFort() {
 	this.hp += 5;
 	if (this.hp > this.maxHp)
 	    this.hp = this.maxHp;
     }
     
-    public void addRegenerationForest() {
-	System.out.println("Nothing to do.");
-	// let empty
-    }
-    
-    public void addRegeneration() {
-	System.out.println("Nothing to do.");
-	// let empty
-    }
-
     /**
      * Attack an other unit.
      * 
@@ -113,7 +116,7 @@ public abstract class Unit {
     public String attack(Unit u) throws DeadUnitException {
 	return this.attack.attack(this, u);
     }
-
+    
     /**
      * Returns if a unit can attack from a certain range.
      * 
@@ -132,15 +135,6 @@ public abstract class Unit {
      */
     public int getCrit() {
 	return crit;
-    }
-
-    /**
-     * Returns the possibility of the unit to MaT.
-     * 
-     * @return the true if the unit can MaT.
-     */
-    public boolean hasMat() {
-	return mat > 0;
     }
 
     /**
@@ -206,18 +200,38 @@ public abstract class Unit {
 	return name;
     }
 
+    /**
+     * Returns the range of attack.
+     * 
+     * @return the range
+     */
     public int getRange() {
 	return attack.getRange();
     }
 
+    /**
+     * Returns the Tile of the unit.
+     * 
+     * @return the tile
+     */
     public Tile getTile() {
 	return tile;
     }
 
+    /**
+     * Returns the number of turns crippled left.
+     * 
+     * @return number of turn cripples
+     */
     public int getTurnsCripple() {
 	return turnsCripple;
     }
 
+    /**
+     * Returns the number of turns poisoned left.
+     * 
+     * @return number of turn poisoned
+     */
     public int getTurnsPoisoned() {
 	return turnsPoisoned;
     }
@@ -231,14 +245,42 @@ public abstract class Unit {
 	return wep;
     }
 
+    /**
+     * Returns if the unit has attacked previous turn.
+     * 
+     * @return true if the unit has attacked previous turn false otherwise
+     */
+    public boolean hasAttackedPrevious() {
+	return attackedPrevious;
+    }
+
+    /**
+     * Returns the possibility of the unit to MaT.
+     * 
+     * @return the true if the unit can MaT.
+     */
+    public boolean hasMat() {
+	return mat > 0;
+    }
+
+    /**
+     * Returns if a unit is a cavalry.
+     * 
+     * @return true if cavalry false otherwise
+     */
     public boolean isCavalry() {
 	return cavalry;
     }
 
+    /**
+     * Returns if the power of the unit is activate.
+     * 
+     * @return true if activate false otherwise
+     */
     public boolean isPowActivate() {
 	return pow;
     }
-
+    
     /**
      * Reduce the number of life points.
      * 
@@ -259,11 +301,30 @@ public abstract class Unit {
 	}
     }
 
+    /**
+     * Reduce the number of life points dur to poison.
+     * 
+     * @throws DeadUnitException
+     * 		if the unit is dead
+     * @throws DeadBossException if the boss is dead
+     */
     public void receivePoisonedDmg() throws DeadUnitException,
 	    DeadBossException {
 	this.receiveDmg(5);
     }
 
+    /**
+     * Set if a unit has attacked previous turn.
+     * 
+     * @param attackedPrevious true if the unit has attacked previous turn false otherwise
+     */
+    public void setAttackedPrevious(boolean attackedPrevious) {
+	this.attackedPrevious = attackedPrevious;
+    }
+
+    /**
+     * Set a unit as a cavalry.
+     */
     public void setCavalry() {
 	this.cavalry = true;
     }
@@ -288,10 +349,20 @@ public abstract class Unit {
 	this.tile = tile;
     }
 
+    /**
+     * Set number of turns cripple.
+     * 
+     * @param turnsCripple
+     */
     public void setTurnsCripple(int turnsCripple) {
 	this.turnsCripple = turnsCripple;
     }
 
+    /**
+     * Set number of turns poisoned.
+     * 
+     * @param turnsPoisoned
+     */
     public void setTurnsPoisoned(int turnsPoisoned) {
 	this.turnsPoisoned = turnsPoisoned;
     }

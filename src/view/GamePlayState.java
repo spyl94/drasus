@@ -362,23 +362,25 @@ public class GamePlayState extends BasicGameState {
 	}
 
 	if (popupX > -1 && popupY > -1) {
+	    if(main.getUnit(unitOnIt) != null){
 	    popup.draw(popupX, popupY);
 	    Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
 	    TrueTypeFont font = new TrueTypeFont(awtFont, false);
 	    if (main.getUnit(unitOnIt).getHp() > 99) {
-		font.drawString(popupX + 19, popupY + 7,
-			String.valueOf(main.getUnit(unitOnIt).getHp()),
-			Color.black);
+	    font.drawString(popupX + 19, popupY + 7,
+	    String.valueOf(main.getUnit(unitOnIt).getHp()),
+	    Color.black);
 	    } else if (main.getUnit(unitOnIt).getHp() > 9) {
-		font.drawString(popupX + 25, popupY + 7,
-			String.valueOf(main.getUnit(unitOnIt).getHp()),
-			Color.black);
+	    font.drawString(popupX + 25, popupY + 7,
+	    String.valueOf(main.getUnit(unitOnIt).getHp()),
+	    Color.black);
 	    } else {
-		font.drawString(popupX + 31, popupY + 7,
-			String.valueOf(main.getUnit(unitOnIt).getHp()),
-			Color.black);
+	    font.drawString(popupX + 31, popupY + 7,
+	    String.valueOf(main.getUnit(unitOnIt).getHp()),
+	    Color.black);
 	    }
-	}
+	    }
+	    }
 
 	if (currentState != STATES.START_GAME
 		&& currentState != STATES.NEW_UNIT
@@ -486,8 +488,8 @@ public class GamePlayState extends BasicGameState {
 	    if (tile != null) // si clic
 		if (tile.isBlocked() == false
 			&& main.isFreeTileset(tile)
-			&& ((main.playLeft() && tile.x < grassMap.getWidth() / 2) || (main
-				.playRight() && tile.x >= grassMap.getWidth() / 2))) {
+			&& ((main.playLeft() && tile.x < grassMap.getWidth() / 2) || (!main
+				.playLeft() && tile.x >= grassMap.getWidth() / 2))) {
 		    main.addUnit(main.getPlayerAUnitsNames()[unitNb], tile);
 		    System.out.print("Ajout :");
 		    System.out.println(main.getPlayerAUnitsNames()[unitNb]);
