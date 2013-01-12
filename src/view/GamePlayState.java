@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Font;
 import java.util.Vector;
 
 import controller.*;
@@ -13,6 +14,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -102,6 +105,10 @@ public class GamePlayState extends BasicGameState {
     private Animation dragonA;
     private SpriteSheet dragonR;
     private Animation dragonAR;
+    private int popupX = -1;
+    private int popupY = -1;
+    private Image popup;
+    private Tile unitOnIt;
 
     public GamePlayState(int stateID) {
 	this.stateID = stateID;
@@ -123,6 +130,7 @@ public class GamePlayState extends BasicGameState {
 	AtkTarget = new Image("res/sprites/atk.png");
 	poison = new Image("res/sprites/poison.png");
 	cripple = new Image("res/sprites/cripple.png");
+	popup = new Image("res/sprites/popup.png");
 	archerS = new SpriteSheet("res/sprites/ArcherS.png", 32, 32);
 	archerA = new Animation(archerS, 0, 0, 1, 0, false, 500, true);
 	archerR = new SpriteSheet("res/sprites/ArcherR.png", 32, 32);
@@ -321,9 +329,9 @@ public class GamePlayState extends BasicGameState {
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
 	    case "Eclaireur":
-		if(!main.isCamo()){
-		eclaireurAR.draw(Integer.parseInt(tabb[i][1]) * 32,
-			Integer.parseInt(tabb[i][2]) * 32);
+		if (!main.isCamo()) {
+		    eclaireurAR.draw(Integer.parseInt(tabb[i][1]) * 32,
+			    Integer.parseInt(tabb[i][2]) * 32);
 		}
 		break;
 	    case "Fantassin":
@@ -350,6 +358,25 @@ public class GamePlayState extends BasicGameState {
 		pegasusAR.draw(Integer.parseInt(tabb[i][1]) * 32,
 			Integer.parseInt(tabb[i][2]) * 32);
 		break;
+	    }
+	}
+
+	if (popupX > -1 && popupY > -1) {
+	    popup.draw(popupX, popupY);
+	    Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
+	    TrueTypeFont font = new TrueTypeFont(awtFont, false);
+	    if (main.getUnit(unitOnIt).getHp() > 99) {
+		font.drawString(popupX + 19, popupY + 7,
+			String.valueOf(main.getUnit(unitOnIt).getHp()),
+			Color.black);
+	    } else if (main.getUnit(unitOnIt).getHp() > 9) {
+		font.drawString(popupX + 25, popupY + 7,
+			String.valueOf(main.getUnit(unitOnIt).getHp()),
+			Color.black);
+	    } else {
+		font.drawString(popupX + 31, popupY + 7,
+			String.valueOf(main.getUnit(unitOnIt).getHp()),
+			Color.black);
 	    }
 	}
 
@@ -390,10 +417,11 @@ public class GamePlayState extends BasicGameState {
 	    endTurn();
 	    break;
 	case PAUSE_GAME:
-	    if (!main.isAuto()){
-	    main.recPlayers();
-	    if (main.isTurn())
-		currentState = STATES.START_TURN;
+	    getTileMouseOn(gc);
+	    if (!main.isAuto()) {
+		main.recPlayers();
+		if (main.isTurn())
+		    currentState = STATES.START_TURN;
 	    }
 	    break;
 	case GAME_OVER:
@@ -405,17 +433,16 @@ public class GamePlayState extends BasicGameState {
 
     private void startGame() {
 	if (main.isAuto())
-	autoGenerateBUnits();
+	    autoGenerateBUnits();
 	else
-	main.connexion("88.180.34.112");
-	
+	    main.connexion("88.180.34.112");
+
 	if (main.playLeft())
-	main.addUnit(main.getPlayerA().getBoss(), getTile(3, 2));
+	    main.addUnit(main.getPlayerA().getBoss(), getTile(3, 2));
 	else
-	main.addUnit(main.getPlayerA().getBoss(), getTile(36, 18));
+	    main.addUnit(main.getPlayerA().getBoss(), getTile(36, 18));
 
-	}
-
+    }
 
     private void initTurn() {
 	try {
@@ -431,17 +458,17 @@ public class GamePlayState extends BasicGameState {
 	currentState = STATES.PAUSE_GAME;
 	main.endNewTurn();
 
-	if(main.isAuto()) {
-	   sleep();
+	if (main.isAuto()) {
+	    sleep();
 	    currentState = STATES.START_TURN;
 	} else {
 
-		main.sendEnd();
-		main.endTurn();
-		    if(main.getPlayerA().getTurn()){
-			    currentState = STATES.START_TURN;
-			    }
-		    }
+	    main.sendEnd();
+	    main.endTurn();
+	    if (main.getPlayerA().getTurn()) {
+		currentState = STATES.START_TURN;
+	    }
+	}
     }
 
     private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
@@ -455,6 +482,7 @@ public class GamePlayState extends BasicGameState {
 
 	} else {
 	    Tile tile = getTileClicked(gc);
+
 	    if (tile != null) // si clic
 		if (tile.isBlocked() == false
 			&& main.isFreeTileset(tile)
@@ -481,6 +509,7 @@ public class GamePlayState extends BasicGameState {
 	    }
 	}
     }
+
     private void sleep() {
 	try {
 	    Thread.sleep(2000L);
@@ -489,9 +518,10 @@ public class GamePlayState extends BasicGameState {
 	    e.printStackTrace();
 	}
     }
+
     private void playTurn(GameContainer gc, StateBasedGame sbg, int delta) {
 	if (main.isAuto()) {
-	    switch(TurnController.numberTurn) {
+	    switch (TurnController.numberTurn) {
 	    case 1:
 		highLight = main.canMove(tiles, getTile(18, 17));
 		break;
@@ -505,14 +535,14 @@ public class GamePlayState extends BasicGameState {
 		main.move(getTile(21, 3), getTile(18, 3), highLight);
 		break;
 	    case 5:
-		 try {
+		try {
 		    main.attack(getTile(21, 17), getTile(24, 17));
 		} catch (VictoryException e) {
 		    e.printStackTrace();
 		}
 		break;
 	    case 6:
-		 try {
+		try {
 		    main.attack(getTile(21, 17), getTile(24, 17));
 		} catch (VictoryException e) {
 		    e.printStackTrace();
@@ -525,6 +555,7 @@ public class GamePlayState extends BasicGameState {
 	    }
 	    currentState = STATES.END_TURN;
 	} else {
+	    getTileMouseOn(gc);
 	    Tile tile = getTileClicked(gc);
 	    if (tile != null) {
 		if (main.isPlayerAUnit(tile)) {
@@ -554,8 +585,8 @@ public class GamePlayState extends BasicGameState {
 	}
     }
 
-
     private void selectingUnit(GameContainer gc, StateBasedGame sbg, int delta) {
+	getTileMouseOn(gc);
 	Tile tile = getTileClicked(gc);
 	if (tile != null) {
 	    // on clique sur une unité de B
@@ -600,6 +631,33 @@ public class GamePlayState extends BasicGameState {
 	    }
 	}
 	return null;
+    }
+
+    private void getTileMouseOn(GameContainer gc) {
+	Input input = gc.getInput();
+
+	int mouseOnX = input.getMouseX();
+	int mouseOnY = input.getMouseY();
+	int x = 0;
+	int y = 0;
+
+	x = mouseOnX / grassMap.getTileWidth();
+	y = mouseOnY / grassMap.getTileHeight();
+
+	popupX = -1;
+	popupY = -1;
+
+	for (Tile t : tiles) {
+	    if (t.x == x && t.y == y) {
+		if (main.getUnit(t) != null) {
+		    popupX = t.x * 32;
+		    popupY = t.y * 32 - 32;
+		    unitOnIt = t;
+		}
+	    }
+
+	}
+
     }
 
     private Tile getTile(int x, int y) {
