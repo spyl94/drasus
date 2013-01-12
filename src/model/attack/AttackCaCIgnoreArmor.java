@@ -6,7 +6,7 @@ import model.units.Unit;
 public class AttackCaCIgnoreArmor extends AttackCaC {
    
     @Override
-    public String attack(Unit att, Unit def) throws DeadUnitException {
+    public String attack(Unit att, Unit def, boolean tank) throws DeadUnitException {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();

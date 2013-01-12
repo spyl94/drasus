@@ -10,7 +10,7 @@ import model.units.Unit;
 public class AttackCaCBerserkerBoosted extends AttackCaC {
 
     @Override
-    public String attack(Unit att, Unit def) throws DeadUnitException {
+    public String attack(Unit att, Unit def, boolean tank) throws DeadUnitException {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
@@ -25,6 +25,9 @@ public class AttackCaCBerserkerBoosted extends AttackCaC {
 
 	dmg += dmg * ((double) crit / 100);
 	dmg -= dmg * ((double) def.getDef() / 100);
+	
+	if (tank)
+	    dmg = dmg - (dmg/5);
 
 	def.receiveDmg(dmg);
 	if (!((int) (Math.random() * (101)) < 35))

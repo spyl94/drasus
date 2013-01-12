@@ -113,8 +113,8 @@ public abstract class Unit {
      * @throws DeadUnitException
      *             if the defender is dead
      */
-    public String attack(Unit u) throws DeadUnitException {
-	return this.attack.attack(this, u);
+    public String attack(Unit u, boolean tank) throws DeadUnitException {
+	return this.attack.attack(this, u, tank);
     }
     
     /**

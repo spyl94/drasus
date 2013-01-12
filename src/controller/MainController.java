@@ -154,7 +154,7 @@ public class MainController {
      */
     private String attack(String att, String def) throws VictoryException {
 	try {
-	    return a.attackWith(a.getUnit(att), b.getUnit(def));
+	    return a.attackWith(a.getUnit(att), b.getUnit(def), isTankInRange(b.getUnit(def)));
 	} catch (DeadBossException e) {
 	    throw new VictoryException(e);
 	} catch (DeadUnitException e) {
@@ -606,11 +606,15 @@ public class MainController {
 	    Unit tank = a.getUnit("Tank");
 	    if (tank == null)
 		return false;
+	    if(tank.isPowActivate())
+		return distance(tank.getTile(), u.getTile()) <= range*2;
 	    return distance(tank.getTile(), u.getTile()) <= range;
 	} else {
 	    Unit tank = b.getUnit("Tank");
 	    if (tank == null)
 		return false;
+	    if(tank.isPowActivate())
+		return distance(tank.getTile(), u.getTile()) <= range*2;
 	    return distance(tank.getTile(), u.getTile()) <= range;
 	}
     }

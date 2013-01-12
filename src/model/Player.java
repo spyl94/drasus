@@ -131,13 +131,14 @@ public class Player {
      * 
      * @param att the attacking unit
      * @param def the defending unit
+     * @param tank if the tank is in range of defending unit
      * @return the result of the fight
      * @throws DeadUnitException if a unit is dead
      * @throws DeadBossException if a boss is dead
      */
-    public String attackWith(Unit att, Unit def) throws DeadUnitException,
+    public String attackWith(Unit att, Unit def, boolean tank) throws DeadUnitException,
 	    DeadBossException {
-	return att.attack(def);
+	return att.attack(def, tank);
     }
 
 }
