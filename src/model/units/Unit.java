@@ -12,7 +12,7 @@ import view.Tile;
 public abstract class Unit {
 
     public enum Weapon {
-	SWORD, LANCE, AXE, BOW
+	SWORD, LANCE, AXE, BOW, DAGGER
     }
 
     protected IAttack attack;
@@ -31,7 +31,6 @@ public abstract class Unit {
     protected int turnsCripple;
     protected int turnsPoisoned;
     protected boolean attackedPrevious;
-    protected boolean cavalry;
 
     /**
      * @param attack
@@ -71,7 +70,6 @@ public abstract class Unit {
 	this.turnsCripple = 0;
 	this.turnsPoisoned = 0;
 	this.attackedPrevious = false;
-	this.cavalry = false;
     }
 
     public abstract void activatePower();
@@ -103,7 +101,7 @@ public abstract class Unit {
 	if (this.hp > this.maxHp)
 	    this.hp = this.maxHp;
     }
-    
+
     /**
      * Attack an other unit.
      * 
@@ -116,7 +114,7 @@ public abstract class Unit {
     public String attack(Unit u, boolean tank) throws DeadUnitException {
 	return this.attack.attack(this, u, tank);
     }
-    
+
     /**
      * Returns if a unit can attack from a certain range.
      * 
@@ -263,14 +261,6 @@ public abstract class Unit {
 	return mat > 0;
     }
 
-    /**
-     * Returns if a unit is a cavalry.
-     * 
-     * @return true if cavalry false otherwise
-     */
-    public boolean isCavalry() {
-	return cavalry;
-    }
 
     /**
      * Returns if the power of the unit is activate.
@@ -280,7 +270,7 @@ public abstract class Unit {
     public boolean isPowActivate() {
 	return pow;
     }
-    
+
     /**
      * Reduce the number of life points.
      * 
@@ -305,8 +295,9 @@ public abstract class Unit {
      * Reduce the number of life points dur to poison.
      * 
      * @throws DeadUnitException
-     * 		if the unit is dead
-     * @throws DeadBossException if the boss is dead
+     *             if the unit is dead
+     * @throws DeadBossException
+     *             if the boss is dead
      */
     public void receivePoisonedDmg() throws DeadUnitException,
 	    DeadBossException {
@@ -316,17 +307,11 @@ public abstract class Unit {
     /**
      * Set if a unit has attacked previous turn.
      * 
-     * @param attackedPrevious true if the unit has attacked previous turn false otherwise
+     * @param attackedPrevious
+     *            true if the unit has attacked previous turn false otherwise
      */
     public void setAttackedPrevious(boolean attackedPrevious) {
 	this.attackedPrevious = attackedPrevious;
-    }
-
-    /**
-     * Set a unit as a cavalry.
-     */
-    public void setCavalry() {
-	this.cavalry = true;
     }
 
     /**

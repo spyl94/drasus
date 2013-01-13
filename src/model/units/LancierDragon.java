@@ -10,7 +10,7 @@ import model.attack.AttackDistanceDoubledAgainstCavalry;
 public class LancierDragon extends Unit {
 
     public LancierDragon() {
-	super(new AttackDistance(2), 60, 25, 75, 5, 25, 30, 0, Weapon.LANCE,
+	super(new AttackDistance(2), 220, 55, 75, 4, 25, 10, 0, Weapon.LANCE,
 		"Lancier");
 
     }
@@ -19,7 +19,7 @@ public class LancierDragon extends Unit {
     public void activatePower() {
 	pow = true;
 	setIAttack(new AttackDistanceDoubledAgainstCavalry(2));
-	
+
     }
 
 }

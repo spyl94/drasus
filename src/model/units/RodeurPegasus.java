@@ -10,7 +10,7 @@ import model.attack.AttackDistanceDoubledInForest;
 public class RodeurPegasus extends Unit {
 
     public RodeurPegasus() {
-	super(new AttackDistance(3), 80, 30, 80, 7, 15, 35, 0, Weapon.BOW,
+	super(new AttackDistance(3), 210, 45, 85, 5, 20, 25, 0, Weapon.BOW,
 		"Rodeur");
 
     }
@@ -19,9 +19,9 @@ public class RodeurPegasus extends Unit {
     public void activatePower() {
 	pow = true;
 	setIAttack(new AttackDistanceDoubledInForest(3));
-	
+
     }
-    
+
     @Override
     public void addRegenerationForest() {
 	this.hp += 10;

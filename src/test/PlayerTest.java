@@ -12,24 +12,23 @@ import org.junit.Test;
 import controller.MainController;
 
 public class PlayerTest {
-    
+
     public static Player p;
-    
+
     @BeforeClass
     public static void init() {
 	p = new Player();
     }
-    
+
     @Test
     public void testDefaultConstructor() {
 	assertNotNull(p.getBoss());
 	assertNotNull(p.getNamesOfUnits());
     }
-    
+
     @Test
     public void testContructor() {
-	for (String boss : MainController.BOSS)
-	{
+	for (String boss : MainController.BOSS) {
 	    p = new Player(boss);
 	    assertNotNull(p.getBoss());
 	    assertNotNull(p.getNamesOfUnits());
@@ -44,9 +43,9 @@ public class PlayerTest {
 	    p.addUnit(u.getUnit(str).getName());
 	    assertNotNull(p.getUnit(u.getUnit(str).getName()));
 	}
-	
+
     }
-    
+
     @Test
     public void testDelUnit() {
 	UnitFactory u;
@@ -57,7 +56,5 @@ public class PlayerTest {
 	    assertNull(p.getUnit(u.getUnit(str).getName()));
 	}
     }
-    
-    
 
 }

@@ -3,18 +3,14 @@ package model.attack;
 import model.exception.DeadUnitException;
 import model.units.Unit;
 
-/**
- * @author Aurel
- * 
- */
-public class AttackCaC extends Attack {
+public class AttackCaCBoostedInHill extends AttackCaC {
 
     @Override
     public String attack(Unit att, Unit def, boolean tank)
 	    throws DeadUnitException {
-	int hit = att.getHit();
-	int dmg = att.getDmg();
-	int crit = att.getCrit();
+	int hit = 85;
+	int dmg = 60;
+	int crit = 20;
 
 	if (trinityAdvantage(def.getWep(), att.getWep()))
 	    hit = hit * 1 / 3;
@@ -34,11 +30,6 @@ public class AttackCaC extends Attack {
 
 	return "L'attaque du  " + att.getName() + " a infligé " + dmg + " à "
 		+ def.getName();
-    }
-
-    @Override
-    public boolean canAttackFromRange(int i) {
-	return false;
     }
 
 }

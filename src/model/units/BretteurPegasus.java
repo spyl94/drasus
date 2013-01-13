@@ -10,18 +10,15 @@ import model.attack.AttackCaCCrippleLonger;
 public class BretteurPegasus extends Unit {
 
     public BretteurPegasus() {
-	super(new AttackCaCCripple(), 80, 30, 95, 6, 10, 50, 0, Weapon.SWORD,
+	super(new AttackCaCCripple(), 200, 40, 90, 5, 20, 30, 0, Weapon.SWORD,
 		"Bretteur");
-
     }
 
     @Override
     public void activatePower() {
 	pow = true;
 	setIAttack(new AttackCaCCrippleLonger());
-	
+
     }
-    
-  
 
 }

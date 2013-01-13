@@ -9,7 +9,7 @@ import model.attack.AttackCaC;
 public class FantassinPegasus extends Unit {
 
     public FantassinPegasus() {
-	super(new AttackCaC(), 100, 20, 80, 5, 35, 20, 0, Weapon.SWORD,
+	super(new AttackCaC(), 220, 50, 85, 5, 25, 15, 0, Weapon.SWORD,
 		"Fantassin");
 
     }
@@ -18,10 +18,12 @@ public class FantassinPegasus extends Unit {
     public void activatePower() {
 	pow = true;
     }
-    
+
     @Override
     public void addRegeneration() {
 	this.hp += 10;
+	if(isPowActivate())
+	    this.hp += 5;
 	if (this.hp > this.maxHp)
 	    this.hp = this.maxHp;
     }

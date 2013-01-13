@@ -9,13 +9,13 @@ import model.attack.AttackCaC;
 public class TankDragon extends Unit {
 
     public TankDragon() {
-	super(new AttackCaC(), 100, 10, 70, 3, 65, 5, 0, Weapon.LANCE, "Tank");
+	super(new AttackCaC(), 250, 55, 60, 3, 35, 5, 0, Weapon.LANCE, "Tank");
 
     }
 
     @Override
     public void activatePower() {
 	pow = true;
-	
+
     }
 }

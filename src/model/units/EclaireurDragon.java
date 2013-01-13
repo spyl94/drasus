@@ -10,7 +10,7 @@ import model.attack.AttackCaCIgnoreArmor;
 public class EclaireurDragon extends Unit {
 
     public EclaireurDragon() {
-	super(new AttackCaC(), 30, 10, 95, 10, 5, 80, 0, Weapon.SWORD,
+	super(new AttackCaC(), 180, 45, 95, 6, 20, 50, 0, Weapon.DAGGER,
 		"Eclaireur");
 
     }
@@ -19,7 +19,7 @@ public class EclaireurDragon extends Unit {
     public void activatePower() {
 	pow = true;
 	setIAttack(new AttackCaCIgnoreArmor());
-	
+
     }
 
 }

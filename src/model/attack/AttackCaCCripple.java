@@ -4,9 +4,10 @@ import model.exception.DeadUnitException;
 import model.units.Unit;
 
 public class AttackCaCCripple extends AttackCaC {
-    
+
     @Override
-    public String attack(Unit att, Unit def, boolean tank) throws DeadUnitException {
+    public String attack(Unit att, Unit def, boolean tank)
+	    throws DeadUnitException {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
@@ -22,15 +23,16 @@ public class AttackCaCCripple extends AttackCaC {
 
 	dmg += dmg * ((double) crit / 100);
 	dmg -= dmg * ((double) def.getDef() / 100);
-	
+
 	if (tank)
-	    dmg = dmg - (dmg/5);
+	    dmg = dmg - (dmg / 5);
 
 	def.receiveDmg(dmg);
 	def.setTurnsCripple(def.getTurnsCripple() + cripple);
 
-	return "L'attaque de votre " + att.getName() + " a infligé " + dmg
-		+ " à " + def.getName() + " ainsi que l'infirmité pendant " + cripple + " tours.";
+	return "L'attaque du " + att.getName() + " a infligé " + dmg + " à "
+		+ def.getName() + " ainsi que l'infirmité pendant " + cripple
+		+ " tours.";
     }
 
 }

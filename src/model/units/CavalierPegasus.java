@@ -1,6 +1,8 @@
 package model.units;
 
-import model.attack.AttackDistance;
+import model.attack.AttackCaC;
+import model.attack.AttackCaCBoostedInHill;
+
 
 /**
  * @author Aurel
@@ -9,15 +11,15 @@ import model.attack.AttackDistance;
 public class CavalierPegasus extends Unit {
 
     public CavalierPegasus() {
-	super(new AttackDistance(1), 120, 30, 70, 8, 35, 35, 2, Weapon.LANCE,
+	super(new AttackCaC(), 240, 50, 75, 7, 20, 10, 2, Weapon.LANCE,
 		"Cavalier");
-	setCavalry();
     }
 
     @Override
     public void activatePower() {
 	pow = true;
-	
+	setIAttack(new AttackCaCBoostedInHill());
+
     }
 
 }

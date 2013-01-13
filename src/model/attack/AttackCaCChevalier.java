@@ -9,9 +9,10 @@ public class AttackCaCChevalier extends AttackCaC {
     protected boolean trinityAdvantage(Unit.Weapon a, Unit.Weapon b) {
 	return (int) (Math.random() * (2)) < 1;
     }
-    
+
     @Override
-    public String attack(Unit att, Unit def, boolean tank) throws DeadUnitException {
+    public String attack(Unit att, Unit def, boolean tank)
+	    throws DeadUnitException {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
@@ -26,13 +27,13 @@ public class AttackCaCChevalier extends AttackCaC {
 
 	dmg += dmg * ((double) crit / 100);
 	dmg -= dmg * ((double) def.getDef() / 100);
-	
+
 	if (tank)
-	    dmg = dmg - (dmg/5);
+	    dmg = dmg - (dmg / 5);
 
 	def.receiveDmg(dmg);
 
-	return "L'attaque de votre " + att.getName() + " a infligé " + dmg
-		+ " à " + def.getName();
+	return "L'attaque du " + att.getName() + " a infligé " + dmg + " à "
+		+ def.getName();
     }
 }

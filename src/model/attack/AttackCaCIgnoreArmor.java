@@ -4,9 +4,10 @@ import model.exception.DeadUnitException;
 import model.units.Unit;
 
 public class AttackCaCIgnoreArmor extends AttackCaC {
-   
+
     @Override
-    public String attack(Unit att, Unit def, boolean tank) throws DeadUnitException {
+    public String attack(Unit att, Unit def, boolean tank)
+	    throws DeadUnitException {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
@@ -24,7 +25,7 @@ public class AttackCaCIgnoreArmor extends AttackCaC {
 
 	def.receiveDmg(dmg);
 
-	return "L'attaque de votre " + att.getName() + " a infligé " + dmg
-		+ " à " + def.getName() + " en ignorant l'armure.";
+	return "L'attaque de l'" + att.getName() + " a infligé " + dmg + " à "
+		+ def.getName() + " en ignorant l'armure.";
     }
 }

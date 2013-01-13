@@ -14,8 +14,6 @@ import model.units.RodeurPegasus;
 import model.units.TankPegasus;
 import model.units.Unit;
 
-
-
 /**
  * @author Aurel
  * 

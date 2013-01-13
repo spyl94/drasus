@@ -2,7 +2,7 @@ package model.exception;
 
 /**
  * @author Aurel
- *
+ * 
  */
 public class DeadBossException extends DeadUnitException {
 

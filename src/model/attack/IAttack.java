@@ -12,11 +12,15 @@ public interface IAttack {
     /**
      * Attack between two units.
      * 
-     * @param att the attacking unit
-     * @param deff the defending unit
-     * @param tank if the tank is in range of defending unit
+     * @param att
+     *            the attacking unit
+     * @param deff
+     *            the defending unit
+     * @param tank
+     *            if the tank is in range of defending unit
      * @return the string containing the result of the fight
-     * @throws DeadUnitException if the defending unit is dead
+     * @throws DeadUnitException
+     *             if the defending unit is dead
      */
     String attack(Unit att, Unit deff, boolean tank) throws DeadUnitException;
 
@@ -28,7 +32,7 @@ public interface IAttack {
      * @return true if the behavior of attack can attack or false otherwise
      */
     boolean canAttackFromRange(int i);
-    
+
     /**
      * Returns the range of the behavior of attack.
      * 
