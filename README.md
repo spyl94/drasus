@@ -12,16 +12,16 @@ Retrouvez toutes les informations nécéssaires pour jouer :
 https://github.com/spyl94/drasus/wiki
 
 ## Télécharger
-
+http://efrei.spyl.net/L3/Java/drasus.rar
 
 ## Les changements à venir
 
-- [] highlight rouge pour attaque
+- [x] highlight rouge pour attaque
 - [] un vrai pathfinding avec déplacement
 - [x] animation et couleur rouge
-- [] Adapter highlight au mat
-- [] modifier move
-- [] menu
+- [x] Adapter highlight au mat
+- [x] modifier move
+- [x] menu
 - [] connexion multi users
 - [x] Améliorations et conditions des unités
 - [x] JavaDoc
