@@ -10,7 +10,7 @@ import model.attack.AttackDistanceArcher;
 public class ArcherDragon extends Unit {
 
     public ArcherDragon() {
-	super(new AttackDistance(4), 100, 55, 80, 4, 15, 10, 0, Weapon.BOW,
+	super(new AttackDistance(4), 200, 55, 80, 4, 15, 10, 0, Weapon.BOW,
 		"Archer");
 
     }

@@ -10,7 +10,7 @@ import model.attack.AttackDistanceArcher;
 public class ArcherPegasus extends Unit {
 
     public ArcherPegasus() {
-	super(new AttackDistance(4), 100, 50, 80, 5, 15, 10, 0, Weapon.BOW,
+	super(new AttackDistance(4), 200, 50, 80, 5, 15, 10, 0, Weapon.BOW,
 		"Archer");
 
     }
