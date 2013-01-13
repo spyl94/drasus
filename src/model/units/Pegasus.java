@@ -9,7 +9,7 @@ import model.attack.AttackCaC;
 public class Pegasus extends Unit {
 
     public Pegasus() {
-	super(new AttackCaC(), 80, 30, 80, 7, 15, 35, 0, Weapon.BOW, "Pegasus");
+	super(new AttackCaC(), 250, 60, 80, 0, 10, 10, 0, Weapon.HEROIC, "Pegasus");
 
     }
 

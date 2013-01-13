@@ -1,6 +1,7 @@
 package model.units;
 
 import model.attack.AttackCaC;
+import model.units.Unit.Weapon;
 
 /**
  * @author Aurel
@@ -9,7 +10,7 @@ import model.attack.AttackCaC;
 public class Dragon extends Unit {
 
     public Dragon() {
-	super(new AttackCaC(), 80, 30, 80, 7, 15, 35, 0, Weapon.BOW, "Dragon");
+	super(new AttackCaC(), 250, 60, 80, 0, 10, 10, 0, Weapon.HEROIC, "Dragon");
 
     }
 

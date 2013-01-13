@@ -12,7 +12,7 @@ import view.Tile;
 public abstract class Unit {
 
     public enum Weapon {
-	SWORD, LANCE, AXE, BOW, DAGGER
+	SWORD, LANCE, AXE, BOW, DAGGER, HEROIC, UNKNOWN
     }
 
     protected IAttack attack;
