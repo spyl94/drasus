@@ -391,11 +391,10 @@ public class MainController {
     
     /**
      * Init the connection between client and server.
-     * @param adr
-     * 		   Address of the server.
+
      */
-    public void connexion(String adr) {
-	client = new ConnexionController(adr);
+    public void connexion() {
+	client = new ConnexionController();
 	Msg firstco = new Msg("", true, false);
 	client.sendMsg(firstco);
 	while (client.getMsg().getOkCo() != true) {

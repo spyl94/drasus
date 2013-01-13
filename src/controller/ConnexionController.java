@@ -10,14 +10,14 @@ import controller.ConnexionController;
 
 public class ConnexionController {
 
-    public static String IP;
-    public static String PORT;
+    public static String IP = "127.0.0.1";
+    public static String PORT = "4662";
     private Client client;
     private Msg msg = new Msg();
     private Player[] envoi;
     private Player[] recu;
 
-    public ConnexionController(String adr) {
+    public ConnexionController() {
 
 	client = new Client();
 
@@ -35,6 +35,7 @@ public class ConnexionController {
 	kryo.register(model.attack.AttackCaC.class);
 	kryo.register(model.attack.AttackCaCBerserker.class);
 	kryo.register(model.attack.AttackCaCBerserkerBoosted.class);
+	kryo.register(model.attack.AttackCaCBoostedInHill.class);
 	kryo.register(model.attack.AttackCaCChevalier.class);
 	kryo.register(model.attack.AttackCaCCripple.class);
 	kryo.register(model.attack.AttackCaCCrippleLonger.class);
@@ -90,7 +91,7 @@ public class ConnexionController {
 	});
 
 	try {
-	    client.connect(5000, adr, 4662, 4672);
+	    client.connect(5000, IP, Integer.parseInt(PORT), 4672);
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}

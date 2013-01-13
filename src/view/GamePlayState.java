@@ -469,7 +469,7 @@ public class GamePlayState extends BasicGameState {
 	if (main.isAuto())
 	    autoGenerateBUnits();
 	else
-	    main.connexion("127.0.0.1");
+	    main.connexion();
 
 	if (main.playLeft())
 	    main.addUnit(main.getPlayerA().getBoss(), getTile(3, 2));
@@ -597,6 +597,8 @@ public class GamePlayState extends BasicGameState {
 		    if ((!main.getTurn().hasMove(main.getUnit(tile)) && !main
 			    .getTurn().hasAttack(main.getUnit(tile)))) {
 			highLight = main.canMove(tiles, currentSelected);
+			atkHighLight = main
+				.atkHighLight(tiles, currentSelected);
 		    }
 
 		    else if ((main.getUnit(tile).hasMat()
@@ -610,7 +612,6 @@ public class GamePlayState extends BasicGameState {
 			atkHighLight = main
 				.atkHighLight(tiles, currentSelected);
 		    }
-		    // setHighLight(main.canCross(tiles, currentSelected, 6));
 		}
 	    } else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
 		currentState = STATES.END_TURN;
