@@ -5,6 +5,8 @@ Drasus est un jeu de stratégie au tour par tour créé par le studio Damos.
 Vous incarnez un général et devez gérer vos unités afin de détruire l'ennemi, nous entendons par la le général adverse.
 Decouvrez des unités uniques et obtenez la victoire en usant de vos meilleurs stratégies !
 
+https://github.com/spyl94/drasus/wiki
+
 
 TODO LIST:
 - [] highlight rouge pour attaque
