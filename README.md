@@ -14,7 +14,7 @@ https://github.com/spyl94/drasus/wiki
 ## Télécharger
 
 
-## Les fonctionnalités à venir
+## Les changements à venir
 
 - [] highlight rouge pour attaque
 - [] un vrai pathfinding avec déplacement
