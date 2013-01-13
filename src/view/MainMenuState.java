@@ -64,6 +64,12 @@ public class MainMenuState extends BasicGameState {
 	getPosClicked(gc);
 
 	boolean insideStartGame = false;
+	
+	if(main.isAuto()) {
+	    main.setPlayerA("Pegasus");
+	    insideStartGame = true;
+	}
+	   
 
 	if ((mouseX >= 270 && mouseX <= pegasusGold.getWidth() + 270)
 		&& (mouseY >= 200 && mouseY <= pegasusGold.getHeight() + 200)) {
@@ -81,7 +87,7 @@ public class MainMenuState extends BasicGameState {
 	    if(isPegasus){
 	    main.setPlayerA("Pegasus");
 	    }
-	    else{
+	    else {
 		    main.setPlayerA("Dragon");
 	    }
 	}
