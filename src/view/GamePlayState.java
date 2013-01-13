@@ -439,7 +439,7 @@ public class GamePlayState extends BasicGameState {
 	    newUnit(gc, sbg, delta);
 	    break;
 	case START_TURN:
-	    initTurn();
+	    initTurn(sbg);
 	    currentState = STATES.PLAY_TURN;
 	case PLAY_TURN:
 	    playTurn(gc, sbg, delta);
@@ -478,11 +478,11 @@ public class GamePlayState extends BasicGameState {
 
     }
 
-    private void initTurn() {
+    private void initTurn(StateBasedGame sbg) {
 	try {
 	    main.initNewTurn();
 	} catch (VictoryException e) {
-
+	    sbg.enterState(ViewController.VICTORYSTATE);
 	}
     }
 
@@ -629,8 +629,9 @@ public class GamePlayState extends BasicGameState {
 		    main.setLastMessage(main.attack(currentSelected, tile));
 		    main.sendLastMessage();
 		} catch (VictoryException e) {
+		    System.out.println("J'ai gagné !");
 		    // TODO: prévenir l'autre de sa défaite !
-		    sbg.enterState(ViewController.MAINMENUSTATE);
+		    sbg.enterState(ViewController.VICTORYSTATE);
 		}
 		main.sendBoth();
 		// Si tout c'est bien passé on réinitialise l'état
