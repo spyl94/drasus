@@ -34,7 +34,7 @@ public class VictoryState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg)
 	    throws SlickException {
 	background = new Image("res/victoire/victoire.png");
-	menu = new Image("res/menu.jpg");
+	menu = new Image("res/menu/menu.png");
     }
 
     @Override
