@@ -12,9 +12,10 @@ public class AttackDistancePoisoned extends AttackDistance {
     public AttackDistancePoisoned(int i) {
 	super(i);
     }
-    
+
     @Override
-    public String attack(Unit att, Unit def, boolean tank) throws DeadUnitException {
+    public String attack(Unit att, Unit def, boolean tank)
+	    throws DeadUnitException {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
@@ -25,15 +26,17 @@ public class AttackDistancePoisoned extends AttackDistance {
 
 	dmg += dmg * ((double) crit / 100);
 	dmg -= dmg * ((double) def.getDef() / 100);
-	
+
 	if (tank)
-	    dmg = dmg - (dmg/5);
-	
+	    dmg = dmg - (dmg / 5);
+
 	def.receiveDmg(dmg);
 	def.setTurnsPoisoned(def.getTurnsPoisoned() + poison);
 
 	return "L'attaque à distance de l'" + att.getName() + " a infligé "
-		+ dmg + " à " + def.getName() + " ainsi que le poison pendant " + poison + " tours.";
+
+		+ dmg + " à " + def.getName() + " ainsi que le poison pendant "
+		+ poison + " tours.";
     }
 
 }

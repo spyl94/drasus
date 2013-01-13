@@ -469,7 +469,7 @@ public class GamePlayState extends BasicGameState {
 	if (main.isAuto())
 	    autoGenerateBUnits();
 	else
-	    main.connexion("88.180.34.112");
+	    main.connexion("127.0.0.1");
 
 	if (main.playLeft())
 	    main.addUnit(main.getPlayerA().getBoss(), getTile(3, 2));

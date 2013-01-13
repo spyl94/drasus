@@ -75,7 +75,7 @@ public class ConnexionController {
 	kryo.register(model.units.Unit.class);
 	kryo.register(java.util.Hashtable.class);
 	kryo.register(model.units.Unit.Weapon.class);
-	
+
 	client.start();
 
 	client.addListener(new Listener() {

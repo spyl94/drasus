@@ -67,7 +67,7 @@ public class MainController {
 		    "Default constructor called more than once.");
 	this.auto = false;
 	// this.left = true;
-	a = null;	// Instanciate by setPlayerA
+	a = null; // Instanciate by setPlayerA
 	b = new Player("Dragon"); // for local demo only
     }
 
@@ -169,7 +169,8 @@ public class MainController {
      */
     private String attack(String att, String def) throws VictoryException {
 	try {
-	    return a.attackWith(a.getUnit(att), b.getUnit(def), isTankInRange(b.getUnit(def)));
+	    return a.attackWith(a.getUnit(att), b.getUnit(def),
+		    isTankInRange(b.getUnit(def)));
 	} catch (DeadBossException e) {
 	    throw new VictoryException(e);
 	} catch (DeadUnitException e) {
@@ -557,8 +558,7 @@ public class MainController {
 	    if (u.getName() == "Rodeur"
 		    && u.getTile().getField() == FIELD.FOREST)
 		u.addRegenerationForest();
-	    if (u.getName() == "Fantassin")
-		u.addRegeneration();
+	    u.addRegeneration();
 	}
 	return str;
     }
@@ -700,15 +700,15 @@ public class MainController {
 	    Unit tank = a.getUnit("Tank");
 	    if (tank == null)
 		return false;
-	    if(tank.isPowActivate())
-		return distance(tank.getTile(), u.getTile()) <= range*2;
+	    if (tank.isPowActivate())
+		return distance(tank.getTile(), u.getTile()) <= range * 2;
 	    return distance(tank.getTile(), u.getTile()) <= range;
 	} else {
 	    Unit tank = b.getUnit("Tank");
 	    if (tank == null)
 		return false;
-	    if(tank.isPowActivate())
-		return distance(tank.getTile(), u.getTile()) <= range*2;
+	    if (tank.isPowActivate())
+		return distance(tank.getTile(), u.getTile()) <= range * 2;
 	    return distance(tank.getTile(), u.getTile()) <= range;
 	}
     }
@@ -804,9 +804,9 @@ public class MainController {
     }
 
     public void sendLastMessage() {
-  	Msg msg = new Msg(lastMessage, false, true);
-  	client.sendMsg(msg);
-      }
+	Msg msg = new Msg(lastMessage, false, true);
+	client.sendMsg(msg);
+    }
     
     public void recMsg() {
 	if (client.getMsg() != null) {
@@ -827,10 +827,11 @@ public class MainController {
 	client.sendMsg(msg);
     }
 
-    public void setLastMessage(String text){
+
+    public void setLastMessage(String text) {
 	lastMessage = text;
     }
-    
+
     public void sendPlayer() {
 	client.sendPlayer(a);
     }

@@ -22,7 +22,7 @@ public class UnitTest {
 	    p.getUnit(str).activatePower();
 	    assertTrue(p.getUnit(str).isPowActivate());
 	}
-	p = new Player("Dragon"); 
+	p = new Player("Dragon");
 	u = new UnitFactoryDragon();
 	for (String str : u.getNamesOfUnits()) {
 	    p.addUnit(str);

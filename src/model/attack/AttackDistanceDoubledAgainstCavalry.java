@@ -6,15 +6,16 @@ import model.units.Unit;
 public class AttackDistanceDoubledAgainstCavalry extends AttackDistance {
 
     public AttackDistanceDoubledAgainstCavalry() {
-   	super(0);
-      }
-    
+	super(0);
+    }
+
     public AttackDistanceDoubledAgainstCavalry(int i) {
 	super(i);
     }
-    
+
     @Override
-    public String attack(Unit att, Unit def, boolean tank) throws DeadUnitException {
+    public String attack(Unit att, Unit def, boolean tank)
+	    throws DeadUnitException {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
@@ -24,19 +25,21 @@ public class AttackDistanceDoubledAgainstCavalry extends AttackDistance {
 
 	dmg += dmg * ((double) crit / 100);
 	dmg -= dmg * ((double) def.getDef() / 100);
-	
+
 	if (tank)
-	    dmg = dmg - (dmg/5);
+	    dmg = dmg - (dmg / 5);
 
 	def.receiveDmg(dmg);
-	
-	if(def.isCavalry()) {
+
+	if (def.getMat() > 0) {
 	    def.receiveDmg(dmg);
-	    return "La double attaque à distance du " + att.getName() + " a infligé "
-		+ dmg*2 + " à " + def.getName();
+
+	    return "La double attaque à distance du " + att.getName()
+		    + " a infligé " + dmg * 2 + " à " + def.getName();
 	}
 
-	return "L'attaque à distance du " + att.getName() + " a infligé "
-		+ dmg + " à " + def.getName();
+
+	return "L'attaque à distance du " + att.getName() + " a infligé " + dmg
+		+ " à " + def.getName();
     }
 }

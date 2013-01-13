@@ -10,7 +10,8 @@ import model.units.Unit;
 public class AttackCaC extends Attack {
 
     @Override
-    public String attack(Unit att, Unit def, boolean tank) throws DeadUnitException {
+    public String attack(Unit att, Unit def, boolean tank)
+	    throws DeadUnitException {
 	int hit = att.getHit();
 	int dmg = att.getDmg();
 	int crit = att.getCrit();
@@ -25,14 +26,15 @@ public class AttackCaC extends Attack {
 
 	dmg += dmg * ((double) crit / 100);
 	dmg -= dmg * ((double) def.getDef() / 100);
-	
+
 	if (tank)
-	    dmg = dmg - (dmg/5);
+	    dmg = dmg - (dmg / 5);
 
 	def.receiveDmg(dmg);
 
-	return "L'attaque du  " + att.getName() + " a infligé " + dmg
-		+ " à " + def.getName();
+	return "L'attaque du  " + att.getName() + " a infligé " + dmg + " à "
+		+ def.getName();
+
     }
 
     @Override

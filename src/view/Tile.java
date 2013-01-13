@@ -37,13 +37,15 @@ public class Tile {
 	this(x, y, block);
 	this.field = field;
     }
-    
+
     @Override
-    public boolean equals(Object o){
-	 if ( this == o ) return true;
-	 if (!(o instanceof Tile) ) return false;
-	 Tile t = (Tile) o;
-	 return this.x == t.x && this.y == t.y;
+    public boolean equals(Object o) {
+	if (this == o)
+	    return true;
+	if (!(o instanceof Tile))
+	    return false;
+	Tile t = (Tile) o;
+	return this.x == t.x && this.y == t.y;
     }
 
     /**

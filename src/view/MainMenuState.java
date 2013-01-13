@@ -58,12 +58,10 @@ public class MainMenuState extends BasicGameState {
 	boolean insideStartGame = false;
 
 	if ((mouseX >= 0 && mouseX <= background.getWidth())
-		&& (mouseY >= 0 && mouseY <= background.getHeight()))
-	{
+		&& (mouseY >= 0 && mouseY <= background.getHeight())) {
 	    insideStartGame = true;
 	    main.setPlayerA("Pegasus");
 	}
-	    
 
 	/*
 	 * }else if( ( mouseX >= menuX && mouseX <= menuX+

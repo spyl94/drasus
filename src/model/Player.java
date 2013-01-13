@@ -22,19 +22,18 @@ public class Player {
 	units = new Hashtable<String, Unit>();
 	factory = new UnitFactoryPegasus();
     }
-    
+
     public Player(String boss) {
 	units = new Hashtable<String, Unit>();
 	this.boss = boss;
 	if (this.boss == "Dragon") {
 	    factory = new UnitFactoryDragon();
-	}
-	else {
+	} else {
 	    factory = new UnitFactoryPegasus();
 	}
-	
+
     }
-    
+
     /**
      * Returns the name of the boss.
      * 
@@ -47,16 +46,18 @@ public class Player {
     /**
      * Create a new unit.
      * 
-     * @param name the name of the new unit
+     * @param name
+     *            the name of the new unit
      */
     public void addUnit(String name) {
 	units.put(name, factory.getUnit(name));
     }
-    
+
     /**
      * Set the turn of the player.
      * 
-     * @param b the turn
+     * @param b
+     *            the turn
      */
     public void setTurn(boolean b) {
 	isTurn = b;
@@ -81,7 +82,7 @@ public class Player {
     }
 
     /**
-     *  Returns a unit according to the name.
+     * Returns a unit according to the name.
      * 
      * @param name
      * @return the unit
@@ -93,8 +94,10 @@ public class Player {
     /**
      * Returns a unit according x and y axis.
      * 
-     * @param x the x axis
-     * @param y the y axis
+     * @param x
+     *            the x axis
+     * @param y
+     *            the y axis
      * @return the unit
      */
     public Unit getUnit(int x, int y) {
@@ -129,15 +132,20 @@ public class Player {
     /**
      * Attack between two units.
      * 
-     * @param att the attacking unit
-     * @param def the defending unit
-     * @param tank if the tank is in range of defending unit
+     * @param att
+     *            the attacking unit
+     * @param def
+     *            the defending unit
+     * @param tank
+     *            if the tank is in range of defending unit
      * @return the result of the fight
-     * @throws DeadUnitException if a unit is dead
-     * @throws DeadBossException if a boss is dead
+     * @throws DeadUnitException
+     *             if a unit is dead
+     * @throws DeadBossException
+     *             if a boss is dead
      */
-    public String attackWith(Unit att, Unit def, boolean tank) throws DeadUnitException,
-	    DeadBossException {
+    public String attackWith(Unit att, Unit def, boolean tank)
+	    throws DeadUnitException, DeadBossException {
 	return att.attack(def, tank);
     }
 

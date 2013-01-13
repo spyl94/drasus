@@ -5,18 +5,20 @@ import model.units.Unit;
 
 /**
  * @author Aurel
- *
+ * 
  */
 public abstract class Attack implements IAttack {
 
-    public abstract String attack(Unit att, Unit deff, boolean tank) throws DeadUnitException;
+    public abstract String attack(Unit att, Unit deff, boolean tank)
+	    throws DeadUnitException;
+
     public abstract boolean canAttackFromRange(int i);
-    
+
     @Override
     public int getRange() {
 	return 1;
     }
-    
+
     /**
      * Determine randomly if the unit has touched the target.
      * 
@@ -27,7 +29,7 @@ public abstract class Attack implements IAttack {
     protected boolean canHit(int i) {
 	return (int) (Math.random() * (101)) < i;
     }
-    
+
     /**
      * Determine if the weapon has an advantage versus the other weapon.
      * 
@@ -42,5 +44,5 @@ public abstract class Attack implements IAttack {
 		|| (a == Unit.Weapon.LANCE && b == Unit.Weapon.AXE)
 		|| (a == Unit.Weapon.AXE && b == Unit.Weapon.SWORD);
     }
-   
+
 }
