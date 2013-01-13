@@ -98,7 +98,16 @@ public class MainController {
 	if (b.getUnit(name) != null)
 	    b.getUnit(name).setTile(tile);
     }
-
+    
+    /**
+     * Send a vector of Tile to see which Tile are in range of the unit's attack.
+     * 
+     * @param tiles
+     *            the map build of tiles 
+     * @param base
+     *            the position of the attacker
+     * @return the vector of tiles which can be attacked
+     */
     public Vector<Tile> atkHighLight(Vector<Tile> tiles, Tile base) {
 	Vector<Tile> result = new Vector<Tile>();
 	boolean temp = false;
@@ -122,7 +131,12 @@ public class MainController {
 	}
 	return result;
     }
-
+    
+    /**
+     * Send a two dimensions String array which contains unit and positions of player A
+     * 
+     * @return Two dimensions String array
+     */
     public String[][] aToTab() {
 	String[][] tab;
 	int i = 0;
@@ -213,7 +227,12 @@ public class MainController {
 	    return "unité introuvable";
 	}
     }
-
+    
+    /**
+     * Send a two dimensions String array which contains unit and positions of player B
+     * 
+     * @return Two dimensions String array
+     */
     public String[][] bToTab() {
 	String[][] tab;
 	int i = 0;
@@ -233,6 +252,17 @@ public class MainController {
 	return tab;
     }
 
+    /**
+     * A recursive method which calculate how the unit can move.
+     * @param tiles
+     * 		    Tiles of the map
+     * @param base
+     * 		    Tile of the unit
+     * @param moveNb
+     * 		    Number of recursion
+     * 
+     * @return A vector of Tile which contains all possibilities of move
+     */
     private Vector<Tile> canCross(Vector<Tile> tiles, Tile base, int moveNb) {
 	Tile[] finale = null;
 	Vector<Tile> tempo = new Vector<Tile>();
@@ -323,16 +353,46 @@ public class MainController {
 	}
 	return result;
     }
-
+    
+    /**
+     * Call the recursive method canCross
+     * @param tiles
+     * 		   Tiles of the map
+     * @param base 
+     * 		   Tile of the unit
+     * @return A vector of Tile which contains all possibilities of move
+     */
+    
     public Vector<Tile> canMove(Vector<Tile> tiles, Tile base) {
 	if (getUnit(base).hasMat() && getTurn().hasAttack(getUnit(base))
 		&& !getTurn().hasMoveAfterAttack(getUnit(base))) {
-	    return canCross(tiles, base, getUnit(base).getMat());
+	    Vector<Tile> result;
+	    if(getTurn().isCrippled(getUnit(base))){
+		result = canCross(tiles, base, getUnit(base).getMat());
+	    }
+	    else{
+		result = canCross(tiles, base, getUnit(base).getMat());
+
+	    }
+	    return result;
 	} else {
-	    return canCross(tiles, base, getUnit(base).getMove());
+	    Vector<Tile> result;
+	    if(getTurn().isCrippled(getUnit(base))){
+		result = canCross(tiles, base, getUnit(base).getMove()/2);
+	    }
+	    else{
+		result = canCross(tiles, base, getUnit(base).getMove());
+
+	    }
+	    return result;
 	}
     }
-
+    
+    /**
+     * Init the connection between client and server.
+     * @param adr
+     * 		   Address of the server.
+     */
     public void connexion(String adr) {
 	client = new ConnexionController(adr);
 	Msg firstco = new Msg("", true, false);
@@ -341,7 +401,6 @@ public class MainController {
 	    try {
 		Thread.sleep(1);
 	    } catch (InterruptedException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    }
 	}
@@ -351,6 +410,14 @@ public class MainController {
 
     }
 
+    /**
+     * Give the Manhattan distance between two Tiles.
+     * @param tile1
+     * 		   First tile.
+     * @param tile2 
+     * 		   Second tile.
+     * @return The distance between tile1 and tile2 as an integer.
+     */
     public int distance(Tile tile1, Tile tile2) {
 	int a = tile1.x - tile2.x;
 	if (a < 0) {
@@ -372,10 +439,17 @@ public class MainController {
 	}
     }
 
+    /**
+     * Set the turn to false.
+     */
     public void endTurn() {
 	a.setTurn(false);
     }
 
+    /**
+     * Return player a.
+     * @return Player A as a Player.
+     */
     public Player getPlayerA() {
 	return a;
     }
@@ -389,14 +463,28 @@ public class MainController {
 	return a.getNamesOfUnits();
     }
 
+    /**
+     * Return player B.
+     * @return Player B as a Player.
+     */
     public Player getPlayerB() {
 	return b;
     }
-
+    
+    /**
+     * Return TurnController.
+     * @return TurnController.
+     */
     public TurnController getTurn() {
 	return turn;
     }
-
+    
+    /**
+     * Return the unit at a certain Tile.
+     * @param t
+     * 		Tile where method will search an unit.
+     * @return An unit if there is an unit in this Tile, null if there is no unit.
+     */
     public Unit getUnit(Tile t) {
 	for (Unit u : a.getUnits().values())
 	    if (u.getTile().x == t.x && u.getTile().y == t.y)
@@ -484,6 +572,11 @@ public class MainController {
 	return auto;
     }
 
+    /**
+     * Check if the Eclaireur is stealth.
+     * 
+     * @return true if the Eclaireur is stealth.
+     */
     public boolean isCamo() {
 	return b.getUnit("Eclaireur").getTile().getField() == FIELD.FOREST;
     }
@@ -620,6 +713,11 @@ public class MainController {
 	}
     }
 
+    /**
+     * Returns true if it's your turn to play.
+     * 
+     * @return true if the server sent you a message with firstCo field at true.
+     */
     public boolean isTurn() {
 	if (client.getMsg() != null) {
 	    boolean temp = client.getMsg().getFirstCo();
@@ -630,6 +728,15 @@ public class MainController {
 	}
     }
 
+    /**
+     * Move an unit at a certain Tile to another tile.
+     * @param tile
+     * 		   Tile to move the unit.
+     * @param currentSelected
+     * 		   		Tile where is the unit.
+     * @param hightLight
+     * 			 Vector of Tile the unit can move on.
+     */
     public void move(Tile tile, Tile currentSelected, Vector<Tile> highLight) {
 	Unit u = getUnit(currentSelected);
 	if ((!turn.hasMove(u) && !turn.hasAttack(u)))

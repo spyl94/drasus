@@ -1,18 +1,30 @@
-drasus
+Drasus
 ======
 
-Drasus
+## Principe du jeu
 
-TODO LIST:
+Vous incarnez un général et devez gérer vos unités afin de détruire l'ennemi, nous entendons par la le général adverse.
+Decouvrez des unités uniques et obtenez la victoire en usant de vos meilleurs stratégies !
+
+## Wiki
+
+Retrouvez toutes les informations nécéssaires pour jouer :
+https://github.com/spyl94/drasus/wiki
+
+## Télécharger
+
+
+## Les changements à venir
+
 - [] highlight rouge pour attaque
 - [] un vrai pathfinding avec déplacement
-- [] animation et couleur rouge
+- [x] animation et couleur rouge
 - [] Adapter highlight au mat
 - [] modifier move
 - [] menu
 - [] connexion multi users
-- [] Améliorations et conditions des unités
-- [] JavaDoc
-- [] UnitTest
-- [] Auto
+- [x] Améliorations et conditions des unités
+- [x] JavaDoc
+- [x] UnitTest
+- [x] Auto
 - [x] override equals tile
