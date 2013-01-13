@@ -19,6 +19,10 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.MouseOverArea;
 
+/**
+ * @author Adrien
+ *
+ */
 public class MainMenuState extends BasicGameState {
 
     private int stateID = -1;
@@ -111,6 +115,11 @@ public class MainMenuState extends BasicGameState {
 	}
     }
 
+    /**
+     * Send the position of the mouse when it clicked.
+     * @param gc
+     * 		gc is the game container created by slick
+     */
     private void getPosClicked(GameContainer gc) {
 	Input input = gc.getInput();
 	if (input.isMousePressed(0)) {

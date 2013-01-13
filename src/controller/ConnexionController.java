@@ -8,6 +8,11 @@ import com.esotericsoftware.kryo.*;
 import com.esotericsoftware.kryonet.*;
 import controller.ConnexionController;
 
+
+/**
+ * @author Adrien 
+ */
+
 public class ConnexionController {
 
     public static String IP = "88.180.34.112";
@@ -97,12 +102,26 @@ public class ConnexionController {
 	}
     }
 
+    /**
+     * Send a player.
+     * 
+     * @param player
+     *            The player to send
+     */
     public void sendPlayer(Player player) {
 	envoi = new Player[1];
 	envoi[0] = player;
 	client.sendTCP(envoi);
     }
 
+    /**
+     * Send to player in an array.
+     * 
+     * @param a
+     *            First player to send
+     * @param b
+     * 		  Second player to send
+     */
     public void sendPlayers(Player a, Player b) {
 	envoi = new Player[2];
 	envoi[0] = a;
@@ -110,23 +129,44 @@ public class ConnexionController {
 	client.sendTCP(envoi);
     }
 
+    
+    /**
+     * Send a message.
+     * @param msg
+     * 		  message to send		
+     */
     public void sendMsg(Msg msg) {
 	System.out.println(msg.getMsg());
 	client.sendTCP(msg);
     }
 
+    /**
+     * Returns the last array of player received.
+     * 
+     * @return An array of player
+     */
     public Player[] getPlayer() {
 	return recu;
     }
 
+    /**
+     * Put recu to null.
+     */
     public void setNull() {
 	recu = null;
     }
 
+    /**
+     * Put the last message received to null.
+     */
     public void eraseMsg() {
 	msg = null;
     }
 
+    /**
+     * Returns the last message received.
+     * @return the last message received
+     */
     public Msg getMsg() {
 	return msg;
     }

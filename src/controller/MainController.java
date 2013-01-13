@@ -23,6 +23,7 @@ import java.util.Vector;
 
 /**
  * @author Aurel
+ * @author Adrien
  * @Singleton
  * 
  */
@@ -134,11 +135,11 @@ public class MainController {
     }
     
     /**
-     * Send a two dimensions String array which contains unit and positions of player A
+     * Send a two dimensions String array which contains unit and positions of player A.
      * 
      * @return Two dimensions String array
      */
-    public String[][] aToTab() {
+    public String[][] playerAToStringArray() {
 	String[][] tab;
 	int i = 0;
 	Hashtable<String, Unit> units = a.getUnits();
@@ -232,11 +233,11 @@ public class MainController {
     }
     
     /**
-     * Send a two dimensions String array which contains unit and positions of player B
+     * Send a two dimensions String array which contains unit and positions of player B.
      * 
      * @return Two dimensions String array
      */
-    public String[][] bToTab() {
+    public String[][] playerBToStringArray() {
 	String[][] tab;
 	int i = 0;
 	Hashtable<String, Unit> units = b.getUnits();
@@ -339,7 +340,6 @@ public class MainController {
 	if (moveNb == 0 || result.isEmpty()) {
 	    return result;
 	}
-	// System.out.println(finale.size());
 	for (i = 0; i < finale.length; i++) {
 	    tempo = this.canCross(tiles, finale[i], moveNb);
 	    for (Tile k : tempo) {
@@ -358,7 +358,7 @@ public class MainController {
     }
     
     /**
-     * Call the recursive method canCross
+     * Call the recursive method canCross.
      * @param tiles
      * 		   Tiles of the map
      * @param base 
@@ -393,7 +393,6 @@ public class MainController {
     
     /**
      * Init the connection between client and server.
-
      */
     public void connexion() {
 	client = new ConnexionController();
@@ -418,10 +417,10 @@ public class MainController {
     /**
      * Give the Manhattan distance between two Tiles.
      * @param tile1
-     * 		   First tile.
+     * 		   First tile
      * @param tile2 
-     * 		   Second tile.
-     * @return The distance between tile1 and tile2 as an integer.
+     * 		   Second tile
+     * @return The distance between tile1 and tile2 as an integer
      */
     public int distance(Tile tile1, Tile tile2) {
 	int a = tile1.x - tile2.x;
@@ -453,7 +452,7 @@ public class MainController {
 
     /**
      * Return player a.
-     * @return Player A as a Player.
+     * @return Player A as a Player
      */
     public Player getPlayerA() {
 	return a;
@@ -462,7 +461,7 @@ public class MainController {
     /**
      * Returns all available units of player A.
      * 
-     * @return strings of names.
+     * @return strings of names
      */
     public String[] getPlayerAUnitsNames() {
 	return a.getNamesOfUnits();
@@ -470,7 +469,7 @@ public class MainController {
 
     /**
      * Return player B.
-     * @return Player B as a Player.
+     * @return Player B as a Player
      */
     public Player getPlayerB() {
 	return b;
@@ -478,7 +477,7 @@ public class MainController {
     
     /**
      * Return TurnController.
-     * @return TurnController.
+     * @return TurnController
      */
     public TurnController getTurn() {
 	return turn;
@@ -487,8 +486,8 @@ public class MainController {
     /**
      * Return the unit at a certain Tile.
      * @param t
-     * 		Tile where method will search an unit.
-     * @return An unit if there is an unit in this Tile, null if there is no unit.
+     * 		Tile where method will search an unit
+     * @return An unit if there is an unit in this Tile, null if there is no unit
      */
     public Unit getUnit(Tile t) {
 	for (Unit u : a.getUnits().values())
@@ -525,7 +524,7 @@ public class MainController {
 
 	try {
 	    app = new AppGameContainer(new ViewController());
-	    // app.setShowFPS(false);
+	    app.setShowFPS(false);
 	    app.setDisplayMode(1280, 704, false);
 	    app.start();
 	} catch (SlickException e) {
@@ -579,7 +578,7 @@ public class MainController {
     /**
      * Check if the Eclaireur is stealth.
      * 
-     * @return true if the Eclaireur is stealth.
+     * @return true if the Eclaireur is stealth
      */
     public boolean isCamo() {
 	return b.getUnit("Eclaireur").getTile().getField() == FIELD.FOREST;
@@ -590,7 +589,7 @@ public class MainController {
      * 
      * @param tiles
      *            the map
-     * @return tiles with units crippled.
+     * @return tiles with units crippled
      */
     public Vector<Tile> isCrippled(Vector<Tile> tiles) {
 	Vector<Tile> result = new Vector<Tile>();
@@ -679,7 +678,7 @@ public class MainController {
      * 
      * @param tiles
      *            the map
-     * @return tiles with units poisoned.
+     * @return tiles with units poisoned
      */
     public Vector<Tile> isPoisoned(Vector<Tile> tiles) {
 	Vector<Tile> result = new Vector<Tile>();
@@ -720,7 +719,7 @@ public class MainController {
     /**
      * Returns true if it's your turn to play.
      * 
-     * @return true if the server sent you a message with firstCo field at true.
+     * @return true if the server sent you a message with firstCo field at true
      */
     public boolean isTurn() {
 	if (client.getMsg() != null) {
@@ -735,11 +734,11 @@ public class MainController {
     /**
      * Move an unit at a certain Tile to another tile.
      * @param tile
-     * 		   Tile to move the unit.
+     * 		   Tile to move the unit
      * @param currentSelected
-     * 		   		Tile where is the unit.
+     * 		   		Tile where is the unit
      * @param hightLight
-     * 			 Vector of Tile the unit can move on.
+     * 			 Vector of Tile the unit can move on
      */
     public void move(Tile tile, Tile currentSelected, Vector<Tile> highLight) {
 	Unit u = getUnit(currentSelected);
@@ -779,6 +778,9 @@ public class MainController {
 	return left;
     }
 
+    /**
+     * Set b to the last enemy Player received
+     */
     public void recPlayer() {
 	while (client.getPlayer() == null) {
 	    try {
@@ -791,6 +793,11 @@ public class MainController {
 	client.setNull();
     }
 
+    /**
+     * Set a and b to the last Players received.
+     * @throws LoseException
+     * 				if the player have no boss
+     */
     public void recPlayers() throws LoseException {
 	Player[] tab = client.getPlayer();
 	if (tab != null) {
@@ -803,40 +810,70 @@ public class MainController {
 	if(a.getUnit(a.getBoss()) == null) throw new LoseException();
     }
 
+    /**
+     * Send a message with a particular String.
+     * @param message
+     * 			String of the message
+     */
     public void sendMsg(String message) {
 	Msg msg = new Msg(message, false, true);
 	client.sendMsg(msg);
     }
 
+    /**
+     * Send the last message of the player.
+     */
     public void sendLastMessage() {
 	Msg msg = new Msg(lastMessage, false, true);
 	client.sendMsg(msg);
     }
     
+    /**
+     * Set lastMessage  to the last String received by the network.
+     */
     public void recMsg() {
 	if (client.getMsg() != null) {
 	    lastMessage = client.getMsg().getMsg();
 	}
     }
 
+    /**
+     * Getter of lastMessage.
+     * @return
+     * 		the String lastMessage
+     */
     public String getLastMessage() {
 	return lastMessage;
     }
 
+    /**
+     * Send the two players.
+     */
     public void sendBoth() {
 	client.sendPlayers(a, b);
     }
 
+    /**
+     * Send the end of the turn signal.
+     */
     public void sendEnd() {
 	Msg msg = new Msg("C'est à vous de jouer.", true, true);
 	client.sendMsg(msg);
     }
 
 
+    /**
+     * Setter of lastMessage.
+     * @param text
+     * 		   The text we want to put in lastMessage
+     */
     public void setLastMessage(String text) {
 	lastMessage = text;
     }
 
+    /**
+     * Send the a player.
+     */
     public void sendPlayer() {
 	client.sendPlayer(a);
     }

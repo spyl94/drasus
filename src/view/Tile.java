@@ -1,5 +1,9 @@
 package view;
 
+/**
+ * @author Aurel
+ *
+ */
 public class Tile {
 
     public enum FIELD {

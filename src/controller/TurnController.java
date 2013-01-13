@@ -4,6 +4,10 @@ import model.units.Unit;
 
 import java.util.Hashtable;
 
+/**
+ * @author Aurel
+ *
+ */
 public class TurnController {
 
     public static int numberTurn = 0;

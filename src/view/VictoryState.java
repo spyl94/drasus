@@ -12,6 +12,10 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.Image;
 
 
+/**
+ * @author Aurel
+ *
+ */
 public class VictoryState extends BasicGameState {
 
     private int stateID = -1;
@@ -59,7 +63,12 @@ public class VictoryState extends BasicGameState {
 	menu.draw(530, 500);
 	
     }
-
+    
+    /**
+     * Send the position of the mouse when it clicked.
+     * @param gc
+     * 		gc is the game container created by slick
+     */
     private void getPosClicked(GameContainer gc) {
 	Input input = gc.getInput();
 	if (input.isMousePressed(0)) {

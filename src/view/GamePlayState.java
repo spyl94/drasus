@@ -16,20 +16,20 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 
-import org.newdawn.slick.gui.AbstractComponent;
-import org.newdawn.slick.gui.ComponentListener;
-import org.newdawn.slick.gui.MouseOverArea;
-import org.newdawn.slick.tiled.TileSet;
 import org.newdawn.slick.tiled.TiledMap;
 
 import view.Tile.FIELD;
+
+/**
+ * @author Adrien
+ * @author Aurel
+ */
 
 public class GamePlayState extends BasicGameState {
 
@@ -114,7 +114,6 @@ public class GamePlayState extends BasicGameState {
     private Tile unitOnIt;
     private Font awtFont;
     private TrueTypeFont font;
-    private Font traFont;
     private TrueTypeFont message;
 
     public GamePlayState(int stateID) {
@@ -195,7 +194,6 @@ public class GamePlayState extends BasicGameState {
 	dragonAR = new Animation(dragonR, 0, 0, 1, 0, false, 500, true);
 	awtFont = new Font("Times New Roman", Font.BOLD, 24);
 	font = new TrueTypeFont(awtFont, false);
-	traFont = new Font("Times New Roman", Font.PLAIN, 24);
 	message = new TrueTypeFont(awtFont, false);
 	/* Init Vector tiles */
 
@@ -254,7 +252,7 @@ public class GamePlayState extends BasicGameState {
 	    }
 	}
 
-	taba = main.aToTab();
+	taba = main.playerAToStringArray();
 	for (int i = 0; i < taba.length; i++) {
 	    switch (taba[i][0]) {
 	    case "Archer":
@@ -313,7 +311,7 @@ public class GamePlayState extends BasicGameState {
 
 	}
 
-	tabb = main.bToTab();
+	tabb = main.playerBToStringArray();
 	for (int i = 0; i < tabb.length; i++) {
 	    switch (tabb[i][0]) {
 	    case "Archer":
@@ -470,6 +468,9 @@ public class GamePlayState extends BasicGameState {
 
     }
 
+    /**
+     * Start the game by trying to connect to a server or use Auto mode.
+     */
     private void startGame() {
 	if (main.isAuto())
 	    autoGenerateBUnits();
@@ -483,6 +484,11 @@ public class GamePlayState extends BasicGameState {
 
     }
 
+    /**
+     * Start a new Turn.
+     * @param sbg
+     * 		 the game
+     */
     private void initTurn(StateBasedGame sbg) {
 	try {
 	    main.initNewTurn();
@@ -491,6 +497,9 @@ public class GamePlayState extends BasicGameState {
 	}
     }
 
+    /**
+     * End the turn and send the players by network.
+     */
     private void endTurn() {
 	currentSelected = null;
 	currentState = STATES.PAUSE_GAME;
@@ -509,6 +518,15 @@ public class GamePlayState extends BasicGameState {
 	}
     }
 
+    /**
+     * Create a new Unit by clicking on tiles.
+     * @param gc
+     * 		GameContainer of slick
+     * @param sbg
+     * 		The game
+     * @param delta
+     * 		The framerate
+     */
     private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 	if (main.isAuto()) {
 	    main.addUnit("Eclaireur", getTile(18, 3));
@@ -548,15 +566,26 @@ public class GamePlayState extends BasicGameState {
 	}
     }
 
+    /**
+     * Slow the game in auto mode to permit the user to see the game.
+     */
     private void sleep() {
 	try {
 	    Thread.sleep(2000L);
 	} catch (InterruptedException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
 
+    /**
+     * Start the turn and check the actions of player.
+     * @param gc
+     * 		GameContainer of slick
+     * @param sbg
+     * 		The game
+     * @param delta
+     * 		The framerate
+     */
     private void playTurn(GameContainer gc, StateBasedGame sbg, int delta) {
 	if (main.isAuto()) {
 	    switch (TurnController.numberTurn) {
@@ -624,6 +653,15 @@ public class GamePlayState extends BasicGameState {
 	}
     }
 
+    /**
+     * Check what a player want to do with the unit he selected before.
+     * @param gc
+     * 		GameContainer of slick
+     * @param sbg
+     * 		The game
+     * @param delta
+     * 		The framerate
+     */
     private void selectingUnit(GameContainer gc, StateBasedGame sbg, int delta) {
 	getTileMouseOn(gc);
 	Tile tile = getTileClicked(gc);
@@ -654,6 +692,12 @@ public class GamePlayState extends BasicGameState {
 	}
     }
 
+    /**
+     * Returns the tile the user clicked on.
+     * @param gc
+     * 		GameContainer of slick
+     * @return the tile the user clicked on
+     */
     private Tile getTileClicked(GameContainer gc) {
 	Input input = gc.getInput();
 	if (input.isMousePressed(0)) {
@@ -674,6 +718,11 @@ public class GamePlayState extends BasicGameState {
 	return null;
     }
 
+    /**
+     * Returns the tile the mouse is on.
+     * @param gc
+     * 		GameContainer of slick
+     */
     private void getTileMouseOn(GameContainer gc) {
 	Input input = gc.getInput();
 
@@ -701,6 +750,14 @@ public class GamePlayState extends BasicGameState {
 
     }
 
+    /**
+     * Returns the tile of a certain position.
+     * @param x
+     * 		x parameter of the position
+     * @param y
+     * 		y parameter of the position
+     * @return the tile which have this position
+     */
     private Tile getTile(int x, int y) {
 	for (Tile t : tiles) {
 	    if (t.x == x && t.y == y)
@@ -709,6 +766,9 @@ public class GamePlayState extends BasicGameState {
 	return null;
     }
 
+    /**
+     * Auto generate some units for player B in auto mode.
+     */
     private void autoGenerateBUnits() {
 	main.addUnitToB(main.getPlayerB().getBoss(), getTile(36, 18));
 	main.addUnitToB("Eclaireur", getTile(23, 15));

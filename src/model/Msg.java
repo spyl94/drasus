@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * @author Adrien
+ *
+ */
+
 public class Msg {
     private String message;
     private boolean firstCo;
@@ -26,26 +31,53 @@ public class Msg {
 	okCo = ok;
     }
 
+    /**
+     * Returns the last message received.
+     * @return message
+     */
     public String getMsg() {
 	return message;
     }
-
+    
+    /**
+     * Returns the boolean firstCo.
+     * @return boolean firstCo
+     */
     public boolean getFirstCo() {
 	return firstCo;
     }
 
+    /**
+     * Returns true if the connection is set.
+     * @return okCo
+     */
     public boolean getOkCo() {
 	return okCo;
     }
 
+    /**
+     * Set the string of a Msg.
+     * @param mess
+     * 		   The string we want to put in the Msg.
+     */
     public void setMsg(String mess) {
 	message = mess;
     }
 
+    /**
+     * Set the boolean of first connection.
+     * @param first
+     * 			the boolean
+     */
     public void setFirstCo(boolean first) {
 	firstCo = first;
     }
 
+    /**
+     * Set the connection granted boolean.
+     * @param ok
+     * 		  the boolean
+     */
     public void setOkCo(boolean ok) {
 	okCo = ok;
     }
