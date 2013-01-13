@@ -583,7 +583,7 @@ public class GamePlayState extends BasicGameState {
 		break;
 	    default:
 		sleep();
-		sbg.enterState(ViewController.MAINMENUSTATE);
+		sbg.enterState(ViewController.VICTORYSTATE);
 		break;
 	    }
 	    currentState = STATES.END_TURN;
