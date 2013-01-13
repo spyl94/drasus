@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import controller.*;
 import model.*;
+import model.exception.LoseException;
 import model.exception.VictoryException;
 
 import org.newdawn.slick.GameContainer;
@@ -453,7 +454,11 @@ public class GamePlayState extends BasicGameState {
 	    main.recMsg();
 	    getTileMouseOn(gc);
 	    if (!main.isAuto()) {
-		main.recPlayers();
+		try {
+		    main.recPlayers();
+		} catch (LoseException e) {
+		    sbg.enterState(ViewController.LOSESTATE);
+		}
 		if (main.isTurn())
 		    currentState = STATES.START_TURN;
 	    }
