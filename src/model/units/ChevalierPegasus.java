@@ -9,7 +9,7 @@ import model.attack.AttackDistance;
 public class ChevalierPegasus extends Unit {
 
     public ChevalierPegasus() {
-	super(new AttackDistance(1), 240, 60, 90, 4, 25, 10, 0, Weapon.SWORD,
+	super(new AttackDistance(1), 240, 60, 90, 4, 25, 10, 0, Weapon.UNKNOWN,
 		"Chevalier");
     }
 
