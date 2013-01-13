@@ -538,7 +538,7 @@ public class MainController {
      * @throws VictoryException
      *             if a boss is dead
      */
-    public String initNewTurn() throws VictoryException {
+    public synchronized String initNewTurn() throws VictoryException {
 	String str = "";
 	turn = new TurnController(a.getUnits());
 	for (Unit u : a.getUnits().values()) {
