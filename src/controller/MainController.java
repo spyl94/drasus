@@ -406,6 +406,9 @@ public class MainController {
 	}
 	left = client.getMsg().getFirstCo();
 	a.setTurn(client.getMsg().getFirstCo());
+	if(a.getTurn()){
+	    lastMessage = "A vous de commencer.";
+	}
 	client.eraseMsg();
 
     }

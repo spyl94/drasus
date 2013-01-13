@@ -105,7 +105,7 @@ public class MainMenuState extends BasicGameState {
 	}
     }
 
-    private Tile getPosClicked(GameContainer gc) {
+    private void getPosClicked(GameContainer gc) {
 	Input input = gc.getInput();
 	if (input.isMousePressed(0)) {
 
@@ -113,6 +113,5 @@ public class MainMenuState extends BasicGameState {
 	    mouseY = input.getMouseY();
 
 	}
-	return null;
     }
 }
