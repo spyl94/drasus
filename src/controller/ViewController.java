@@ -25,6 +25,7 @@ public class ViewController extends StateBasedGame {
     @Override
     public void initStatesList(GameContainer gameContainer)
 	    throws SlickException {
+	
 	this.addState(new MainMenuState(MAINMENUSTATE));
 	this.addState(new GamePlayState(GAMEPLAYSTATE));
 	this.addState(new VictoryState(VICTORYSTATE));
