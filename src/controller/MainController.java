@@ -241,7 +241,7 @@ public class MainController {
 
 	for (Tile t : tiles) {
 	    if (t.x == base.x + 1 && t.y == base.y) {
-		if (t.isBlocked() == false) {
+		if (t.isBlocked() == false && !isPlayerBUnit(t)) {
 		    for (Tile p : result) {
 			if (p == t) {
 			    temp = true;
@@ -255,7 +255,7 @@ public class MainController {
 	    }
 
 	    if (t.x == base.x && t.y + 1 == base.y) {
-		if (t.isBlocked() == false) {
+		if (t.isBlocked() == false && !isPlayerBUnit(t)) {
 		    for (Tile p : result) {
 			if (p == t) {
 			    temp = true;
@@ -269,7 +269,7 @@ public class MainController {
 	    }
 
 	    if (t.x == base.x - 1 && t.y == base.y) {
-		if (t.isBlocked() == false) {
+		if (t.isBlocked() == false && !isPlayerBUnit(t)) {
 		    for (Tile p : result) {
 			if (p == t) {
 			    temp = true;
@@ -283,7 +283,7 @@ public class MainController {
 	    }
 
 	    if (t.x == base.x && t.y - 1 == base.y) {
-		if (t.isBlocked() == false) {
+		if (t.isBlocked() == false && !isPlayerBUnit(t)) {
 		    for (Tile p : result) {
 			if (p == t) {
 			    temp = true;
