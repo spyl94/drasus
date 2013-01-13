@@ -172,6 +172,7 @@ public class MainController {
 	    return a.attackWith(a.getUnit(att), b.getUnit(def),
 		    isTankInRange(b.getUnit(def)));
 	} catch (DeadBossException e) {
+	    System.out.println("mort d'un boss");
 	    throw new VictoryException(e);
 	} catch (DeadUnitException e) {
 	    b.delUnit(e.getName());
@@ -538,7 +539,7 @@ public class MainController {
      * @throws VictoryException
      *             if a boss is dead
      */
-    public String initNewTurn() throws VictoryException {
+    public synchronized String initNewTurn() throws VictoryException {
 	String str = "";
 	turn = new TurnController(a.getUnits());
 	for (Unit u : a.getUnits().values()) {
