@@ -285,7 +285,7 @@ public abstract class Unit {
     public void receiveDmg(int dmg) throws DeadUnitException, DeadBossException {
 	this.hp -= dmg;
 	if (this.hp <= 0) {
-	    if (this.name == "Pegasus" || this.name == "Dragon")
+	    if (this.name.equals("Pegasus") || this.name.equals("Dragon"))
 		throw new DeadBossException(this.name, dmg);
 	    throw new DeadUnitException(this.name, dmg);
 	}

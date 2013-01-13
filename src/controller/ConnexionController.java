@@ -10,7 +10,7 @@ import controller.ConnexionController;
 
 public class ConnexionController {
 
-    public static String IP = "127.0.0.1";
+    public static String IP = "88.180.34.112";
     public static String PORT = "4662";
     private Client client;
     private Msg msg = new Msg();

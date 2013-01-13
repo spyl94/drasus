@@ -172,6 +172,7 @@ public class MainController {
 	    return a.attackWith(a.getUnit(att), b.getUnit(def),
 		    isTankInRange(b.getUnit(def)));
 	} catch (DeadBossException e) {
+	    System.out.println("mort d'un boss");
 	    throw new VictoryException(e);
 	} catch (DeadUnitException e) {
 	    b.delUnit(e.getName());

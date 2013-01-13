@@ -114,10 +114,8 @@ public class MainMenuState extends BasicGameState {
     private void getPosClicked(GameContainer gc) {
 	Input input = gc.getInput();
 	if (input.isMousePressed(0)) {
-
 	    mouseX = input.getMouseX();
 	    mouseY = input.getMouseY();
-
 	}
     }
 }
