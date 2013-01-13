@@ -38,42 +38,18 @@ public class LoseState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg)
 	    throws SlickException {
 	background = new Image("res/defaite/defaite.png");
-	menu = new Image("res/menu/menu.png");
     }
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int delta)
 	    throws SlickException {
 	
-	getPosClicked(gc);
-	boolean insideMenu = false;
-	
-	if ((mouseX > 530 && mouseX < menu.getWidth() + 530)
-		&& (mouseY >= 500 && mouseY <= menu.getHeight() + 500))
-	    insideMenu = true;
 
-	if(insideMenu)
-	    sbg.enterState(ViewController.MAINMENUSTATE);
     }
 
     @Override
     public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 	    throws SlickException {
 	background.draw(0, 0);
-	menu.draw(530, 500);
-	
-    }
-    
-    /**
-     * Send the position of the mouse when it clicked.
-     * @param gc
-     * 		gc is the game container created by slick
-     */
-    private void getPosClicked(GameContainer gc) {
-	Input input = gc.getInput();
-	if (input.isMousePressed(0)) {
-	    mouseX = input.getMouseX();
-	    mouseY = input.getMouseY();
-	}
     }
 }

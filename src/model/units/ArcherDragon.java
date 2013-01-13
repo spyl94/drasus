@@ -18,7 +18,7 @@ public class ArcherDragon extends Unit {
     @Override
     public void activatePower() {
 	pow = true;
-	setIAttack(new AttackDistanceArcher(3));
+	setIAttack(new AttackDistanceArcher(4));
     }
 
 }
