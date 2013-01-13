@@ -1,7 +1,7 @@
 package test;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import model.Player;
 import model.UnitFactory;
 import model.UnitFactoryDragon;

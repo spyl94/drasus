@@ -1,8 +1,8 @@
 package model.attack;
 
-import view.Tile.FIELD;
 import model.exception.DeadUnitException;
 import model.units.Unit;
+import view.Tile.FIELD;
 
 public class AttackDistanceDoubledInForest extends AttackDistance {
 

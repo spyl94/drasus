@@ -1,8 +1,8 @@
 package controller;
 
-import model.units.Unit;
-
 import java.util.Hashtable;
+
+import model.units.Unit;
 
 /**
  * @author Aurel
@@ -53,6 +53,39 @@ public class TurnController {
 		u.setTurnsPoisoned(0);
 	    }
 	}
+    }
+
+    /**
+     * Returns if a unit already attacked.
+     * 
+     * @param u
+     *            the unit
+     * @return true if the unit already attacked false otherwise
+     */
+    public boolean hasAttack(Unit u) {
+	return hasAttack.get(u);
+    }
+
+    /**
+     * Returns if a unit already moved.
+     * 
+     * @param u
+     *            the unit
+     * @return true if the unit already moved false otherwise
+     */
+    public boolean hasMove(Unit u) {
+	return hasMove.get(u);
+    }
+
+    /**
+     * Returns if a unit already moved after attacking.
+     * 
+     * @param u
+     *            the unit
+     * @return true if the unit already moved after attacking false otherwise
+     */
+    public boolean hasMoveAfterAttack(Unit u) {
+	return hasMoveAfterAttack.get(u);
     }
 
     /**
@@ -116,39 +149,6 @@ public class TurnController {
      */
     public void setHasMoveAfterAttack(Unit u) {
 	hasMoveAfterAttack.put(u, true);
-    }
-
-    /**
-     * Returns if a unit already attacked.
-     * 
-     * @param u
-     *            the unit
-     * @return true if the unit already attacked false otherwise
-     */
-    public boolean hasAttack(Unit u) {
-	return hasAttack.get(u);
-    }
-
-    /**
-     * Returns if a unit already moved.
-     * 
-     * @param u
-     *            the unit
-     * @return true if the unit already moved false otherwise
-     */
-    public boolean hasMove(Unit u) {
-	return hasMove.get(u);
-    }
-
-    /**
-     * Returns if a unit already moved after attacking.
-     * 
-     * @param u
-     *            the unit
-     * @return true if the unit already moved after attacking false otherwise
-     */
-    public boolean hasMoveAfterAttack(Unit u) {
-	return hasMoveAfterAttack.get(u);
     }
 
 }

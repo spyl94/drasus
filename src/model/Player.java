@@ -35,15 +35,6 @@ public class Player {
     }
 
     /**
-     * Returns the name of the boss.
-     * 
-     * @return the boss
-     */
-    public String getBoss() {
-	return boss;
-    }
-
-    /**
      * Create a new unit.
      * 
      * @param name
@@ -54,22 +45,23 @@ public class Player {
     }
 
     /**
-     * Set the turn of the player.
+     * Attack between two units.
      * 
-     * @param b
-     *            the turn
+     * @param att
+     *            the attacking unit
+     * @param def
+     *            the defending unit
+     * @param tank
+     *            if the tank is in range of defending unit
+     * @return the result of the fight
+     * @throws DeadUnitException
+     *             if a unit is dead
+     * @throws DeadBossException
+     *             if a boss is dead
      */
-    public void setTurn(boolean b) {
-	isTurn = b;
-    }
-
-    /**
-     * Returns if it is the turn of the player to play.
-     * 
-     * @return true if the turn of player false otherwise
-     */
-    public boolean getTurn() {
-	return isTurn;
+    public String attackWith(Unit att, Unit def, boolean tank)
+	    throws DeadUnitException, DeadBossException {
+	return att.attack(def, tank);
     }
 
     /**
@@ -82,13 +74,30 @@ public class Player {
     }
 
     /**
-     * Returns a unit according to the name.
+     * Returns the name of the boss.
      * 
-     * @param name
-     * @return the unit
+     * @return the boss
      */
-    public Unit getUnit(String name) {
-	return units.get(name);
+    public String getBoss() {
+	return boss;
+    }
+
+    /**
+     * Return the names of units that can be created.
+     * 
+     * @return the names
+     */
+    public String[] getNamesOfUnits() {
+	return factory.getNamesOfUnits();
+    }
+
+    /**
+     * Returns if it is the turn of the player to play.
+     * 
+     * @return true if the turn of player false otherwise
+     */
+    public boolean getTurn() {
+	return isTurn;
     }
 
     /**
@@ -112,12 +121,13 @@ public class Player {
     }
 
     /**
-     * Return the names of units that can be created.
+     * Returns a unit according to the name.
      * 
-     * @return the names
+     * @param name
+     * @return the unit
      */
-    public String[] getNamesOfUnits() {
-	return factory.getNamesOfUnits();
+    public Unit getUnit(String name) {
+	return units.get(name);
     }
 
     /**
@@ -130,23 +140,13 @@ public class Player {
     }
 
     /**
-     * Attack between two units.
+     * Set the turn of the player.
      * 
-     * @param att
-     *            the attacking unit
-     * @param def
-     *            the defending unit
-     * @param tank
-     *            if the tank is in range of defending unit
-     * @return the result of the fight
-     * @throws DeadUnitException
-     *             if a unit is dead
-     * @throws DeadBossException
-     *             if a boss is dead
+     * @param b
+     *            the turn
      */
-    public String attackWith(Unit att, Unit def, boolean tank)
-	    throws DeadUnitException, DeadBossException {
-	return att.attack(def, tank);
+    public void setTurn(boolean b) {
+	isTurn = b;
     }
 
 }

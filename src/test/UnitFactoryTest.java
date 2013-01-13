@@ -1,7 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertNotNull;
 import model.UnitFactory;
 import model.UnitFactoryDragon;
 import model.UnitFactoryPegasus;

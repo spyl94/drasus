@@ -1,11 +1,11 @@
 package controller;
 
-import view.*;
-import view.Tile.FIELD;
-
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Vector;
 
-import model.*;
+import model.Msg;
+import model.Player;
 import model.exception.DeadBossException;
 import model.exception.DeadUnitException;
 import model.exception.LoseException;
@@ -13,17 +13,13 @@ import model.exception.VictoryException;
 import model.units.Unit;
 
 import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Vector;
+
+import view.Tile;
+import view.Tile.FIELD;
 
 /**
- * @author Aurel
- * @author Adrien
+ * @author Aurel Adrien
  * @Singleton
  * 
  */
@@ -135,30 +131,6 @@ public class MainController {
     }
     
     /**
-     * Send a two dimensions String array which contains unit and positions of player A.
-     * 
-     * @return Two dimensions String array
-     */
-    public String[][] playerAToStringArray() {
-	String[][] tab;
-	int i = 0;
-	Hashtable<String, Unit> units = a.getUnits();
-	Iterator<Unit> it = units.values().iterator();
-	Iterator<String> itKey = units.keySet().iterator();
-	tab = new String[units.size()][3];
-	Unit temp;
-	while (it.hasNext()) {
-	    temp = it.next();
-	    tab[i][0] = itKey.next();
-	    tab[i][1] = String.valueOf(temp.getTile().x);
-	    tab[i][2] = String.valueOf(temp.getTile().y);
-	    i++;
-	}
-
-	return tab;
-    }
-
-    /**
      * Attack between two units.
      * 
      * @param att
@@ -230,30 +202,6 @@ public class MainController {
 	} catch (NullPointerException e) {
 	    return "unité introuvable";
 	}
-    }
-    
-    /**
-     * Send a two dimensions String array which contains unit and positions of player B.
-     * 
-     * @return Two dimensions String array
-     */
-    public String[][] playerBToStringArray() {
-	String[][] tab;
-	int i = 0;
-	Hashtable<String, Unit> units = b.getUnits();
-	Iterator<Unit> it = units.values().iterator();
-	Iterator<String> itKey = units.keySet().iterator();
-	tab = new String[units.size()][3];
-	Unit temp;
-	while (it.hasNext()) {
-	    temp = it.next();
-	    tab[i][0] = itKey.next();
-	    tab[i][1] = String.valueOf(temp.getTile().x);
-	    tab[i][2] = String.valueOf(temp.getTile().y);
-	    i++;
-	}
-
-	return tab;
     }
 
     /**
@@ -390,7 +338,7 @@ public class MainController {
 	    return result;
 	}
     }
-    
+
     /**
      * Init the connection between client and server.
      */
@@ -413,7 +361,7 @@ public class MainController {
 	client.eraseMsg();
 
     }
-
+    
     /**
      * Give the Manhattan distance between two Tiles.
      * @param tile1
@@ -433,7 +381,7 @@ public class MainController {
 	}
 	return a + b;
     }
-
+    
     /**
      * End a turn of the game.
      */
@@ -448,6 +396,15 @@ public class MainController {
      */
     public void endTurn() {
 	a.setTurn(false);
+    }
+
+    /**
+     * Getter of lastMessage.
+     * @return
+     * 		the String lastMessage
+     */
+    public String getLastMessage() {
+	return lastMessage;
     }
 
     /**
@@ -474,7 +431,7 @@ public class MainController {
     public Player getPlayerB() {
 	return b;
     }
-    
+
     /**
      * Return TurnController.
      * @return TurnController
@@ -498,7 +455,7 @@ public class MainController {
 		return u;
 	return null;
     }
-
+    
     /**
      * Init the GameContainer, start the game.
      * 
@@ -770,12 +727,69 @@ public class MainController {
     }
 
     /**
+     * Send a two dimensions String array which contains unit and positions of player A.
+     * 
+     * @return Two dimensions String array
+     */
+    public String[][] playerAToStringArray() {
+	String[][] tab;
+	int i = 0;
+	Hashtable<String, Unit> units = a.getUnits();
+	Iterator<Unit> it = units.values().iterator();
+	Iterator<String> itKey = units.keySet().iterator();
+	tab = new String[units.size()][3];
+	Unit temp;
+	while (it.hasNext()) {
+	    temp = it.next();
+	    tab[i][0] = itKey.next();
+	    tab[i][1] = String.valueOf(temp.getTile().x);
+	    tab[i][2] = String.valueOf(temp.getTile().y);
+	    i++;
+	}
+
+	return tab;
+    }
+
+    /**
+     * Send a two dimensions String array which contains unit and positions of player B.
+     * 
+     * @return Two dimensions String array
+     */
+    public String[][] playerBToStringArray() {
+	String[][] tab;
+	int i = 0;
+	Hashtable<String, Unit> units = b.getUnits();
+	Iterator<Unit> it = units.values().iterator();
+	Iterator<String> itKey = units.keySet().iterator();
+	tab = new String[units.size()][3];
+	Unit temp;
+	while (it.hasNext()) {
+	    temp = it.next();
+	    tab[i][0] = itKey.next();
+	    tab[i][1] = String.valueOf(temp.getTile().x);
+	    tab[i][2] = String.valueOf(temp.getTile().y);
+	    i++;
+	}
+
+	return tab;
+    }
+
+    /**
      * Returns if the player side is left.
      * 
      * @return true if the player play left
      */
     public boolean playLeft() {
 	return left;
+    }
+
+    /**
+     * Set lastMessage  to the last String received by the network.
+     */
+    public void recMsg() {
+	if (client.getMsg() != null) {
+	    lastMessage = client.getMsg().getMsg();
+	}
     }
 
     /**
@@ -809,43 +823,7 @@ public class MainController {
 	}
 	if(a.getUnit(a.getBoss()) == null) throw new LoseException();
     }
-
-    /**
-     * Send a message with a particular String.
-     * @param message
-     * 			String of the message
-     */
-    public void sendMsg(String message) {
-	Msg msg = new Msg(message, false, true);
-	client.sendMsg(msg);
-    }
-
-    /**
-     * Send the last message of the player.
-     */
-    public void sendLastMessage() {
-	Msg msg = new Msg(lastMessage, false, true);
-	client.sendMsg(msg);
-    }
     
-    /**
-     * Set lastMessage  to the last String received by the network.
-     */
-    public void recMsg() {
-	if (client.getMsg() != null) {
-	    lastMessage = client.getMsg().getMsg();
-	}
-    }
-
-    /**
-     * Getter of lastMessage.
-     * @return
-     * 		the String lastMessage
-     */
-    public String getLastMessage() {
-	return lastMessage;
-    }
-
     /**
      * Send the two players.
      */
@@ -861,6 +839,31 @@ public class MainController {
 	client.sendMsg(msg);
     }
 
+    /**
+     * Send the last message of the player.
+     */
+    public void sendLastMessage() {
+	Msg msg = new Msg(lastMessage, false, true);
+	client.sendMsg(msg);
+    }
+
+    /**
+     * Send a message with a particular String.
+     * @param message
+     * 			String of the message
+     */
+    public void sendMsg(String message) {
+	Msg msg = new Msg(message, false, true);
+	client.sendMsg(msg);
+    }
+
+
+    /**
+     * Send the a player.
+     */
+    public void sendPlayer() {
+	client.sendPlayer(a);
+    }
 
     /**
      * Setter of lastMessage.
@@ -869,13 +872,6 @@ public class MainController {
      */
     public void setLastMessage(String text) {
 	lastMessage = text;
-    }
-
-    /**
-     * Send the a player.
-     */
-    public void sendPlayer() {
-	client.sendPlayer(a);
     }
 
     /**

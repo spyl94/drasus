@@ -10,19 +10,19 @@ public class Tile {
 	DEFAULT, GRASS, FOREST, MOUNTAIN, BRIDGE, FORT
     }
 
+    // let public for easier use
+    public final int x;
+
+    public final int y;
+    private FIELD field;
+
+    private boolean blocked;
     public Tile() {
 	x = 0;
 	y = 0;
 	this.blocked = false;
 	this.field = FIELD.DEFAULT;
     }
-
-    // let public for easier use
-    public final int x;
-    public final int y;
-
-    private FIELD field;
-    private boolean blocked;
 
     public Tile(int x, int y) {
 	this.x = x;

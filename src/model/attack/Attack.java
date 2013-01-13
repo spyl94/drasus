@@ -9,15 +9,12 @@ import model.units.Unit;
  */
 public abstract class Attack implements IAttack {
 
+    @Override
     public abstract String attack(Unit att, Unit deff, boolean tank)
 	    throws DeadUnitException;
 
-    public abstract boolean canAttackFromRange(int i);
-
     @Override
-    public int getRange() {
-	return 1;
-    }
+    public abstract boolean canAttackFromRange(int i);
 
     /**
      * Determine randomly if the unit has touched the target.
@@ -28,6 +25,11 @@ public abstract class Attack implements IAttack {
      */
     protected boolean canHit(int i) {
 	return (int) (Math.random() * (101)) < i;
+    }
+
+    @Override
+    public int getRange() {
+	return 1;
     }
 
     /**

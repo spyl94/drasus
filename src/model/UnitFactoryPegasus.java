@@ -29,6 +29,11 @@ public class UnitFactoryPegasus extends UnitFactory {
     }
 
     @Override
+    public String[] getNamesOfUnits() {
+	return this.names;
+    }
+
+    @Override
     public Unit getUnit(String str) {
 
 	if (str == "Pegasus")
@@ -57,11 +62,6 @@ public class UnitFactoryPegasus extends UnitFactory {
 	    return new ChevalierPegasus();
 
 	return null;
-    }
-
-    @Override
-    public String[] getNamesOfUnits() {
-	return this.names;
     }
 
 }

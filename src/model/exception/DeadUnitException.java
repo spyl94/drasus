@@ -4,6 +4,7 @@ package model.exception;
  * @author Aurel
  * 
  */
+@SuppressWarnings("serial")
 public class DeadUnitException extends Exception {
 
     private String name;
@@ -21,21 +22,21 @@ public class DeadUnitException extends Exception {
     }
 
     /**
-     * Returns the name of the dead unit.
-     * 
-     * @return the name
-     */
-    public String getName() {
-	return name;
-    }
-
-    /**
      * Returns the number of damage that killed the unit.
      * 
      * @return the damages
      */
     public int getDmg() {
 	return dmg;
+    }
+
+    /**
+     * Returns the name of the dead unit.
+     * 
+     * @return the name
+     */
+    public String getName() {
+	return name;
     }
 
 }

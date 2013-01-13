@@ -1,7 +1,7 @@
 package test;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import model.Player;
 import model.UnitFactory;
 import model.UnitFactoryPegasus;
@@ -21,9 +21,14 @@ public class PlayerTest {
     }
 
     @Test
-    public void testDefaultConstructor() {
-	assertNotNull(p.getBoss());
-	assertNotNull(p.getNamesOfUnits());
+    public void testAddUnit() {
+	UnitFactory u;
+	u = new UnitFactoryPegasus();
+	for (String str : u.getNamesOfUnits()) {
+	    p.addUnit(u.getUnit(str).getName());
+	    assertNotNull(p.getUnit(u.getUnit(str).getName()));
+	}
+
     }
 
     @Test
@@ -36,14 +41,9 @@ public class PlayerTest {
     }
 
     @Test
-    public void testAddUnit() {
-	UnitFactory u;
-	u = new UnitFactoryPegasus();
-	for (String str : u.getNamesOfUnits()) {
-	    p.addUnit(u.getUnit(str).getName());
-	    assertNotNull(p.getUnit(u.getUnit(str).getName()));
-	}
-
+    public void testDefaultConstructor() {
+	assertNotNull(p.getBoss());
+	assertNotNull(p.getNamesOfUnits());
     }
 
     @Test

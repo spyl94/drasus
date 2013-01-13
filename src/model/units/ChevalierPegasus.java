@@ -1,7 +1,6 @@
 package model.units;
 
 import model.attack.AttackCaC;
-import model.attack.AttackDistance;
 
 /**
  * @author Aurel

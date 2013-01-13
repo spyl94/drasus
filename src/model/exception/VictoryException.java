@@ -4,6 +4,7 @@ package model.exception;
  * @author Aurel
  * 
  */
+@SuppressWarnings("serial")
 public class VictoryException extends Exception {
 
     private String name;

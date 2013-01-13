@@ -3,32 +3,29 @@ package view;
 import java.awt.Font;
 import java.util.Vector;
 
-import controller.*;
-import model.*;
 import model.exception.LoseException;
 import model.exception.VictoryException;
 
-import org.newdawn.slick.GameContainer;
-
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Image;
-
 import org.newdawn.slick.tiled.TiledMap;
 
 import view.Tile.FIELD;
+import controller.MainController;
+import controller.TurnController;
+import controller.ViewController;
 
 /**
- * @author Adrien
- * @author Aurel
+ * @author Adrien Aurel
  */
 
 public class GamePlayState extends BasicGameState {
@@ -123,9 +120,116 @@ public class GamePlayState extends BasicGameState {
 	main = MainController.getInstance();
     }
 
+    /**
+     * Auto generate some units for player B in auto mode.
+     */
+    private void autoGenerateBUnits() {
+	main.addUnitToB(main.getPlayerB().getBoss(), getTile(36, 18));
+	main.addUnitToB("Eclaireur", getTile(23, 15));
+	main.addUnitToB("Fantassin", getTile(23, 16));
+	main.addUnitToB("Archer", getTile(24, 17));
+	main.addUnitToB("ArcherMonte", getTile(22, 15));
+	main.addUnitToB("Cavalier", getTile(23, 18));
+    }
+
+    /**
+     * End the turn and send the players by network.
+     */
+    private void endTurn() {
+	currentSelected = null;
+	currentState = STATES.PAUSE_GAME;
+	main.endNewTurn();
+
+	if (main.isAuto()) {
+	    sleep();
+	    currentState = STATES.START_TURN;
+	} else {
+
+	    main.sendEnd();
+	    main.endTurn();
+	    if (main.getPlayerA().getTurn()) {
+		currentState = STATES.START_TURN;
+	    }
+	}
+    }
+
     @Override
     public int getID() {
 	return stateID;
+    }
+
+    /**
+     * Returns the tile of a certain position.
+     * @param x
+     * 		x parameter of the position
+     * @param y
+     * 		y parameter of the position
+     * @return the tile which have this position
+     */
+    private Tile getTile(int x, int y) {
+	for (Tile t : tiles) {
+	    if (t.x == x && t.y == y)
+		return t;
+	}
+	return null;
+    }
+
+    /**
+     * Returns the tile the user clicked on.
+     * @param gc
+     * 		GameContainer of slick
+     * @return the tile the user clicked on
+     */
+    private Tile getTileClicked(GameContainer gc) {
+	Input input = gc.getInput();
+	if (input.isMousePressed(0)) {
+
+	    int mouseX = input.getMouseX();
+	    int mouseY = input.getMouseY();
+	    int x = 0;
+	    int y = 0;
+
+	    x = mouseX / grassMap.getTileWidth();
+	    y = mouseY / grassMap.getTileHeight();
+
+	    for (Tile t : tiles) {
+		if (t.x == x && t.y == y)
+		    return t;
+	    }
+	}
+	return null;
+    }
+
+    /**
+     * Returns the tile the mouse is on.
+     * @param gc
+     * 		GameContainer of slick
+     */
+    private void getTileMouseOn(GameContainer gc) {
+	Input input = gc.getInput();
+
+	int mouseOnX = input.getMouseX();
+	int mouseOnY = input.getMouseY();
+	int x = 0;
+	int y = 0;
+
+	x = mouseOnX / grassMap.getTileWidth();
+	y = mouseOnY / grassMap.getTileHeight();
+
+	popupX = -1;
+	popupY = -1;
+
+	for (Tile t : tiles) {
+	    if (t.x == x && t.y == y) {
+		if (main.getUnit(t) != null) {
+		    popupX = t.x * 32;
+		    popupY = t.y * 32 - 32;
+		    unitOnIt = t;
+		}
+	    }
+
+	}
+
     }
 
     @Override
@@ -231,6 +335,143 @@ public class GamePlayState extends BasicGameState {
 		default:
 		    break;
 		}
+	    }
+	}
+    }
+
+    /**
+     * Start a new Turn.
+     * @param sbg
+     * 		 the game
+     */
+    private void initTurn(StateBasedGame sbg) {
+	try {
+	    main.initNewTurn();
+	} catch (VictoryException e) {
+	    sbg.enterState(ViewController.VICTORYSTATE);
+	}
+    }
+
+    /**
+     * Create a new Unit by clicking on tiles.
+     * @param gc
+     * 		GameContainer of slick
+     * @param sbg
+     * 		The game
+     * @param delta
+     * 		The framerate
+     */
+    private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
+	if (main.isAuto()) {
+	    main.addUnit("Eclaireur", getTile(18, 3));
+	    main.addUnit("Fantassin", getTile(18, 15));
+	    main.addUnit("Chevalier", getTile(17, 15));
+	    main.addUnit("Archer", getTile(18, 7));
+	    main.addUnit("ArcherMonte", getTile(18, 17));
+	    currentState = STATES.START_TURN;
+
+	} else {
+	    Tile tile = getTileClicked(gc);
+
+	    if (tile != null) // si clic
+		if (tile.isBlocked() == false
+			&& main.isFreeTileset(tile)
+			&& ((main.playLeft() && tile.x < grassMap.getWidth() / 2) || (!main
+				.playLeft() && tile.x >= grassMap.getWidth() / 2))) {
+		    main.addUnit(main.getPlayerAUnitsNames()[unitNb], tile);
+		    System.out.print("Ajout :");
+		    System.out.println(main.getPlayerAUnitsNames()[unitNb]);
+		    unitNb++;
+		} else
+		    System.out.println("Impossible de placer une unité ici");
+
+	    // si il reste des unités à placer
+	    currentState = STATES.NEW_UNIT;
+
+	    // sinon
+	    if (unitNb == main.getPlayerAUnitsNames().length) {
+		currentState = STATES.START_TURN;
+		main.sendPlayer();
+		main.recPlayer();
+		if (main.getPlayerA().getTurn() == false) {
+		    currentState = STATES.PAUSE_GAME;
+		}
+	    }
+	}
+    }
+
+    /**
+     * Start the turn and check the actions of player.
+     * @param gc
+     * 		GameContainer of slick
+     * @param sbg
+     * 		The game
+     * @param delta
+     * 		The framerate
+     */
+    private void playTurn(GameContainer gc, StateBasedGame sbg, int delta) {
+	if (main.isAuto()) {
+	    switch (TurnController.numberTurn) {
+	    case 1:
+		highLight = main.canMove(tiles, getTile(18, 17));
+		break;
+	    case 2:
+		main.move(getTile(21, 17), getTile(18, 17), highLight);
+		break;
+	    case 3:
+		highLight = main.canMove(tiles, getTile(18, 3));
+		break;
+	    case 4:
+		main.move(getTile(21, 3), getTile(18, 3), highLight);
+		break;
+	    case 5:
+		try {
+		    main.attack(getTile(21, 17), getTile(24, 17));
+		} catch (VictoryException e) {
+		    e.printStackTrace();
+		}
+		break;
+	    case 6:
+		try {
+		    main.attack(getTile(21, 17), getTile(24, 17));
+		} catch (VictoryException e) {
+		    e.printStackTrace();
+		}
+		break;
+	    default:
+		sleep();
+		sbg.enterState(ViewController.VICTORYSTATE);
+		break;
+	    }
+	    currentState = STATES.END_TURN;
+	} else {
+	    getTileMouseOn(gc);
+	    Tile tile = getTileClicked(gc);
+	    if (tile != null) {
+		if (main.isPlayerAUnit(tile)) {
+		    currentState = STATES.SELECTING_UNIT;
+		    currentSelected = tile;
+		    if ((!main.getTurn().hasMove(main.getUnit(tile)) && !main
+			    .getTurn().hasAttack(main.getUnit(tile)))) {
+			highLight = main.canMove(tiles, currentSelected);
+			atkHighLight = main
+				.atkHighLight(tiles, currentSelected);
+		    }
+
+		    else if ((main.getUnit(tile).hasMat()
+			    && main.getTurn().hasAttack(main.getUnit(tile)) && !main
+			    .getTurn().hasMoveAfterAttack(main.getUnit(tile)))) {
+			highLight = main.canMove(tiles, currentSelected);
+		    }
+
+		    else if (main.getTurn().hasMove(main.getUnit(tile))
+			    && !main.getTurn().hasAttack(main.getUnit(tile))) {
+			atkHighLight = main
+				.atkHighLight(tiles, currentSelected);
+		    }
+		}
+	    } else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
+		currentState = STATES.END_TURN;
 	    }
 	}
     }
@@ -426,233 +667,6 @@ public class GamePlayState extends BasicGameState {
 
     }
 
-    @Override
-    public void update(GameContainer gc, StateBasedGame sbg, int delta)
-	    throws SlickException {
-	switch (currentState) {
-	case START_GAME:
-	    startGame();
-	    currentState = STATES.NEW_UNIT;
-	    break;
-	case NEW_UNIT:
-	    newUnit(gc, sbg, delta);
-	    break;
-	case START_TURN:
-	    initTurn(sbg);
-	    currentState = STATES.PLAY_TURN;
-	case PLAY_TURN:
-	    playTurn(gc, sbg, delta);
-	case SELECTING_UNIT:
-	    selectingUnit(gc, sbg, delta);
-	    break;
-	case END_TURN:
-	    endTurn();
-	    break;
-	case PAUSE_GAME:
-	    main.recMsg();
-	    getTileMouseOn(gc);
-	    if (!main.isAuto()) {
-		try {
-		    main.recPlayers();
-		} catch (LoseException e) {
-		    sbg.enterState(ViewController.LOSESTATE);
-		}
-		if (main.isTurn())
-		    currentState = STATES.START_TURN;
-	    }
-	    break;
-	case GAME_OVER:
-	    sbg.enterState(ViewController.MAINMENUSTATE);
-	    break;
-	}
-
-    }
-
-    /**
-     * Start the game by trying to connect to a server or use Auto mode.
-     */
-    private void startGame() {
-	if (main.isAuto())
-	    autoGenerateBUnits();
-	else
-	    main.connexion();
-
-	if (main.playLeft())
-	    main.addUnit(main.getPlayerA().getBoss(), getTile(3, 2));
-	else
-	    main.addUnit(main.getPlayerA().getBoss(), getTile(36, 18));
-
-    }
-
-    /**
-     * Start a new Turn.
-     * @param sbg
-     * 		 the game
-     */
-    private void initTurn(StateBasedGame sbg) {
-	try {
-	    main.initNewTurn();
-	} catch (VictoryException e) {
-	    sbg.enterState(ViewController.VICTORYSTATE);
-	}
-    }
-
-    /**
-     * End the turn and send the players by network.
-     */
-    private void endTurn() {
-	currentSelected = null;
-	currentState = STATES.PAUSE_GAME;
-	main.endNewTurn();
-
-	if (main.isAuto()) {
-	    sleep();
-	    currentState = STATES.START_TURN;
-	} else {
-
-	    main.sendEnd();
-	    main.endTurn();
-	    if (main.getPlayerA().getTurn()) {
-		currentState = STATES.START_TURN;
-	    }
-	}
-    }
-
-    /**
-     * Create a new Unit by clicking on tiles.
-     * @param gc
-     * 		GameContainer of slick
-     * @param sbg
-     * 		The game
-     * @param delta
-     * 		The framerate
-     */
-    private void newUnit(GameContainer gc, StateBasedGame sbg, int delta) {
-	if (main.isAuto()) {
-	    main.addUnit("Eclaireur", getTile(18, 3));
-	    main.addUnit("Fantassin", getTile(18, 15));
-	    main.addUnit("Chevalier", getTile(17, 15));
-	    main.addUnit("Archer", getTile(18, 7));
-	    main.addUnit("ArcherMonte", getTile(18, 17));
-	    currentState = STATES.START_TURN;
-
-	} else {
-	    Tile tile = getTileClicked(gc);
-
-	    if (tile != null) // si clic
-		if (tile.isBlocked() == false
-			&& main.isFreeTileset(tile)
-			&& ((main.playLeft() && tile.x < grassMap.getWidth() / 2) || (!main
-				.playLeft() && tile.x >= grassMap.getWidth() / 2))) {
-		    main.addUnit(main.getPlayerAUnitsNames()[unitNb], tile);
-		    System.out.print("Ajout :");
-		    System.out.println(main.getPlayerAUnitsNames()[unitNb]);
-		    unitNb++;
-		} else
-		    System.out.println("Impossible de placer une unité ici");
-
-	    // si il reste des unités à placer
-	    currentState = STATES.NEW_UNIT;
-
-	    // sinon
-	    if (unitNb == main.getPlayerAUnitsNames().length) {
-		currentState = STATES.START_TURN;
-		main.sendPlayer();
-		main.recPlayer();
-		if (main.getPlayerA().getTurn() == false) {
-		    currentState = STATES.PAUSE_GAME;
-		}
-	    }
-	}
-    }
-
-    /**
-     * Slow the game in auto mode to permit the user to see the game.
-     */
-    private void sleep() {
-	try {
-	    Thread.sleep(2000L);
-	} catch (InterruptedException e) {
-	    e.printStackTrace();
-	}
-    }
-
-    /**
-     * Start the turn and check the actions of player.
-     * @param gc
-     * 		GameContainer of slick
-     * @param sbg
-     * 		The game
-     * @param delta
-     * 		The framerate
-     */
-    private void playTurn(GameContainer gc, StateBasedGame sbg, int delta) {
-	if (main.isAuto()) {
-	    switch (TurnController.numberTurn) {
-	    case 1:
-		highLight = main.canMove(tiles, getTile(18, 17));
-		break;
-	    case 2:
-		main.move(getTile(21, 17), getTile(18, 17), highLight);
-		break;
-	    case 3:
-		highLight = main.canMove(tiles, getTile(18, 3));
-		break;
-	    case 4:
-		main.move(getTile(21, 3), getTile(18, 3), highLight);
-		break;
-	    case 5:
-		try {
-		    main.attack(getTile(21, 17), getTile(24, 17));
-		} catch (VictoryException e) {
-		    e.printStackTrace();
-		}
-		break;
-	    case 6:
-		try {
-		    main.attack(getTile(21, 17), getTile(24, 17));
-		} catch (VictoryException e) {
-		    e.printStackTrace();
-		}
-		break;
-	    default:
-		sleep();
-		sbg.enterState(ViewController.VICTORYSTATE);
-		break;
-	    }
-	    currentState = STATES.END_TURN;
-	} else {
-	    getTileMouseOn(gc);
-	    Tile tile = getTileClicked(gc);
-	    if (tile != null) {
-		if (main.isPlayerAUnit(tile)) {
-		    currentState = STATES.SELECTING_UNIT;
-		    currentSelected = tile;
-		    if ((!main.getTurn().hasMove(main.getUnit(tile)) && !main
-			    .getTurn().hasAttack(main.getUnit(tile)))) {
-			highLight = main.canMove(tiles, currentSelected);
-			atkHighLight = main
-				.atkHighLight(tiles, currentSelected);
-		    }
-
-		    else if ((main.getUnit(tile).hasMat()
-			    && main.getTurn().hasAttack(main.getUnit(tile)) && !main
-			    .getTurn().hasMoveAfterAttack(main.getUnit(tile)))) {
-			highLight = main.canMove(tiles, currentSelected);
-		    }
-
-		    else if (main.getTurn().hasMove(main.getUnit(tile))
-			    && !main.getTurn().hasAttack(main.getUnit(tile))) {
-			atkHighLight = main
-				.atkHighLight(tiles, currentSelected);
-		    }
-		}
-	    } else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
-		currentState = STATES.END_TURN;
-	    }
-	}
-    }
-
     /**
      * Check what a player want to do with the unit he selected before.
      * @param gc
@@ -693,89 +707,72 @@ public class GamePlayState extends BasicGameState {
     }
 
     /**
-     * Returns the tile the user clicked on.
-     * @param gc
-     * 		GameContainer of slick
-     * @return the tile the user clicked on
+     * Slow the game in auto mode to permit the user to see the game.
      */
-    private Tile getTileClicked(GameContainer gc) {
-	Input input = gc.getInput();
-	if (input.isMousePressed(0)) {
-
-	    int mouseX = input.getMouseX();
-	    int mouseY = input.getMouseY();
-	    int x = 0;
-	    int y = 0;
-
-	    x = mouseX / grassMap.getTileWidth();
-	    y = mouseY / grassMap.getTileHeight();
-
-	    for (Tile t : tiles) {
-		if (t.x == x && t.y == y)
-		    return t;
-	    }
+    private void sleep() {
+	try {
+	    Thread.sleep(2000L);
+	} catch (InterruptedException e) {
+	    e.printStackTrace();
 	}
-	return null;
     }
 
     /**
-     * Returns the tile the mouse is on.
-     * @param gc
-     * 		GameContainer of slick
+     * Start the game by trying to connect to a server or use Auto mode.
      */
-    private void getTileMouseOn(GameContainer gc) {
-	Input input = gc.getInput();
+    private void startGame() {
+	if (main.isAuto())
+	    autoGenerateBUnits();
+	else
+	    main.connexion();
 
-	int mouseOnX = input.getMouseX();
-	int mouseOnY = input.getMouseY();
-	int x = 0;
-	int y = 0;
+	if (main.playLeft())
+	    main.addUnit(main.getPlayerA().getBoss(), getTile(3, 2));
+	else
+	    main.addUnit(main.getPlayerA().getBoss(), getTile(36, 18));
 
-	x = mouseOnX / grassMap.getTileWidth();
-	y = mouseOnY / grassMap.getTileHeight();
+    }
 
-	popupX = -1;
-	popupY = -1;
-
-	for (Tile t : tiles) {
-	    if (t.x == x && t.y == y) {
-		if (main.getUnit(t) != null) {
-		    popupX = t.x * 32;
-		    popupY = t.y * 32 - 32;
-		    unitOnIt = t;
+    @Override
+    public void update(GameContainer gc, StateBasedGame sbg, int delta)
+	    throws SlickException {
+	switch (currentState) {
+	case START_GAME:
+	    startGame();
+	    currentState = STATES.NEW_UNIT;
+	    break;
+	case NEW_UNIT:
+	    newUnit(gc, sbg, delta);
+	    break;
+	case START_TURN:
+	    initTurn(sbg);
+	    currentState = STATES.PLAY_TURN;
+	case PLAY_TURN:
+	    playTurn(gc, sbg, delta);
+	case SELECTING_UNIT:
+	    selectingUnit(gc, sbg, delta);
+	    break;
+	case END_TURN:
+	    endTurn();
+	    break;
+	case PAUSE_GAME:
+	    main.recMsg();
+	    getTileMouseOn(gc);
+	    if (!main.isAuto()) {
+		try {
+		    main.recPlayers();
+		} catch (LoseException e) {
+		    sbg.enterState(ViewController.LOSESTATE);
 		}
+		if (main.isTurn())
+		    currentState = STATES.START_TURN;
 	    }
-
+	    break;
+	case GAME_OVER:
+	    sbg.enterState(ViewController.MAINMENUSTATE);
+	    break;
 	}
 
-    }
-
-    /**
-     * Returns the tile of a certain position.
-     * @param x
-     * 		x parameter of the position
-     * @param y
-     * 		y parameter of the position
-     * @return the tile which have this position
-     */
-    private Tile getTile(int x, int y) {
-	for (Tile t : tiles) {
-	    if (t.x == x && t.y == y)
-		return t;
-	}
-	return null;
-    }
-
-    /**
-     * Auto generate some units for player B in auto mode.
-     */
-    private void autoGenerateBUnits() {
-	main.addUnitToB(main.getPlayerB().getBoss(), getTile(36, 18));
-	main.addUnitToB("Eclaireur", getTile(23, 15));
-	main.addUnitToB("Fantassin", getTile(23, 16));
-	main.addUnitToB("Archer", getTile(24, 17));
-	main.addUnitToB("ArcherMonte", getTile(22, 15));
-	main.addUnitToB("Cavalier", getTile(23, 18));
     }
 
 }

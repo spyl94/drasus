@@ -1,10 +1,13 @@
 package controller;
 
-import view.*;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import view.GamePlayState;
+import view.LoseState;
+import view.MainMenuState;
+import view.VictoryState;
 
 /**
  * 

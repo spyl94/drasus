@@ -1,23 +1,15 @@
 package view;
 
-import controller.*;
-
-import org.lwjgl.Sys;
 import org.newdawn.slick.GameContainer;
-
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Image;
-
-import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.gui.AbstractComponent;
-import org.newdawn.slick.gui.ComponentListener;
-import org.newdawn.slick.gui.MouseOverArea;
+import controller.MainController;
+import controller.ViewController;
 
 /**
  * @author Adrien
@@ -38,18 +30,31 @@ public class MainMenuState extends BasicGameState {
     int mouseY = 0;
     boolean isPegasus = true;
 
+    float startGameScale = 1;
+
+    float exitScale = 1;
+
     public MainMenuState(int stateID) {
 	this.stateID = stateID;
 	main = MainController.getInstance();
     }
-
     @Override
     public int getID() {
 	return stateID;
     }
 
-    float startGameScale = 1;
-    float exitScale = 1;
+    /**
+     * Send the position of the mouse when it clicked.
+     * @param gc
+     * 		gc is the game container created by slick
+     */
+    private void getPosClicked(GameContainer gc) {
+	Input input = gc.getInput();
+	if (input.isMousePressed(0)) {
+	    mouseX = input.getMouseX();
+	    mouseY = input.getMouseY();
+	}
+    }
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg)
@@ -60,6 +65,20 @@ public class MainMenuState extends BasicGameState {
 	dragonGold = new Image("res/menu/dragonGold.png");
 	dragonSilver = new Image("res/menu/dragonSilver.png");
 	startGame = new Image("res/menu/jouer.png");
+    }
+
+    @Override
+    public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
+	    throws SlickException {
+	background.draw(0, 0);
+	startGame.draw(530, 500);
+	if (isPegasus) {
+	    pegasusGold.draw(270, 200);
+	    dragonSilver.draw(865, 200);
+	} else {
+	    pegasusSilver.draw(270, 200);
+	    dragonGold.draw(865, 200);
+	}
     }
 
     @Override
@@ -99,32 +118,5 @@ public class MainMenuState extends BasicGameState {
 	if (insideStartGame)
 	    sbg.enterState(ViewController.GAMEPLAYSTATE);
 
-    }
-
-    @Override
-    public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
-	    throws SlickException {
-	background.draw(0, 0);
-	startGame.draw(530, 500);
-	if (isPegasus) {
-	    pegasusGold.draw(270, 200);
-	    dragonSilver.draw(865, 200);
-	} else {
-	    pegasusSilver.draw(270, 200);
-	    dragonGold.draw(865, 200);
-	}
-    }
-
-    /**
-     * Send the position of the mouse when it clicked.
-     * @param gc
-     * 		gc is the game container created by slick
-     */
-    private void getPosClicked(GameContainer gc) {
-	Input input = gc.getInput();
-	if (input.isMousePressed(0)) {
-	    mouseX = input.getMouseX();
-	    mouseY = input.getMouseY();
-	}
     }
 }

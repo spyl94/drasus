@@ -6,11 +6,6 @@ import model.units.Unit;
 public class AttackCaCChevalier extends AttackCaC {
 
     @Override
-    protected boolean trinityAdvantage(Unit.Weapon a, Unit.Weapon b) {
-	return (int) (Math.random() * (2)) < 1;
-    }
-
-    @Override
     public String attack(Unit att, Unit def, boolean tank)
 	    throws DeadUnitException {
 	int hit = att.getHit();
@@ -36,5 +31,10 @@ public class AttackCaCChevalier extends AttackCaC {
 	return "L'attaque du " + att.getName() + " a infligé " + dmg + " à "
 		+ def.getName();
 
+    }
+
+    @Override
+    protected boolean trinityAdvantage(Unit.Weapon a, Unit.Weapon b) {
+	return (int) (Math.random() * (2)) < 1;
     }
 }

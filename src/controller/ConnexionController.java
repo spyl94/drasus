@@ -2,11 +2,13 @@ package controller;
 
 import java.io.IOException;
 
-import model.*;
+import model.Msg;
+import model.Player;
 
-import com.esotericsoftware.kryo.*;
-import com.esotericsoftware.kryonet.*;
-import controller.ConnexionController;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryonet.Client;
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
 
 
 /**
@@ -85,6 +87,7 @@ public class ConnexionController {
 	client.start();
 
 	client.addListener(new Listener() {
+	    @Override
 	    public void received(Connection connection, Object object) {
 		if (object instanceof Player[]) {
 		    recu = (Player[]) object;
@@ -100,6 +103,41 @@ public class ConnexionController {
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
+    }
+
+    /**
+     * Put the last message received to null.
+     */
+    public void eraseMsg() {
+	msg = null;
+    }
+
+    /**
+     * Returns the last message received.
+     * @return the last message received
+     */
+    public Msg getMsg() {
+	return msg;
+    }
+
+    
+    /**
+     * Returns the last array of player received.
+     * 
+     * @return An array of player
+     */
+    public Player[] getPlayer() {
+	return recu;
+    }
+
+    /**
+     * Send a message.
+     * @param msg
+     * 		  message to send		
+     */
+    public void sendMsg(Msg msg) {
+	System.out.println(msg.getMsg());
+	client.sendTCP(msg);
     }
 
     /**
@@ -129,45 +167,10 @@ public class ConnexionController {
 	client.sendTCP(envoi);
     }
 
-    
-    /**
-     * Send a message.
-     * @param msg
-     * 		  message to send		
-     */
-    public void sendMsg(Msg msg) {
-	System.out.println(msg.getMsg());
-	client.sendTCP(msg);
-    }
-
-    /**
-     * Returns the last array of player received.
-     * 
-     * @return An array of player
-     */
-    public Player[] getPlayer() {
-	return recu;
-    }
-
     /**
      * Put recu to null.
      */
     public void setNull() {
 	recu = null;
-    }
-
-    /**
-     * Put the last message received to null.
-     */
-    public void eraseMsg() {
-	msg = null;
-    }
-
-    /**
-     * Returns the last message received.
-     * @return the last message received
-     */
-    public Msg getMsg() {
-	return msg;
     }
 }

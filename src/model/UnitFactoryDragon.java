@@ -29,6 +29,11 @@ public class UnitFactoryDragon extends UnitFactory {
     }
 
     @Override
+    public String[] getNamesOfUnits() {
+	return this.names;
+    }
+
+    @Override
     public Unit getUnit(String str) {
 
 	if (str == "Dragon")
@@ -57,11 +62,6 @@ public class UnitFactoryDragon extends UnitFactory {
 	    return new ChevalierDragon();
 
 	return null;
-    }
-
-    @Override
-    public String[] getNamesOfUnits() {
-	return this.names;
     }
 
 }
