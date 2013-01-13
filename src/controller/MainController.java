@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import model.*;
 import model.exception.DeadBossException;
 import model.exception.DeadUnitException;
+import model.exception.LoseException;
 import model.exception.VictoryException;
 import model.units.Unit;
 
@@ -790,7 +791,7 @@ public class MainController {
 	client.setNull();
     }
 
-    public void recPlayers() {
+    public void recPlayers() throws LoseException {
 	Player[] tab = client.getPlayer();
 	if (tab != null) {
 	    if (tab.length == 2) {
@@ -799,6 +800,7 @@ public class MainController {
 	    }
 	    client.setNull();
 	}
+	if(a.getUnit(a.getBoss()) == null) throw new LoseException();
     }
 
     public void sendMsg(String message) {
@@ -848,7 +850,5 @@ public class MainController {
     public void setPlayerA(String boss) {
 	if (a == null)
 	    a = new Player(boss);
-	else
-	    throw new IllegalArgumentException("Player A already exists");
     }
 }
