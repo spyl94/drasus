@@ -814,7 +814,7 @@ public class MainController {
      * @throws LoseException
      * 				if the player have no boss
      */
-    public void recPlayers() throws LoseException {
+    public synchronized void recPlayers() throws LoseException {
 	Player[] tab = client.getPlayer();
 	if (tab != null) {
 	    if (tab.length == 2) {
