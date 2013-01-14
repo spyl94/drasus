@@ -4,12 +4,10 @@ import model.*;
 import com.esotericsoftware.kryo.*;
 import com.esotericsoftware.kryonet.*;
 
-import controller.ConnexionController;
-
 public class DrasusServer {
 
 	private Server server;
-	public static int PORT;
+	public static int PORT = 4667;
 	private boolean temp = false;
 
 	/**
