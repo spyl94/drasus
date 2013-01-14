@@ -3,28 +3,31 @@ Drasus
 
 ## Principe du jeu
 
-Vous incarnez un gÃ©nÃ©ral et devez gÃ©rer vos unitÃ©s afin de dÃ©truire l'ennemi, nous entendons par la le gÃ©nÃ©ral adverse.
-Decouvrez des unitÃ©s uniques et obtenez la victoire en usant de vos meilleurs stratÃ©gies !
+Vous incarnez un général et devez gèrer vos unités afin de détruire l'ennemi, nous entendons par la le général adverse.
+Découvrez des unités uniques et obtenez la victoire en usant de vos meilleurs stratégies !
 
 ## Wiki
 
-Retrouvez toutes les informations nÃ©cÃ©ssaires pour jouer :
+Retrouvez toutes les informations nécessaires pour jouer :
 https://github.com/spyl94/drasus/wiki
 
-## TÃ©lÃ©charger
+## Télécharger
 http://efrei.spyl.net/L3/Java/drasus.rar
 
-## Les changements Ã  venir
+Drasus nécessite la version 7 de Java qui n'est peut-être pas installé sur votre ordinateur, voici une archive qui comprend le jeu et Java 7:
+http://efrei.spyl.net/L3/Java/drasus+java.rar
 
-- [x] highlight rouge pour attaque
-- [] un vrai pathfinding avec dÃ©placement
-- [x] animation et couleur rouge
-- [x] Adapter highlight au mat
-- [x] modifier move
-- [x] menu
-- [] connexion multi users
-- [x] AmÃ©liorations et conditions des unitÃ©s
+Drasus offrira prochainement une archive complète des sources et fichiers projets pour les développeurs.
+
+## Dernier changements
+
+- [x] Améliorations et ajout de conditions aux unités.
 - [x] JavaDoc
-- [x] UnitTest
-- [x] Auto
-- [x] override equals tile
+- [x] Tests unitaires
+- [x] Ajout des Menus.
+- [x] Modification du Highlight.
+
+## Changements à  venir
+
+- [] un vrai pathfinding avec dÃ©placement
+
