@@ -17,8 +17,8 @@ import com.esotericsoftware.kryonet.Listener;
 
 public class ConnexionController {
 
-    public static String IP = "88.180.34.112";
-    public static String PORT = "4662";
+    public static String IP = "spyl.net";
+    public static String PORT = "6667";
     private Client client;
     private Msg msg = new Msg();
     private Player[] envoi;
@@ -99,7 +99,7 @@ public class ConnexionController {
 	});
 
 	try {
-	    client.connect(5000, IP, Integer.parseInt(PORT), 4672);
+	    client.connect(5000, IP, Integer.parseInt(PORT));
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
