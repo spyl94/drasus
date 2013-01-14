@@ -538,6 +538,7 @@ public class MainController {
      * @return true if the Eclaireur is stealth
      */
     public boolean isCamo() {
+    	if (b.getUnit("Eclaireur") == null) return false;
 	return b.getUnit("Eclaireur").getTile().getField() == FIELD.FOREST;
     }
 
