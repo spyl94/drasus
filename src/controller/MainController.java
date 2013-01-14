@@ -216,6 +216,7 @@ public class MainController {
      * @return A vector of Tile which contains all possibilities of move
      */
     private Vector<Tile> canCross(Vector<Tile> tiles, Tile base, int moveNb) {
+    	if(moveNb == 0) return null;
 	Tile[] finale = null;
 	Vector<Tile> tempo = new Vector<Tile>();
 	Vector<Tile> result = new Vector<Tile>();

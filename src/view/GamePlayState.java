@@ -487,7 +487,7 @@ public class GamePlayState extends BasicGameState {
 			throws SlickException {
 		grassMap.render(0, 0);
 		calque.draw(32, 673);
-		if (highLight.isEmpty() == false) {
+		if (highLight != null && highLight.isEmpty() == false) {
 			for (Tile t : highLight) {
 				Target.draw(t.x * 32, t.y * 32);
 			}
@@ -709,12 +709,12 @@ public class GamePlayState extends BasicGameState {
 			}
 
 			else {
-				main.move(tile, currentSelected, highLight);
+				if(highLight != null) main.move(tile, currentSelected, highLight);
 				main.sendBoth();
 				currentState = STATES.PLAY_TURN;
 			}
 			System.out.println(atkHighLight.size());
-			highLight.clear();
+			if(highLight != null) highLight.clear();
 			atkHighLight.clear();
 		}
 	}
