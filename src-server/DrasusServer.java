@@ -4,9 +4,12 @@ import model.*;
 import com.esotericsoftware.kryo.*;
 import com.esotericsoftware.kryonet.*;
 
+import controller.ConnexionController;
+
 public class DrasusServer {
 
 	private Server server;
+	public static int PORT;
 	private boolean temp = false;
 
 	/**
@@ -143,7 +146,7 @@ public class DrasusServer {
 		});
 
 		try {
-			server.bind(6667);
+			server.bind(DrasusServer.PORT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -151,6 +154,13 @@ public class DrasusServer {
 	}
 
 	public static void main(String[] args) throws IOException {
+		for (String s : args) {
+		    System.out.println(s);
+		    if (s.contains("-port=")) {
+		    	s = s.replace("-port=", "");
+		    	DrasusServer.PORT =  Integer.parseInt(s);
+		    }
+		}
 		new DrasusServer();
 	}
 
