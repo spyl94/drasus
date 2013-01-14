@@ -620,7 +620,7 @@ public class GamePlayState extends BasicGameState {
 
 		if (popupX > -1 && popupY > -1) {
 			if (main.getUnit(unitOnIt) != null) {
-				//If the unit is not an Eclaireur in stealth, show Life Points
+				// If the unit is not an Eclaireur in stealth, show Life Points
 				if (!main.isCamo()
 						|| !main.isPlayerBUnit(unitOnIt)
 						|| !main.getUnit(unitOnIt).getName()
@@ -709,12 +709,14 @@ public class GamePlayState extends BasicGameState {
 			}
 
 			else {
-				if(highLight != null) main.move(tile, currentSelected, highLight);
+				if (highLight != null)
+					main.move(tile, currentSelected, highLight);
 				main.sendBoth();
 				currentState = STATES.PLAY_TURN;
 			}
 			System.out.println(atkHighLight.size());
-			if(highLight != null) highLight.clear();
+			if (highLight != null)
+				highLight.clear();
 			atkHighLight.clear();
 		}
 	}
@@ -736,8 +738,18 @@ public class GamePlayState extends BasicGameState {
 	private void startGame() {
 		if (main.isAuto())
 			autoGenerateBUnits();
-		else
+		else {
 			main.connexion();
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			while (main.isConnected() != true){
+			main.connexion();
+			}
+			main.matchedWithPlayer();
+		}
 
 		if (main.playLeft())
 			main.addUnit(main.getPlayerA().getBoss(), getTile(3, 2));
