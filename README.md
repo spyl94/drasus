@@ -30,5 +30,5 @@ Drasus offrira prochainement une archive complète des sources et fichiers projet
 
 ## Changements à  venir
 
-- [] un vrai pathfinding avec dÃ©placement
+- [] un vrai pathfinding avec déplacement
 
