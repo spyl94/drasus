@@ -834,22 +834,21 @@ public class MainController {
 		client.setNull();
 	}
 
-	/**
-	 * Set a and b to the last Players received.
-	 * 
-	 * @throws LoseException
-	 *             if the player have no boss
-	 */
-	public void recPlayers() throws LoseException {
-		Player[] tab = client.getPlayer();
-		if (tab != null) {
-			if (tab.length == 2) {
-				b = tab[0];
-				a = tab[1];
-			}
-			client.setNull();
-		}
-		if (a.getUnit(a.getBoss()) == null)
+    /**
+     * Set a and b to the last Players received.
+     * @throws LoseException
+     * 				if the player have no boss
+     */
+    public synchronized void recPlayers() throws LoseException {
+	Player[] tab = client.getPlayer();
+	if (tab != null) {
+	    if (tab.length == 2) {
+		b = tab[0];
+		a = tab[1];
+	    }
+	    client.setNull();
+	}
+	if (a.getUnit(a.getBoss()) == null)
 			throw new LoseException();
 	}
 
