@@ -7,6 +7,7 @@ import com.esotericsoftware.kryonet.*;
 public class DrasusServer {
 
 	private Server server;
+	private boolean temp = false;
 
 	/**
 	 * @param args
@@ -73,51 +74,76 @@ public class DrasusServer {
 
 		server.addListener(new Listener() {
 			public void received(Connection connection, Object object) {
-				if (connection.getID() > 2) {
-					connection.close();
-				}
-					if (object instanceof Msg) {
-						Msg request = (Msg) object;
-						if (request.getFirstCo()) {
-							if (request.getOkCo() != true) {
-								if (connection.getID() > 1) {
+				if (object instanceof Msg) {
+					Msg request = (Msg) object;
+					if (request.getFirstCo()) {
+						if (request.getOkCo() != true) {
+							if (connection.getID() % 2 == 0) {
+								for (int i = 0; i < server.getConnections().length; i++) {
+									if (server.getConnections()[i].getID() == connection
+											.getID() - 1) {
+										if (server.getConnections()[i]
+												.isConnected()) {
+											temp = true;
+										}
+									}
+								}
+								if (temp == true) {
 									Msg msg = new Msg("Roger", true, true);
 									java.util.Random rand = new java.util.Random();
-									int randomNum = rand.nextInt(2);
+									int randomNum = rand.nextInt(1);
 									randomNum++;
-									server.sendToAllExceptTCP(randomNum, msg);
+									server.sendToTCP(connection.getID()
+											- randomNum, msg);
 									msg.setFirstCo(false);
-									if (randomNum == 1) {
-										randomNum = 2;
-									} else {
+									if (randomNum == 0) {
 										randomNum = 1;
+									} else {
+										randomNum = 0;
 									}
-									server.sendToAllExceptTCP(randomNum, msg);
+									server.sendToTCP(connection.getID()
+											- randomNum, msg);
+									temp = false;
+								} else {
+									connection.close();
 								}
-							} else {
-								server.sendToAllExceptTCP(connection.getID(),
-										request);
 							}
 						} else {
-							if (request.getOkCo() == true) {
-								Msg msg = new Msg(request.getMsg(), false, true);
-								server.sendToAllExceptTCP(connection.getID(),
-										msg);
+							if (connection.getID() % 2 == 0) {
+								server.sendToTCP(connection.getID() - 1,
+										request);
+							} else {
+								server.sendToTCP(connection.getID() + 1,
+										request);
+							}
+						}
+					} else {
+						if (request.getOkCo() == true) {
+							Msg msg = new Msg(request.getMsg(), false, true);
+							if (connection.getID() % 2 == 0) {
+								server.sendToTCP(connection.getID() - 1, msg);
+							} else {
+								server.sendToTCP(connection.getID() + 1, msg);
 							}
 						}
 					}
+				}
 
-					if (object instanceof Player[]) {
-						Player[] player;
-						player = (Player[]) object;
-						server.sendToAllExceptTCP(connection.getID(), player);
+				if (object instanceof Player[]) {
+					Player[] player;
+					player = (Player[]) object;
+					if (connection.getID() % 2 == 0) {
+						server.sendToTCP(connection.getID() - 1, player);
+					} else {
+						server.sendToTCP(connection.getID() + 1, player);
 					}
 				}
-			
+			}
+
 		});
 
 		try {
-			server.bind(4662, 4672);
+			server.bind(6667);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
