@@ -97,7 +97,7 @@ public abstract class Unit {
      * 
      */
     public void addRegenerationFort() {
-	this.hp += 5;
+	this.hp += 20;
 	if (this.hp > this.maxHp)
 	    this.hp = this.maxHp;
     }
