@@ -3,32 +3,34 @@ Drasus
 
 ## Principe du jeu
 
-Vous incarnez un général et devez gèrer vos unités afin de détruire l'ennemi, nous entendons par la le général adverse.
-Découvrez des unités uniques et obtenez la victoire en usant de vos meilleurs stratégies !
+Vous incarnez un gÃ©nÃ©ral et devez gÃ©rer vos unitÃ©s afin de dÃ©truire l'ennemi, nous entendons par la le gÃ©nÃ©ral adverse.
+DÃ©couvrez des unitÃ©s uniques et obtenez la victoire en usant de vos meilleurs stratÃ©gies !
 
 ## Wiki
 
-Retrouvez toutes les informations nécessaires pour jouer :
+Retrouvez toutes les informations nÃ©cessaires pour jouer :
 https://github.com/spyl94/drasus/wiki
 
-## Télécharger
-http://efrei.spyl.net/L3/Java/drasus.rar
+## TÃ©lÃ©charger
+http://efrei.spyl.net/L3/Java/drasus-v1.0.rar
 
-Drasus nécessite la version 7 de Java qui n'est peut-être pas installé sur votre ordinateur.
+Drasus nÃ©cessite la version 7 de Java qui n'est peut-Ãªtre pas installÃ© sur votre ordinateur.
 Voici une archive qui comprend le jeu et Java 7:
-http://efrei.spyl.net/L3/Java/drasus+java.rar
+http://efrei.spyl.net/L3/Java/drasus+java-v1.0.rar
 
-Drasus offrira prochainement une archive complète des sources et fichiers projets pour les développeurs.
+Enfin, voici une archive destinÃ©e aux dÃ©veloppeurs qui comprend la Javadoc, les sources avec les fichiers projets Eclipse, les libraires et notre rapport de rendu de projet qui comprend le diagramme des Use case et le diagramme des classes de la partie model.
+
+http://efrei.spyl.net/L3/Java/drasus-full-v1.0.rar
 
 ## Dernier changements
 
-- [x] Améliorations et ajout de conditions aux unités.
+- [x] AmÃ©liorations et ajout de conditions aux unitÃ©s.
 - [x] JavaDoc
 - [x] Tests unitaires
 - [x] Ajout des Menus.
 - [x] Modification du Highlight.
 
-## Changements à  venir
+## Changements Ã  venir
 
-- [] un vrai pathfinding avec déplacement
+- [] un vrai pathfinding avec dÃ©placement
 
