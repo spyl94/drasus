@@ -26,7 +26,7 @@ public class Player {
     public Player(String boss) {
 	units = new Hashtable<String, Unit>();
 	this.boss = boss;
-	if (this.boss == "Dragon") {
+	if (this.boss.equals("Dragon")) {
 	    factory = new UnitFactoryDragon();
 	} else {
 	    factory = new UnitFactoryPegasus();
