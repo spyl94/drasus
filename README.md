@@ -22,6 +22,11 @@ Enfin, voici une archive destinée aux développeurs qui comprend la Javadoc, le
 
 http://efrei.spyl.net/L3/Java/drasus-full-v1.0.rar
 
+## Commandes
+Vous effectuez toutes les actions à la souris, que ce soit le déplacement ou l'attaque des unités.
+Pour passer votre tour, pressez la touche Espace !
+
+
 ## Dernier changements
 
 - [x] Améliorations et ajout de conditions aux unités.
