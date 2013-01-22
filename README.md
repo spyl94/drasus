@@ -14,7 +14,7 @@ https://github.com/spyl94/drasus/wiki
 ## Télécharger
 Décompressez dans un dossier l'une des archive suivante:
 
-[drasus-v1.0](http://efrei.spyl.net/L3/Java/drasus-v1.0.rar)
+[drasus-v1.0.rar](http://efrei.spyl.net/L3/Java/drasus-v1.0.rar)
 
 Drasus nécessite la version 7 de Java qui n'est peut-être pas installé sur votre ordinateur.
 Voici une archive qui comprend le jeu et Java 7:
