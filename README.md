@@ -26,7 +26,7 @@ Enfin, voici une archive destinée aux développeurs qui comprend la Javadoc, le
 ## Déroulement d'une partie
 Au lancement du jeu choisissez un [Boss](https://github.com/spyl94/drasus/wiki/Boss) puis cliquez sur jouer.
 Le serveur de drasus vous mettra en relation avec le prochain joueur qui se connectera.
-Chaqun des joueurs place alors ces unités du côté de la (carte)[https://github.com/spyl94/drasus/wiki/La-carte] qui contient son boss, la limite étant la rivière. Puis la partie peu commencer !
+Chaqun des joueurs place alors ces unités du côté de la [carte](https://github.com/spyl94/drasus/wiki/La-carte) qui contient son boss, la limite étant la rivière. Puis la partie peu commencer !
 Vous effectuez toutes les actions à la souris, sélectionnez une de vos [unités](https://github.com/spyl94/drasus/wiki/Unit%C3%A9s) et déplacez là ou bien attaquez une unité adverse !
 Pour terminer votre tour, pressez la touche Espace ! La partie se termine lorsque l'un des deux boss est mort.
 Alors prêt pour un [combat](https://github.com/spyl94/drasus/wiki/Combat) acharné ?
