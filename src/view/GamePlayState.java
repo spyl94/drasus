@@ -477,7 +477,8 @@ public class GamePlayState extends BasicGameState {
 					}
 				}
 			} else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
-				currentState = STATES.END_TURN;
+				if (currentState !=  STATES.PAUSE_GAME)
+						currentState = STATES.END_TURN;
 			}
 		}
 	}
