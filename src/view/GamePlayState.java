@@ -184,15 +184,10 @@ public class GamePlayState extends BasicGameState {
 	 */
 	private Tile getTileClicked(GameContainer gc) {
 		Input input = gc.getInput();
-		if (input.isMousePressed(0)) {
+		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 
-			int mouseX = input.getMouseX();
-			int mouseY = input.getMouseY();
-			int x = 0;
-			int y = 0;
-
-			x = mouseX / grassMap.getTileWidth();
-			y = mouseY / grassMap.getTileHeight();
+			int x = input.getMouseX() / grassMap.getTileWidth();
+			int y = input.getMouseY() / grassMap.getTileHeight();
 
 			for (Tile t : tiles) {
 				if (t.x == x && t.y == y)
