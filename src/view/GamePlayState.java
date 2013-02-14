@@ -472,8 +472,8 @@ public class GamePlayState extends BasicGameState {
 					}
 				}
 			} else if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
-				if (currentState !=  STATES.PAUSE_GAME)
-						currentState = STATES.END_TURN;
+				if (currentState != STATES.PAUSE_GAME)
+					currentState = STATES.END_TURN;
 			}
 		}
 	}
@@ -741,8 +741,8 @@ public class GamePlayState extends BasicGameState {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			while (main.isConnected() != true){
-			main.connexion();
+			while (main.isConnected() != true) {
+				main.connexion();
 			}
 			main.matchedWithPlayer();
 		}

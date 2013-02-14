@@ -37,7 +37,7 @@ public class MainMenuState extends BasicGameState {
 	private TrueTypeFont message;
 	private boolean insideStartGame = false;
 	private Image calque;
-	
+
 	public MainMenuState(int stateID) {
 		this.stateID = stateID;
 		main = MainController.getInstance();
@@ -81,9 +81,10 @@ public class MainMenuState extends BasicGameState {
 			throws SlickException {
 		background.draw(0, 0);
 		startGame.draw(530, 500);
-		if(insideStartGame){
+		if (insideStartGame) {
 			calque.draw(32, 673);
-			message.drawString(35, 675, "En attende d'un autre joueur", Color.black);
+			message.drawString(35, 675, "En attende d'un autre joueur",
+					Color.black);
 		}
 		if (isPegasus) {
 			pegasusGold.draw(270, 200);

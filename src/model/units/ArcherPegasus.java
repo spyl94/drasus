@@ -9,15 +9,15 @@ import model.attack.AttackDistanceArcher;
  */
 public class ArcherPegasus extends Unit {
 
-    public ArcherPegasus() {
-	super(new AttackDistance(4), 200, 50, 80, 5, 15, 10, 0, Weapon.BOW,
-		"Archer");
+	public ArcherPegasus() {
+		super(new AttackDistance(4), 200, 50, 80, 5, 15, 10, 0, Weapon.BOW,
+				"Archer");
 
-    }
+	}
 
-    @Override
-    public void activatePower() {
-	pow = true;
-	setIAttack(new AttackDistanceArcher(4));
-    }
+	@Override
+	public void activatePower() {
+		pow = true;
+		setIAttack(new AttackDistanceArcher(4));
+	}
 }

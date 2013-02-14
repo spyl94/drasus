@@ -9,24 +9,24 @@ import model.attack.AttackDistanceDoubledInForest;
  */
 public class RodeurDragon extends Unit {
 
-    public RodeurDragon() {
-	super(new AttackDistance(3), 210, 50, 85, 5, 20, 25, 0, Weapon.BOW,
-		"Rodeur");
+	public RodeurDragon() {
+		super(new AttackDistance(3), 210, 50, 85, 5, 20, 25, 0, Weapon.BOW,
+				"Rodeur");
 
-    }
+	}
 
-    @Override
-    public void activatePower() {
-	pow = true;
-	setIAttack(new AttackDistanceDoubledInForest(3));
+	@Override
+	public void activatePower() {
+		pow = true;
+		setIAttack(new AttackDistanceDoubledInForest(3));
 
-    }
+	}
 
-    @Override
-    public void addRegenerationForest() {
-	this.hp += 10;
-	if (this.hp > this.maxHp)
-	    this.hp = this.maxHp;
-    }
+	@Override
+	public void addRegenerationForest() {
+		this.hp += 10;
+		if (this.hp > this.maxHp)
+			this.hp = this.maxHp;
+	}
 
 }

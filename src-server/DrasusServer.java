@@ -153,11 +153,11 @@ public class DrasusServer {
 
 	public static void main(String[] args) throws IOException {
 		for (String s : args) {
-		    System.out.println(s);
-		    if (s.contains("-port=")) {
-		    	s = s.replace("-port=", "");
-		    	DrasusServer.PORT =  Integer.parseInt(s);
-		    }
+			System.out.println(s);
+			if (s.contains("-port=")) {
+				s = s.replace("-port=", "");
+				DrasusServer.PORT = Integer.parseInt(s);
+			}
 		}
 		new DrasusServer();
 	}

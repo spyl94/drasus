@@ -9,16 +9,16 @@ import model.attack.AttackCaCBerserkerBoosted;
  */
 public class BerserkerDragon extends Unit {
 
-    public BerserkerDragon() {
-	super(new AttackCaCBerserker(), 240, 65, 80, 4, 5, 10, 0, Weapon.AXE,
-		"Berserker");
+	public BerserkerDragon() {
+		super(new AttackCaCBerserker(), 240, 65, 80, 4, 5, 10, 0, Weapon.AXE,
+				"Berserker");
 
-    }
+	}
 
-    @Override
-    public void activatePower() {
-	pow = true;
-	setIAttack(new AttackCaCBerserkerBoosted());
-    }
+	@Override
+	public void activatePower() {
+		pow = true;
+		setIAttack(new AttackCaCBerserkerBoosted());
+	}
 
 }

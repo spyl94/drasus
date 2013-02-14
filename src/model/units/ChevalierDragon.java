@@ -8,15 +8,15 @@ import model.attack.AttackCaC;
  */
 public class ChevalierDragon extends Unit {
 
-    public ChevalierDragon() {
-	super(new AttackCaC(), 240, 65, 90, 4, 25, 10, 0, Weapon.UNKNOWN,
-		"Chevalier");
-    }
+	public ChevalierDragon() {
+		super(new AttackCaC(), 240, 65, 90, 4, 25, 10, 0, Weapon.UNKNOWN,
+				"Chevalier");
+	}
 
-    @Override
-    public void activatePower() {
-	pow = true;
+	@Override
+	public void activatePower() {
+		pow = true;
 
-    }
+	}
 
 }

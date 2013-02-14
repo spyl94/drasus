@@ -7,14 +7,14 @@ package model.exception;
 @SuppressWarnings("serial")
 public class VictoryException extends Exception {
 
-    private String name;
+	private String name;
 
-    public VictoryException(DeadBossException e) {
-	name = e.getName() + "est mort ! Victoire !";
-    }
+	public VictoryException(DeadBossException e) {
+		name = e.getName() + "est mort ! Victoire !";
+	}
 
-    public String getName() {
-	return name;
-    }
+	public String getName() {
+		return name;
+	}
 
 }
