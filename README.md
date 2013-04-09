@@ -42,7 +42,3 @@ Alors prêt pour un [combat](https://github.com/spyl94/drasus/wiki/Combat) achar
 - [x] Ajout des Menus.
 - [x] Modification du Highlight.
 
-## Changements à venir
-
-- [] un vrai pathfinding avec déplacement
-
