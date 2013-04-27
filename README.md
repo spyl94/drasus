@@ -36,9 +36,9 @@ Alors prêt pour un [combat](https://github.com/spyl94/drasus/wiki/Combat) achar
 
 ## Dernier changements
 
-- [x] Améliorations et ajout de conditions aux unités.
-- [x] JavaDoc
-- [x] Tests unitaires
-- [x] Ajout des Menus.
-- [x] Modification du Highlight.
+-  Améliorations et ajout de conditions aux unités.
+-  JavaDoc
+-  Tests unitaires
+-  Ajout des Menus.
+-  Modification du Highlight.
 
