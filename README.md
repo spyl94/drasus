@@ -34,7 +34,7 @@ Pour terminer votre tour, pressez la touche Espace ! La partie se termine lorsqu
 Alors prêt pour un [combat](https://github.com/spyl94/drasus/wiki/Combat) acharné ?
 
 
-## Dernier changements
+## Derniers changements
 
 -  Améliorations et ajout de conditions aux unités.
 -  JavaDoc
